@@ -1,0 +1,2519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Class XII — CBSE 2025-26 Interactive Course</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0f1a;--surface:#13172a;--card:#181d30;--border:#242840;
+  --a1:#6c63ff;--a2:#ff6584;--a3:#43d9ad;--a4:#ffb347;--a5:#4fc3f7;--a6:#c48cff;
+  --text:#e8eaf6;--text2:#8892b0;--radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:5px}
+
+/* ─── SIDEBAR ─── */
+#sidebar{position:fixed;top:0;left:0;width:255px;height:100vh;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;z-index:200;display:flex;flex-direction:column}
+#sidebar::-webkit-scrollbar{width:3px}
+.sb-brand{padding:18px 18px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.sb-avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--a1),var(--a3));display:grid;place-items:center;font-size:1.1rem;flex-shrink:0;animation:floatY 4s ease-in-out infinite}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.sb-brand-text h1{font-size:.88rem;font-weight:900;background:linear-gradient(135deg,var(--a1),var(--a3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sb-brand-text p{font-size:.62rem;color:var(--text2);margin-top:1px}
+.sb-prog{padding:12px 18px;border-bottom:1px solid var(--border)}
+.sb-prog-row{display:flex;justify-content:space-between;font-size:.68rem;color:var(--text2);margin-bottom:5px}
+.sb-prog-track{height:5px;background:var(--border);border-radius:5px}
+.sb-prog-fill{height:5px;background:linear-gradient(90deg,var(--a1),var(--a3));border-radius:5px;width:0%;transition:width .6s}
+.sb-section{padding:10px 18px 3px;font-size:.6rem;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:1.5px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 18px;cursor:pointer;font-size:.8rem;font-weight:600;color:var(--text2);transition:.18s;border-left:3px solid transparent;position:relative}
+.nav-item:hover{background:rgba(108,99,255,.07);color:var(--text)}
+.nav-item.active{background:rgba(108,99,255,.12);color:var(--a1);border-left-color:var(--a1)}
+.nav-item .ni{font-size:.95rem;width:20px;text-align:center}
+.nav-badge{margin-left:auto;font-size:.56rem;background:var(--a1);color:#fff;border-radius:20px;padding:2px 7px;font-weight:700}
+.nav-xp{margin-left:auto;font-size:.6rem;color:var(--a3);font-weight:700}
+
+/* ─── TOPBAR ─── */
+#main{margin-left:255px;min-height:100vh}
+#topbar{position:sticky;top:0;z-index:50;background:rgba(13,15,26,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 28px;height:54px;display:flex;align-items:center;gap:16px}
+.topbar-title{font-size:.95rem;font-weight:800;flex:1}
+.topbar-chips{display:flex;align-items:center;gap:8px}
+.tchip{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:.72rem;font-weight:700;border:1px solid var(--border);color:var(--text2);background:transparent}
+.tchip.xp{background:linear-gradient(135deg,rgba(255,179,71,.15),rgba(255,101,132,.15));border-color:rgba(255,179,71,.3);color:var(--a4)}
+.tchip.streak{background:rgba(67,217,173,.08);border-color:rgba(67,217,173,.2);color:var(--a3)}
+.tchip.unit{background:rgba(108,99,255,.08);border-color:rgba(108,99,255,.2);color:var(--a1)}
+
+/* ─── PAGES ─── */
+.page{display:none;padding:28px;animation:fadein .35s}
+.page.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── HERO ─── */
+.hero{background:linear-gradient(130deg,#120d38 0%,#0d1d3a 60%,#0a1a26 100%);border:1px solid var(--border);border-radius:20px;padding:40px;position:relative;overflow:hidden;margin-bottom:24px}
+.hero::before,.hero::after{content:'';position:absolute;border-radius:50%;pointer-events:none}
+.hero::before{width:360px;height:360px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(108,99,255,.13),transparent 70%)}
+.hero::after{width:200px;height:200px;bottom:-60px;left:100px;background:radial-gradient(circle,rgba(67,217,173,.08),transparent 70%)}
+.hero-tag{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--a3);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.hero-tag::before{content:'';width:20px;height:2px;background:var(--a3);border-radius:2px}
+.hero h2{font-size:2rem;font-weight:900;line-height:1.2;margin-bottom:12px}
+.hero h2 span{background:linear-gradient(90deg,var(--a1),var(--a3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--text2);max-width:520px;line-height:1.75;font-size:.88rem}
+.hero-stats{display:flex;gap:14px;margin-top:22px;flex-wrap:wrap}
+.hstat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:10px 18px;text-align:center;backdrop-filter:blur(4px)}
+.hstat .num{font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,var(--a1),var(--a3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hstat .lbl{font-size:.65rem;color:var(--text2);margin-top:2px}
+.floating-bot{position:absolute;right:44px;top:50%;transform:translateY(-50%);font-size:5rem;filter:drop-shadow(0 0 30px rgba(108,99,255,.4));animation:botfloat 4s ease-in-out infinite}
+@keyframes botfloat{0%,100%{transform:translateY(-50%)}50%{transform:translateY(-58%)}}
+
+/* ─── UNIT CARDS ─── */
+.units-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.unit-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:.22s;position:relative;overflow:hidden}
+.unit-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--uc,transparent),transparent 60%);pointer-events:none}
+.unit-card:hover{transform:translateY(-5px);border-color:var(--a1);box-shadow:0 12px 40px rgba(108,99,255,.15)}
+.uc-icon{font-size:1.8rem;margin-bottom:8px}
+.uc-num{font-size:.62rem;color:var(--text2);font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.unit-card h3{font-size:.95rem;font-weight:800;margin:4px 0 7px}
+.unit-card p{font-size:.76rem;color:var(--text2);line-height:1.6}
+.uc-footer{margin-top:12px;display:flex;align-items:center;justify-content:space-between}
+.pill{font-size:.6rem;border-radius:20px;padding:3px 9px;font-weight:700}
+.pill-th{background:rgba(108,99,255,.14);color:var(--a1)}
+.pill-pr{background:rgba(67,217,173,.14);color:var(--a3)}
+.uc-hrs{font-size:.65rem;color:var(--text2)}
+
+/* ─── BACK BTN & HEADERS ─── */
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid var(--border);border-radius:30px;font-size:.76rem;cursor:pointer;color:var(--text2);background:transparent;margin-bottom:18px;transition:.18s;font-family:'Nunito',sans-serif}
+.back-btn:hover{border-color:var(--a1);color:var(--a1)}
+.section-header{margin-bottom:20px}
+.section-header h2{font-size:1.5rem;font-weight:900}
+.section-header p{color:var(--text2);margin-top:5px;font-size:.84rem}
+
+/* ─── CONCEPT CARDS ─── */
+.concept-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:16px;overflow:hidden}
+.cc-header{padding:16px 20px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:.18s;user-select:none}
+.cc-header:hover{background:rgba(255,255,255,.025)}
+.cc-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.cc-info{flex:1}
+.cc-title{font-size:.9rem;font-weight:800}
+.cc-sub{font-size:.68rem;color:var(--text2);margin-top:2px}
+.cc-chev{color:var(--text2);font-size:.8rem;transition:.3s;flex-shrink:0}
+.cc-chev.open{transform:rotate(180deg)}
+.cc-body{display:none;padding:6px 20px 20px;border-top:1px solid var(--border)}
+.cc-body.open{display:block;animation:fadein .25s}
+
+/* ─── SIDE-BY-SIDE CODE EDITOR ─── */
+.code-wrap{background:#0a0c14;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:14px 0}
+.code-toolbar{background:var(--surface);padding:9px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+.ce-dots{display:flex;gap:5px}
+.ce-dot{width:10px;height:10px;border-radius:50%}
+.ce-filename{font-size:.68rem;color:var(--text2);font-family:'Fira Code',monospace;flex:1;margin-left:4px}
+.run-btn{background:linear-gradient(135deg,var(--a3),var(--a1));border:none;border-radius:20px;padding:5px 14px;font-size:.72rem;font-weight:800;color:#fff;cursor:pointer;display:flex;align-items:center;gap:5px;transition:.18s;font-family:'Nunito',sans-serif;white-space:nowrap}
+.run-btn:hover{transform:scale(1.05);opacity:.9}
+.run-btn.running{animation:pulse 0.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.code-split{display:grid;grid-template-columns:1fr 1fr;min-height:200px}
+.code-pane{padding:14px;font-family:'Fira Code',monospace;font-size:.76rem;line-height:1.75;outline:none;border:none;background:transparent;color:#cdd6f4;resize:none;overflow-y:auto;width:100%}
+.output-pane{border-left:1px solid var(--border);padding:14px;font-family:'Fira Code',monospace;font-size:.76rem;line-height:1.75;color:var(--a3);background:#060810;white-space:pre-wrap;overflow-y:auto;min-height:200px;position:relative}
+.out-label{font-size:.6rem;color:var(--text2);display:flex;align-items:center;gap:5px;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
+.out-dot{width:7px;height:7px;border-radius:50%;background:var(--a3)}
+.out-dot.idle{background:var(--border)}
+.out-placeholder{color:var(--text2);font-size:.72rem;font-style:italic}
+
+/* syntax highlight spans */
+.kw{color:#ff79c6}
+.fn{color:#50fa7b}
+.st{color:#f1fa8c}
+.cm{color:#6272a4;font-style:italic}
+.nu{color:#bd93f9}
+
+/* ─── VIZ BOX ─── */
+.viz-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin:14px 0;padding:14px;text-align:center;position:relative}
+.viz-box canvas{max-width:100%;border-radius:8px;display:block;margin:0 auto}
+.viz-label{font-size:.68rem;color:var(--text2);margin-top:8px}
+
+/* ─── HOVER TOOLTIP VIZ ─── */
+.hover-viz{position:relative;display:inline-block;cursor:help}
+.hover-viz .tooltip{
+  position:fixed;
+  background:var(--card);border:1px solid var(--a1);border-radius:10px;
+  padding:12px 14px;width:280px;font-size:.75rem;color:var(--text);
+  z-index:9999;pointer-events:none;opacity:0;transition:opacity .2s;
+  box-shadow:0 8px 30px rgba(0,0,0,.7);
+  line-height:1.7;
+  top:0;left:0; /* positioned via JS */
+}
+.hover-viz:hover .tooltip{opacity:1}
+.hover-viz .tooltip::before{
+  content:'';position:absolute;
+  border:7px solid transparent;
+}
+.hover-viz .tooltip.tip-below::before{
+  bottom:100%;left:50%;transform:translateX(-50%);
+  border-bottom-color:var(--a1);
+}
+.hover-viz .tooltip.tip-above::before{
+  top:100%;left:50%;transform:translateX(-50%);
+  border-top-color:var(--a1);
+}
+.hover-label{font-size:.62rem;color:var(--a1);font-weight:700;text-align:center;margin-top:4px;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ─── REALLIFE ─── */
+.reallife{background:linear-gradient(135deg,rgba(67,217,173,.06),rgba(67,217,173,.01));border:1px solid rgba(67,217,173,.18);border-radius:12px;padding:14px;margin:12px 0;display:flex;gap:12px}
+.rl-icon{font-size:1.3rem;flex-shrink:0;margin-top:2px}
+.reallife h4{font-size:.78rem;font-weight:800;color:var(--a3);margin-bottom:4px}
+.reallife p{font-size:.75rem;color:var(--text2);line-height:1.65}
+
+/* ─── ALGO STEPS ─── */
+.algo-steps{margin:12px 0}
+.algo-step{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
+.anum{background:linear-gradient(135deg,var(--a1),var(--a2));color:#fff;font-size:.7rem;font-weight:900;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.abody h5{font-size:.8rem;font-weight:800;margin-bottom:3px}
+.abody p{font-size:.74rem;color:var(--text2);line-height:1.6}
+
+/* ─── FORMULA ─── */
+.formula{background:#080a10;border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-family:'Fira Code',monospace;font-size:.8rem;color:#a6e3a1;margin:10px 0;overflow-x:auto}
+
+/* ─── METRIC CARDS ─── */
+.mrow{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.mcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;flex:1;min-width:110px}
+.mcard .mv{font-size:1.2rem;font-weight:900;margin-bottom:4px}
+.mcard .ml{font-size:.68rem;color:var(--text2);line-height:1.5}
+
+/* ─── TABS ─── */
+.tabs{display:flex;gap:3px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.tab{padding:7px 16px;border-radius:9px 9px 0 0;cursor:pointer;font-size:.76rem;font-weight:700;color:var(--text2);background:transparent;border:1px solid transparent;border-bottom:none;position:relative;bottom:-1px;transition:.18s}
+.tab.active{background:var(--card);border-color:var(--border);color:var(--a1)}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadein .25s}
+
+/* ─── QUIZ ─── */
+.quiz-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin:12px 0}
+.quiz-card h4{font-size:.84rem;font-weight:800;margin-bottom:12px;line-height:1.5}
+.q-opts{display:flex;flex-direction:column;gap:7px}
+.q-opt{padding:9px 14px;border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:.78rem;transition:.18s;display:flex;align-items:center;gap:8px}
+.q-opt:hover{border-color:var(--a1);background:rgba(108,99,255,.07)}
+.q-opt.correct{border-color:var(--a3);background:rgba(67,217,173,.09);color:var(--a3)}
+.q-opt.wrong{border-color:var(--a2);background:rgba(255,101,132,.09);color:var(--a2)}
+.q-fb{font-size:.74rem;margin-top:8px;padding:8px 12px;border-radius:8px;display:none;line-height:1.5}
+.q-fb.vis{display:block}
+
+/* ─── CAPSTONE PROJECT CARDS ─── */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:.22s}
+.proj-card:hover{transform:translateY(-4px);border-color:var(--a1);box-shadow:0 10px 36px rgba(108,99,255,.14)}
+.proj-header{padding:18px;border-bottom:1px solid var(--border)}
+.proj-icon{font-size:2rem;margin-bottom:8px}
+.proj-sdg{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.proj-header h3{font-size:.95rem;font-weight:900;margin-bottom:6px}
+.proj-header p{font-size:.75rem;color:var(--text2);line-height:1.6}
+.proj-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.proj-tag{font-size:.6rem;padding:2px 8px;border-radius:20px;font-weight:700;background:rgba(108,99,255,.12);color:var(--a1)}
+.proj-body{padding:0}
+
+/* project accordion inside card */
+.proj-accordion{border-top:1px solid var(--border)}
+.proj-acc-header{padding:12px 18px;cursor:pointer;font-size:.78rem;font-weight:700;color:var(--a1);display:flex;align-items:center;justify-content:space-between;transition:.18s}
+.proj-acc-header:hover{background:rgba(108,99,255,.06)}
+.proj-acc-body{display:none;border-top:1px solid var(--border)}
+.proj-acc-body.open{display:block}
+.proj-code-wrap{background:#0a0c14;padding:14px;font-family:'Fira Code',monospace;font-size:.72rem;color:#cdd6f4;line-height:1.75;overflow-x:auto;max-height:300px;overflow-y:auto;white-space:pre}
+.proj-viz{padding:14px;background:var(--surface)}
+.proj-run-btn{width:100%;padding:10px;background:linear-gradient(135deg,var(--a1),var(--a3));border:none;border-radius:0 0 var(--radius) var(--radius);color:#fff;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:800;cursor:pointer;transition:.18s;display:flex;align-items:center;justify-content:center;gap:8px}
+.proj-run-btn:hover{opacity:.88}
+
+/* ─── CHECKLIST ─── */
+.checklist{list-style:none;margin:10px 0}
+.checklist li{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:.78rem;color:var(--text2);border-bottom:1px solid var(--border)}
+.checklist li:last-child{border:none}
+.checklist li::before{content:'☐';color:var(--a1);font-size:.9rem;flex-shrink:0;margin-top:1px}
+
+/* ─── ANIMATIONS ─── */
+@keyframes ping{0%{transform:scale(1);opacity:1}80%,100%{transform:scale(2);opacity:0}}
+</style>
+</head>
+<body>
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sb-brand">
+    <div class="sb-avatar">🤖</div>
+    <div class="sb-brand-text"><h1>AI Class XII</h1><p>CBSE 2025-26 · Sub Code 843</p></div>
+  </div>
+  <div class="sb-prog">
+    <div class="sb-prog-row"><span>Progress</span><span id="prog-pct">0%</span></div>
+    <div class="sb-prog-track"><div class="sb-prog-fill" id="prog-fill"></div></div>
+  </div>
+  <div class="sb-section">Dashboard</div>
+  <div class="nav-item active" id="nav-home" onclick="showPage('home')"><span class="ni">🏠</span>Home<span class="nav-xp" id="xp-sb">0 XP</span></div>
+  <div class="sb-section">Part B — Core Units</div>
+  <div class="nav-item" id="nav-u1" onclick="showPage('u1')"><span class="ni">🐍</span>Unit 1: Python II<span class="nav-badge">Prac</span></div>
+  <div class="nav-item" id="nav-u2" onclick="showPage('u2')"><span class="ni">📊</span>Unit 2: Data Science</div>
+  <div class="nav-item" id="nav-u3" onclick="showPage('u3')"><span class="ni">👁️</span>Unit 3: Machines See</div>
+  <div class="nav-item" id="nav-u4" onclick="showPage('u4')"><span class="ni">🟠</span>Unit 4: Orange Tool<span class="nav-badge">Prac</span></div>
+  <div class="nav-item" id="nav-u5" onclick="showPage('u5')"><span class="ni">🌊</span>Unit 5: Big Data</div>
+  <div class="nav-item" id="nav-u6" onclick="showPage('u6')"><span class="ni">🧠</span>Unit 6: Neural Nets</div>
+  <div class="nav-item" id="nav-u7" onclick="showPage('u7')"><span class="ni">✨</span>Unit 7: Gen AI</div>
+  <div class="nav-item" id="nav-u8" onclick="showPage('u8')"><span class="ni">📖</span>Unit 8: Data Story</div>
+  <div class="sb-section">Exam Prep</div>
+  <div class="nav-item" id="nav-quiz" onclick="showPage('quiz')"><span class="ni">🎯</span>Practice Quiz</div>
+  <div class="nav-item" id="nav-projects" onclick="showPage('projects')"><span class="ni">🚀</span>Capstone Projects</div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="topbar-title" id="page-title">🏠 Dashboard</div>
+    <div class="topbar-chips">
+      <div class="tchip unit" id="unit-chip">📚 8 Units</div>
+      <div class="tchip streak">🔥 <span id="streak-count">0</span> day streak</div>
+      <div class="tchip xp">⭐ <span id="xp-count">0</span> XP</div>
+    </div>
+  </div>
+
+  <!-- ══════════ HOME ══════════ -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="floating-bot">🤖</div>
+      <div class="hero-tag">CBSE Skill Education · Session 2025-26</div>
+      <h2>Welcome to <span>Artificial Intelligence</span><br>Class XII Interactive Course</h2>
+      <p>Master CBSE AI (Sub Code 843) through animated visualizations, live side-by-side coding, real-world projects, and gamified learning.</p>
+      <div class="hero-stats">
+        <div class="hstat"><div class="num">8</div><div class="lbl">Core Units</div></div>
+        <div class="hstat"><div class="num">50</div><div class="lbl">Theory Marks</div></div>
+        <div class="hstat"><div class="num">50</div><div class="lbl">Practical Marks</div></div>
+        <div class="hstat"><div class="num">100</div><div class="lbl">Total Hours</div></div>
+      </div>
+    </div>
+    <div class="units-grid">
+      <div class="unit-card" style="--uc:rgba(108,99,255,.1)" onclick="showPage('u1')"><div class="uc-icon">🐍</div><div class="uc-num">Unit 1 · Practical Only</div><h3>Python Programming – II</h3><p>NumPy, Pandas, CSV, missing values, Linear Regression</p><div class="uc-footer"><span class="pill pill-pr">18 hrs Practical</span></div></div>
+      <div class="unit-card" style="--uc:rgba(255,101,132,.08)" onclick="showPage('u2')"><div class="uc-icon">📊</div><div class="uc-num">Unit 2 · Theory + Practical</div><h3>Data Science Methodology</h3><p>10-step pipeline, validation, confusion matrix, F1 score</p><div class="uc-footer"><span class="pill pill-th">8 Th + 12 Pr</span></div></div>
+      <div class="unit-card" style="--uc:rgba(79,195,247,.08)" onclick="showPage('u3')"><div class="uc-icon">👁️</div><div class="uc-num">Unit 3 · Theory + Practical</div><h3>Making Machines See</h3><p>Computer Vision, pixel grids, CV pipeline, OpenCV</p><div class="uc-footer"><span class="pill pill-th">6 Th + 12 Pr</span></div></div>
+      <div class="unit-card" style="--uc:rgba(255,179,71,.08)" onclick="showPage('u4')"><div class="uc-icon">🟠</div><div class="uc-num">Unit 4 · Practical Only</div><h3>AI with Orange Tool</h3><p>No-code AI, data mining, classification, NLP</p><div class="uc-footer"><span class="pill pill-pr">18 hrs Practical</span></div></div>
+      <div class="unit-card" style="--uc:rgba(67,217,173,.08)" onclick="showPage('u5')"><div class="uc-icon">🌊</div><div class="uc-num">Unit 5 · Theory + Practical</div><h3>Big Data & Analytics</h3><p>5Vs, data streams, analytics pipeline, future trends</p><div class="uc-footer"><span class="pill pill-th">6 Th + 12 Pr</span></div></div>
+      <div class="unit-card" style="--uc:rgba(196,140,255,.08)" onclick="showPage('u6')"><div class="uc-icon">🧠</div><div class="uc-num">Unit 6 · Theory + Practical</div><h3>Neural Networks</h3><p>Perceptrons, backprop, CNN, RNN, TensorFlow</p><div class="uc-footer"><span class="pill pill-th">8 Th + 12 Pr</span></div></div>
+      <div class="unit-card" style="--uc:rgba(255,101,132,.08)" onclick="showPage('u7')"><div class="uc-icon">✨</div><div class="uc-num">Unit 7 · Theory + Practical</div><h3>Generative AI</h3><p>GANs, LLMs, ethics, Gemini API chatbot</p><div class="uc-footer"><span class="pill pill-th">7 Th + 12 Pr</span></div></div>
+      <div class="unit-card" style="--uc:rgba(79,195,247,.08)" onclick="showPage('u8')"><div class="uc-icon">📖</div><div class="uc-num">Unit 8 · Theory + Practical</div><h3>Data Storytelling</h3><p>Narrative, Freytag's Pyramid, data visualisation</p><div class="uc-footer"><span class="pill pill-th">5 Th + 4 Pr</span></div></div>
+    </div>
+  </div>
+
+  <!-- ══════════ UNIT 1: PYTHON II ══════════ -->
+  <div class="page" id="page-u1">
+    <button class="back-btn" onclick="showPage('home')">← Back to Dashboard</button>
+    <div class="section-header"><h2>🐍 Unit 1: Python Programming – II</h2><p>NumPy · Pandas · CSV · Missing Values · Linear Regression | Practical Only (18 hrs)</p></div>
+
+    <!-- NumPy -->
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(108,99,255,.15)">🔢</div>
+        <div class="cc-info"><div class="cc-title">NumPy – N-Dimensional Arrays</div><div class="cc-sub">Why AI needs NumPy · Arrays · Vectorized operations · 100× faster than lists</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:10px">NumPy provides <strong style="color:var(--text)">N-dimensional arrays</strong> with vectorized math — the backbone of every AI library. Operations that take seconds on Python lists complete in milliseconds on NumPy arrays.</p>
+        <div class="viz-box">
+          <canvas id="numpy-canvas" width="620" height="170"></canvas>
+          <div class="viz-label">Python List vs NumPy Array — speed & structure comparison</div>
+        </div>
+        <div class="reallife"><div class="rl-icon">🌾</div><div><h4>Real-Life: ICAR Crop Yield Prediction</h4><p>India's agricultural research stores rainfall, soil pH, temperature for 10 lakh farms as NumPy arrays. Daily harvest forecasts that would take minutes with Python lists run in under 2 seconds.</p></div></div>
+        <div class="code-wrap">
+          <div class="code-toolbar">
+            <div class="ce-dots"><div class="ce-dot" style="background:#ff5f57"></div><div class="ce-dot" style="background:#febc2e"></div><div class="ce-dot" style="background:#28c840"></div></div>
+            <span class="ce-filename">numpy_demo.py</span>
+            <button class="run-btn" onclick="runSplit('numpy-code','numpy-out','numpy-dot')">▶ Run Code</button>
+          </div>
+          <div class="code-split">
+            <textarea class="code-pane" id="numpy-code" spellcheck="false">import numpy as np
+
+# Create a NumPy array
+marks = np.array([85, 90, 78, 92, 88])
+
+print("Marks Array:", marks)
+print("Mean Score:", np.mean(marks))
+print("Max Score:", np.max(marks))
+print("Std Dev:", round(np.std(marks), 2))
+
+# 2D matrix
+matrix = np.array([[1, 2, 3],
+                   [4, 5, 6]])
+print("\n2D Matrix Shape:", matrix.shape)
+print("Matrix * 2:\n", matrix * 2)
+
+# Slicing
+print("\nTop scorers (>88):", marks[marks > 88])</textarea>
+            <div class="output-pane" id="numpy-out">
+              <div class="out-label"><div class="out-dot idle" id="numpy-dot"></div>OUTPUT</div>
+              <div class="out-placeholder">Click ▶ Run Code to see output</div>
+            </div>
+          </div>
+        </div>
+        <div class="quiz-card">
+          <h4>🎯 Quick Check: What does <code>marks[marks > 88]</code> return from [85,90,78,92,88]?</h4>
+          <div class="q-opts">
+            <div class="q-opt" onclick="checkQ(this,'wrong','Boolean indexing returns only elements where condition is True. 90 and 92 are >88.')">A) [85, 90, 78, 92, 88]</div>
+            <div class="q-opt" onclick="checkQ(this,'correct','Boolean indexing returns only elements where condition is True. 90 and 92 are >88.')">B) [90, 92]</div>
+            <div class="q-opt" onclick="checkQ(this,'wrong','88 is NOT greater than 88, it is equal. The condition is strictly greater than.')">C) [90, 92, 88]</div>
+          </div>
+          <div class="q-fb"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pandas -->
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(67,217,173,.15)">🐼</div>
+        <div class="cc-info"><div class="cc-title">Pandas – DataFrames & Missing Values</div><div class="cc-sub">DataFrame · Series · CSV import/export · isnull · fillna · dropna</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:10px">Pandas gives you <strong style="color:var(--text)">DataFrames</strong> — Excel-style tables in Python. Every AI project begins with loading data into a DataFrame and cleaning it. Real-world data is always messy!</p>
+        <div class="viz-box">
+          <canvas id="pandas-canvas" width="620" height="150"></canvas>
+          <div class="viz-label">DataFrame structure — red cells show NaN (missing values) that need fixing</div>
+        </div>
+        <div class="algo-steps">
+          <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Load</h5><p><code>pd.read_csv('data.csv')</code> — reads CSV into DataFrame instantly</p></div></div>
+          <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Explore</h5><p><code>df.head()</code>, <code>df.info()</code>, <code>df.describe()</code>, <code>df.shape</code></p></div></div>
+          <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Find Missing</h5><p><code>df.isnull().sum()</code> — counts NaN per column</p></div></div>
+          <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Fix Missing</h5><p><code>df.fillna(df.mean())</code> or <code>df.dropna()</code> — replace or remove</p></div></div>
+          <div class="algo-step"><div class="anum">5</div><div class="abody"><h5>Export</h5><p><code>df.to_csv('clean.csv', index=False)</code> — save cleaned data</p></div></div>
+        </div>
+        <div class="code-wrap">
+          <div class="code-toolbar">
+            <div class="ce-dots"><div class="ce-dot" style="background:#ff5f57"></div><div class="ce-dot" style="background:#febc2e"></div><div class="ce-dot" style="background:#28c840"></div></div>
+            <span class="ce-filename">pandas_demo.py</span>
+            <button class="run-btn" onclick="runSplit('pandas-code','pandas-out','pandas-dot')">▶ Run Code</button>
+          </div>
+          <div class="code-split">
+            <textarea class="code-pane" id="pandas-code" spellcheck="false">import pandas as pd
+import numpy as np
+
+data = {
+    'Name':    ['Arjun','Priya','Rahul','Sneha','Karan'],
+    'Maths':   [85, 92, np.nan, 78, 95],
+    'Science': [90, 88, 76, np.nan, 82],
+    'AI':      [95, 89, 84, 91, np.nan]
+}
+df = pd.DataFrame(data)
+
+print("Original DataFrame:")
+print(df.to_string())
+
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+# Fill with column mean
+df_clean = df.fillna(
+    df.mean(numeric_only=True).round(1)
+)
+print("\nAfter Filling NaN:")
+print(df_clean.to_string())
+
+print("\nAverage Scores:")
+print(df_clean[['Maths','Science','AI']]
+      .mean().round(2))</textarea>
+            <div class="output-pane" id="pandas-out">
+              <div class="out-label"><div class="out-dot idle" id="pandas-dot"></div>OUTPUT</div>
+              <div class="out-placeholder">Click ▶ Run Code to see output</div>
+            </div>
+          </div>
+        </div>
+        <div class="reallife"><div class="rl-icon">🏥</div><div><h4>Real-Life: AIIMS Patient Records</h4><p>Hospital datasets have thousands of missing test values. Pandas handles cleaning: missing age → fill with median, missing blood pressure → flag for re-test. Done in 3 lines of code before AI model training begins.</p></div></div>
+      </div>
+    </div>
+
+    <!-- Linear Regression -->
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(255,179,71,.15)">📈</div>
+        <div class="cc-info"><div class="cc-title">Linear Regression Algorithm ★ Advanced</div><div class="cc-sub">Predict continuous values · Slope & intercept · MSE cost function</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:10px">Linear Regression finds the best-fit line <strong style="color:var(--text)">Y = mX + b</strong> through data points. The algorithm minimizes the Mean Squared Error between predictions and actual values.</p>
+        <div class="formula">Y = β₀ + β₁×X + ε
+Slope m = [n·Σ(XY) − ΣX·ΣY] / [n·ΣX² − (ΣX)²]
+MSE = (1/n) × Σ(Y_actual − Y_pred)²</div>
+        <div class="viz-box">
+          <canvas id="linreg-canvas" width="620" height="220"></canvas>
+          <div class="viz-label">🖱️ Click anywhere on the chart to add your own data points — regression line updates live!</div>
+        </div>
+        <div class="reallife"><div class="rl-icon">🏠</div><div><h4>Real-Life: MagicBricks House Price Prediction</h4><p>Input: area in sq.ft → Output: price in ₹. Trained on lakhs of Mumbai listings, model learns each extra sq.ft adds ~₹3,500. Estate agents use this to instantly estimate fair value for new properties.</p></div></div>
+        <div class="code-wrap">
+          <div class="code-toolbar">
+            <div class="ce-dots"><div class="ce-dot" style="background:#ff5f57"></div><div class="ce-dot" style="background:#febc2e"></div><div class="ce-dot" style="background:#28c840"></div></div>
+            <span class="ce-filename">linear_regression.py</span>
+            <button class="run-btn" onclick="runSplit('linreg-code','linreg-out','linreg-dot')">▶ Run Code</button>
+          </div>
+          <div class="code-split">
+            <textarea class="code-pane" id="linreg-code" spellcheck="false">import numpy as np
+
+# Hours studied vs Exam Score
+X = np.array([1,2,3,4,5,6,7,8])
+Y = np.array([35,45,55,60,70,78,85,92])
+
+n = len(X)
+m = (n*np.sum(X*Y) - np.sum(X)*np.sum(Y)) \
+    / (n*np.sum(X**2) - np.sum(X)**2)
+b = (np.sum(Y) - m*np.sum(X)) / n
+
+print(f"Slope  m = {m:.2f}")
+print(f"Intercept b = {b:.2f}")
+print(f"Line: Y = {m:.2f}X + {b:.2f}")
+
+# Predictions
+for h in [5, 9, 12]:
+    score = m*h + b
+    print(f"  {h} hrs → {score:.1f} marks")
+
+# Accuracy
+Y_pred = m*X + b
+mse  = np.mean((Y - Y_pred)**2)
+rmse = np.sqrt(mse)
+print(f"\nMSE  = {mse:.2f}")
+print(f"RMSE = {rmse:.2f}")</textarea>
+            <div class="output-pane" id="linreg-out">
+              <div class="out-label"><div class="out-dot idle" id="linreg-dot"></div>OUTPUT</div>
+              <div class="out-placeholder">Click ▶ Run Code to see output</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ UNIT 2: DATA SCIENCE ══════════ -->
+  <div class="page" id="page-u2">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="section-header"><h2>📊 Unit 2: Data Science Methodology</h2><p>Analytic Approach · Model Validation · Evaluation Metrics | 8 Theory + 12 Practical Marks</p></div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(108,99,255,.15)">🗺️</div>
+        <div class="cc-info"><div class="cc-title">The 10-Step Data Science Methodology</div><div class="cc-sub">IBM's roadmap from business problem to deployed AI solution</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <div class="viz-box"><canvas id="ds-method-canvas" width="680" height="190"></canvas><div class="viz-label">Animated pipeline — each stage lights up sequentially</div></div>
+        <div class="algo-steps">
+          <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Business Understanding</h5><p>What problem are we solving? e.g., "Predict student dropout rate in rural schools"</p></div></div>
+          <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Analytic Approach</h5><p>Which ML type? Classification / Regression / Clustering / NLP</p></div></div>
+          <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Data Requirements</h5><p>What columns do we need? Attendance %, grades, family income, meals</p></div></div>
+          <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Data Collection</h5><p>Surveys, government portals (data.gov.in), school databases</p></div></div>
+          <div class="algo-step"><div class="anum">5</div><div class="abody"><h5>Data Understanding</h5><p>EDA — histograms, correlation heatmaps, outlier detection</p></div></div>
+          <div class="algo-step"><div class="anum">6</div><div class="abody"><h5>Data Preparation</h5><p>Clean NaN, encode categories, normalize, train-test split</p></div></div>
+          <div class="algo-step"><div class="anum">7</div><div class="abody"><h5>AI Modelling</h5><p>Train Decision Tree / Neural Network / Linear Regression</p></div></div>
+          <div class="algo-step"><div class="anum">8</div><div class="abody"><h5>Evaluation</h5><p>Test on unseen data — accuracy, F1, confusion matrix</p></div></div>
+          <div class="algo-step"><div class="anum">9</div><div class="abody"><h5>Deployment</h5><p>Web app, API, teacher dashboard showing at-risk students</p></div></div>
+          <div class="algo-step"><div class="anum">10</div><div class="abody"><h5>Feedback Loop</h5><p>Monitor predictions, gather new data, retrain — continuous improvement</p></div></div>
+        </div>
+        <div class="reallife"><div class="rl-icon">🎓</div><div><h4>Real-Life: CBSE Dropout Prediction System</h4><p>A state education board followed all 10 steps to build a model flagging at-risk students. Teacher dashboard shows red/yellow/green indicators. Early intervention reduced dropouts by 18% in pilot districts.</p></div></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(67,217,173,.15)">🎯</div>
+        <div class="cc-info"><div class="cc-title">Confusion Matrix & Evaluation Metrics</div><div class="cc-sub">Accuracy · Precision · Recall · F1 Score · MSE · RMSE</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <div class="viz-box"><canvas id="conf-canvas" width="540" height="280"></canvas><div class="viz-label">Confusion Matrix — hover cells for detailed explanation</div></div>
+        <div class="mrow">
+          <div class="mcard"><div class="mv" style="color:var(--a3)">Accuracy</div><div class="formula" style="margin:6px 0;font-size:.72rem">(TP+TN)/(TP+TN+FP+FN)</div><div class="ml">Overall correctness</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a1)">Precision</div><div class="formula" style="margin:6px 0;font-size:.72rem">TP / (TP + FP)</div><div class="ml">Of predicted positives, how many real?</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a4)">Recall</div><div class="formula" style="margin:6px 0;font-size:.72rem">TP / (TP + FN)</div><div class="ml">Of actual positives, how many caught?</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a2)">F1 Score</div><div class="formula" style="margin:6px 0;font-size:.72rem">2×P×R / (P+R)</div><div class="ml">Balance of precision & recall</div></div>
+        </div>
+        <div class="code-wrap">
+          <div class="code-toolbar">
+            <div class="ce-dots"><div class="ce-dot" style="background:#ff5f57"></div><div class="ce-dot" style="background:#febc2e"></div><div class="ce-dot" style="background:#28c840"></div></div>
+            <span class="ce-filename">evaluate_model.py</span>
+            <button class="run-btn" onclick="runSplit('eval-code','eval-out','eval-dot')">▶ Run Code</button>
+          </div>
+          <div class="code-split">
+            <textarea class="code-pane" id="eval-code" spellcheck="false"># Spam Email Detection — Confusion Matrix
+TP = 45  # spam → correctly flagged spam
+TN = 48  # ham  → correctly passed
+FP = 2   # ham  → wrongly flagged spam
+FN = 5   # spam → missed! went to inbox
+
+acc  = (TP+TN)/(TP+TN+FP+FN)
+prec = TP/(TP+FP)
+rec  = TP/(TP+FN)
+f1   = 2*(prec*rec)/(prec+rec)
+
+print("=== SPAM DETECTOR METRICS ===")
+print(f"TP={TP}  TN={TN}  FP={FP}  FN={FN}")
+print(f"Accuracy : {acc*100:.1f}%")
+print(f"Precision: {prec*100:.1f}%")
+print(f"Recall   : {rec*100:.1f}%")
+print(f"F1 Score : {f1*100:.1f}%")
+
+# MSE and RMSE (for regression tasks)
+import numpy as np
+actual    = [100,90,80,70,60]
+predicted = [98, 92,79,73,58]
+mse  = np.mean([(a-p)**2 for a,p in zip(actual,predicted)])
+rmse = np.sqrt(mse)
+print(f"\nMSE  = {mse:.2f}")
+print(f"RMSE = {rmse:.2f}")</textarea>
+            <div class="output-pane" id="eval-out">
+              <div class="out-label"><div class="out-dot idle" id="eval-dot"></div>OUTPUT</div>
+              <div class="out-placeholder">Click ▶ Run Code to see output</div>
+            </div>
+          </div>
+        </div>
+        <div class="reallife"><div class="rl-icon">🩺</div><div><h4>Real-Life: Cancer Detection Model</h4><p>For cancer detection, Recall matters most — missing a cancer (FN) is life-threatening. A model with 98% accuracy but 40% recall is useless. F1 Score catches this imbalance that pure accuracy hides.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ UNIT 3: MACHINES SEE ══════════ -->
+  <div class="page" id="page-u3">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="section-header"><h2>👁️ Unit 3: Making Machines See</h2><p>Computer Vision · Digital Images · OpenCV | 6 Theory + 12 Practical Marks</p></div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(79,195,247,.15)">🖼️</div>
+        <div class="cc-info"><div class="cc-title">How Machines See — Images as Numbers</div><div class="cc-sub">Pixels · RGB channels · Binary Art CBSE Activity</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:10px">Every image is a <strong style="color:var(--text)">grid of numbers</strong>. Grayscale: each pixel = 0–255. Colour: each pixel = (R,G,B) — three numbers. A 4K image has 8 million pixels processed mathematically!</p>
+        <div class="viz-box" style="position:relative">
+          <canvas id="pixel-canvas" width="640" height="240"></canvas>
+          <div class="hover-viz" style="position:absolute;top:10px;right:18px">
+            <div style="background:rgba(108,99,255,.18);border:1px solid var(--a1);border-radius:8px;padding:6px 12px;font-size:.72rem;font-weight:700;color:var(--a1);cursor:help">🔍 Hover for explanation</div>
+            <div class="tooltip">
+              <strong>Pixel Value Meaning:</strong><br>
+              255 = White (maximum brightness)<br>
+              0 = Black (no light)<br>
+              128 = 50% grey<br><br>
+              Each RGB colour has 3 values: Red, Green, Blue — each 0 to 255.<br>
+              So pure red = (255, 0, 0).<br>
+              A 640×480 image has <strong>921,600 pixels</strong> — all processed as numbers!
+            </div>
+          </div>
+          <div class="viz-label">Left: pixel grid visualized | Right: actual number matrix — hover the info badge ↗</div>
+        </div>
+        <div class="code-wrap">
+          <div class="code-toolbar">
+            <div class="ce-dots"><div class="ce-dot" style="background:#ff5f57"></div><div class="ce-dot" style="background:#febc2e"></div><div class="ce-dot" style="background:#28c840"></div></div>
+            <span class="ce-filename">binary_art.py — CBSE Activity</span>
+            <button class="run-btn" onclick="runSplit('pixel-code','pixel-out','pixel-dot')">▶ Run Code</button>
+          </div>
+          <div class="code-split">
+            <textarea class="code-pane" id="pixel-code" spellcheck="false"># CBSE Activity: Binary Art — Image as 0s and 1s
+# 8x8 grayscale smiley face (255=white, 0=black)
+image = [
+    [255,255,255,255,255,255,255,255],
+    [255,  0,255,255,255,  0,255,255],
+    [255,  0,255,255,255,  0,255,255],
+    [255,255,255,255,255,255,255,255],
+    [255,  0,255,255,255,255,  0,255],
+    [255,255,  0,255,255,  0,255,255],
+    [255,255,255,  0,  0,255,255,255],
+    [255,255,255,255,255,255,255,255],
+]
+print("Visual (██=black, spaces=white):")
+for row in image:
+    print(' '.join(['██' if p==0 else '  ' for p in row]))
+
+print("\nPixel values (0-255 matrix):")
+for row in image:
+    print([p for p in row])
+
+print("\nBinary (0=black, 1=white):")
+for row in image:
+    print(' '.join(['0' if p==0 else '1' for p in row]))</textarea>
+            <div class="output-pane" id="pixel-out">
+              <div class="out-label"><div class="out-dot idle" id="pixel-dot"></div>OUTPUT</div>
+              <div class="out-placeholder">Click ▶ Run Code to see output</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(255,101,132,.15)">⚙️</div>
+        <div class="cc-info"><div class="cc-title">Computer Vision Pipeline & Applications</div><div class="cc-sub">Acquisition → Preprocessing → Feature Extraction → Analysis</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <div class="viz-box"><canvas id="cv-pipeline-canvas" width="680" height="170"></canvas><div class="viz-label">Animated CV pipeline — each stage activates in sequence</div></div>
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab(this,'cv-health')">🏥 Healthcare</div>
+          <div class="tab" onclick="switchTab(this,'cv-agri')">🌾 Agriculture</div>
+          <div class="tab" onclick="switchTab(this,'cv-sec')">📷 Security</div>
+          <div class="tab" onclick="switchTab(this,'cv-auto')">🚗 Autonomous</div>
+        </div>
+        <div class="tab-panel active" id="cv-health"><div class="reallife"><div class="rl-icon">🔬</div><div><h4>Medical Imaging — AIIMS, Apollo Hospitals</h4><p>MRI/CT scans analyzed by CV models detect tumors with 94% accuracy. Diabetic retinopathy screening via eye photos deployed in 500+ rural clinics in India — no ophthalmologist needed on-site.</p></div></div></div>
+        <div class="tab-panel" id="cv-agri"><div class="reallife"><div class="rl-icon">🌱</div><div><h4>Crop Disease Detection — Plantix App</h4><p>15 million Indian farmers photograph leaves. CV identifies disease (blight, rust, mildew) with 89% accuracy and recommends treatment. Saves ₹90,000 crore in annual crop losses.</p></div></div></div>
+        <div class="tab-panel" id="cv-sec"><div class="reallife"><div class="rl-icon">✈️</div><div><h4>DigiYatra — Face Recognition at 24 Indian Airports</h4><p>Facial recognition matches passenger to Aadhaar photo in 0.3 seconds, replacing boarding passes. Used by 3 crore+ passengers in 2024. Privacy controls allow opt-out.</p></div></div></div>
+        <div class="tab-panel" id="cv-auto"><div class="reallife"><div class="rl-icon">🚦</div><div><h4>Autonomous Vehicles — ISRO/Tata Research</h4><p>8 camera feeds processed at 60fps. CV detects lanes, pedestrians, traffic lights, and potholes in real time. Indian roads pose unique challenges: cattle, auto-rickshaws, unmarked roads.</p></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ UNIT 4: ORANGE ══════════ -->
+  <div class="page" id="page-u4">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="section-header"><h2>🟠 Unit 4: AI with Orange Data Mining</h2><p>No-Code AI · Visual ML · Classification · NLP | Practical Only (18 hrs)</p></div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(255,179,71,.15)">🧩</div>
+        <div class="cc-info"><div class="cc-title">Orange — Visual AI Without Code</div><div class="cc-sub">Drag-and-drop widgets · Iris dataset · Classification pipeline</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:10px">Orange is an open-source visual ML tool. Drag <strong style="color:var(--text)">widgets</strong> onto a canvas, connect them with lines, and see instant results — no code needed! Perfect for exploring data before writing any Python.</p>
+        <div class="viz-box"><canvas id="orange-canvas" width="680" height="210"></canvas><div class="viz-label">Orange workflow: File → Data Table → Scatter Plot → Classifier → Test & Score → Confusion Matrix</div></div>
+        <div class="algo-steps">
+          <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>File Widget</h5><p>Load iris.csv — Orange auto-detects 4 features + 1 target (species)</p></div></div>
+          <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Scatter Plot Widget</h5><p>Visually explore data — colour-coded clusters appear instantly</p></div></div>
+          <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Data Sampler</h5><p>70:30 train-test split with one drag — no code!</p></div></div>
+          <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>kNN / Decision Tree / Naive Bayes</h5><p>Drag classifier widget → connects to training data automatically</p></div></div>
+          <div class="algo-step"><div class="anum">5</div><div class="abody"><h5>Test & Score</h5><p>Shows Accuracy, F1, AUC, Precision, Recall in a table — instant!</p></div></div>
+          <div class="algo-step"><div class="anum">6</div><div class="abody"><h5>Confusion Matrix Widget</h5><p>Click cells to see which flowers were misclassified and why</p></div></div>
+        </div>
+        <div class="reallife"><div class="rl-icon">🌸</div><div><h4>CBSE Activity: Iris Classification in Orange</h4><p>Load iris.csv (150 flowers, 4 measurements, 3 species). Connect: File → Scatter Plot → Data Sampler → kNN Classifier → Test & Score → Confusion Matrix. Get 96% accuracy in 5 clicks and 0 lines of code!</p></div></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(108,99,255,.15)">💬</div>
+        <div class="cc-info"><div class="cc-title">NLP with Orange — Text Mining</div><div class="cc-sub">Word Cloud · Sentiment Analysis · Topic Modelling</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <div class="algo-steps">
+          <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Corpus Widget</h5><p>Load CSV with a text column — reviews, tweets, articles, news</p></div></div>
+          <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Preprocess Text</h5><p>Lowercase → Tokenize → Remove stopwords (the, is, and) → Stem</p></div></div>
+          <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Word Cloud</h5><p>Bigger word = more frequent. Instantly see dominant themes</p></div></div>
+          <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Sentiment Analysis</h5><p>Score each text as Positive/Negative/Neutral — great for reviews!</p></div></div>
+        </div>
+        <div class="reallife"><div class="rl-icon">🛒</div><div><h4>Real-Life: Amazon India Product Reviews</h4><p>Load 10,000 phone reviews into Orange NLP → Word Cloud shows "battery", "camera", "price" as dominant themes → Sentiment shows 73% positive → Feed to classifier to predict star rating from review text automatically.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ UNIT 5: BIG DATA ══════════ -->
+  <div class="page" id="page-u5">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="section-header"><h2>🌊 Unit 5: Big Data & Analytics</h2><p>5Vs · Analytics Pipeline · Data Streams | 6 Theory + 12 Practical Marks</p></div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(67,217,173,.15)">🌊</div>
+        <div class="cc-info"><div class="cc-title">The 5 Vs of Big Data</div><div class="cc-sub">Volume · Velocity · Variety · Veracity · Value</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <div class="viz-box"><canvas id="bigdata-canvas" width="600" height="260"></canvas><div class="viz-label">Interactive 5Vs radar chart — hover sectors for examples</div></div>
+        <div class="mrow">
+          <div class="mcard"><div class="mv" style="color:var(--a1)">📦 Volume</div><div class="ml">India generates 5MB per person per day. Facebook stores 100 petabytes.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a2)">⚡ Velocity</div><div class="ml">UPI: 10 crore transactions/day in real time. Stock exchange: 1M orders/second.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a4)">🎨 Variety</div><div class="ml">Text, images, video, GPS, sensor readings — all different formats.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a3)">✅ Veracity</div><div class="ml">Trustworthiness. Fake news, sensor errors, duplicates — must verify.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a5)">💎 Value</div><div class="ml">All data is worthless without actionable insights extracted from it.</div></div>
+        </div>
+        <div class="reallife"><div class="rl-icon">🚂</div><div><h4>Real-Life: IRCTC Railway Booking</h4><p>10 lakh bookings/hour during Tatkal rush = massive Volume + Velocity. Seat data + GPS + PNR + payment = Variety. Big Data analytics sets dynamic pricing and prevents fraud. Generates ₹8,000 crore revenue insight annually.</p></div></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(108,99,255,.15)">🔄</div>
+        <div class="cc-info"><div class="cc-title">Mining Data Streams</div><div class="cc-sub">Real-time processing · Sliding windows · When you can't store everything</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <div class="viz-box"><canvas id="stream-canvas" width="620" height="155"></canvas><div class="viz-label">Animated data stream with sliding window — watch real-time processing</div></div>
+        <div class="algo-steps">
+          <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Stream Ingestion</h5><p>Continuous data: stock ticks, sensor readings, tweets — arrives every millisecond</p></div></div>
+          <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Sliding Window</h5><p>Keep only last N events in memory — analyze that window, discard old data</p></div></div>
+          <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Micro-batch Processing</h5><p>Process small batches every few seconds — Apache Kafka, Spark Streaming</p></div></div>
+          <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Alert / Action</h5><p>Trigger instant alert if anomaly detected: fraud, equipment failure, spike</p></div></div>
+        </div>
+        <div class="reallife"><div class="rl-icon">💳</div><div><h4>Real-Life: SBI Credit Card Fraud Detection</h4><p>Every swipe = stream event. ML analyzes: location, amount, merchant, time in &lt;100ms, blocks suspicious transactions before they complete. Saves ₹2,000+ crore annually from fraud.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ UNIT 6: NEURAL NETWORKS ══════════ -->
+  <div class="page" id="page-u6">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="section-header"><h2>🧠 Unit 6: Understanding Neural Networks</h2><p>Perceptrons · Backpropagation · Types | 8 Theory + 12 Practical Marks</p></div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(196,140,255,.15)">🔵</div>
+        <div class="cc-info"><div class="cc-title">Anatomy of a Neural Network</div><div class="cc-sub">Neurons · Layers · Weights · Activation functions · Backpropagation</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:10px">A neural network is inspired by the brain. Neurons connect in <strong style="color:var(--text)">layers</strong>: Input → Hidden → Output. Each connection has a <strong style="color:var(--text)">weight</strong> the network learns through backpropagation.</p>
+        <div class="viz-box"><canvas id="neural-canvas" width="680" height="290"></canvas><div class="viz-label">🖱️ Click any neuron to animate signal propagation through the network!</div></div>
+        <div class="formula">Forward:  output = activation(Σ weight×input + bias)
+ReLU:     f(x) = max(0, x)
+Loss:     MSE = (predicted − actual)²
+Update:   weight = weight − learning_rate × gradient</div>
+        <div class="reallife"><div class="rl-icon">🗣️</div><div><h4>Real-Life: Google Translate Hindi↔English</h4><p>Transformer network with 175 billion weights. Input layer: Hindi words encoded as numbers. 96 hidden layers: learn grammar, context, idioms. Output: English sentence. Improves with every correction users submit.</p></div></div>
+        <div class="code-wrap">
+          <div class="code-toolbar">
+            <div class="ce-dots"><div class="ce-dot" style="background:#ff5f57"></div><div class="ce-dot" style="background:#febc2e"></div><div class="ce-dot" style="background:#28c840"></div></div>
+            <span class="ce-filename">celsius_to_fahrenheit_nn.py — CBSE Activity</span>
+            <button class="run-btn" onclick="runSplit('nn-code','nn-out','nn-dot')">▶ Run Code</button>
+          </div>
+          <div class="code-split">
+            <textarea class="code-pane" id="nn-code" spellcheck="false">import numpy as np
+
+# Neural Net learns: F = 1.8*C + 32
+# WITHOUT being told the formula!
+celsius    = np.array([-40,-10,0,10,20,30,40,100])
+fahrenheit = np.array([-40,14,32,50,68,86,104,212])
+
+np.random.seed(42)
+w = np.random.randn()   # random weight
+b = np.random.randn()   # random bias
+lr = 0.0001
+
+for epoch in range(5001):
+    pred = w * celsius + b
+    loss = np.mean((pred - fahrenheit)**2)
+    dw = np.mean(2*(pred-fahrenheit)*celsius)
+    db = np.mean(2*(pred-fahrenheit))
+    w -= lr * dw
+    b -= lr * db
+    if epoch % 1000 == 0:
+        print(f"Epoch {epoch:4d} | Loss:{loss:8.2f}"
+              f" | w:{w:.3f} | b:{b:.3f}")
+
+print(f"\nLearned: w={w:.3f} ≈ 1.800")
+print(f"Learned: b={b:.3f} ≈ 32.000")
+for c in [0,25,100]:
+    print(f"  {c}°C → {w*c+b:.1f}°F "
+          f"(actual {c*1.8+32:.1f}°F)")</textarea>
+            <div class="output-pane" id="nn-out">
+              <div class="out-label"><div class="out-dot idle" id="nn-dot"></div>OUTPUT</div>
+              <div class="out-placeholder">Click ▶ Run Code to see output</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(67,217,173,.15)">🔀</div>
+        <div class="cc-info"><div class="cc-title">Types of Neural Networks</div><div class="cc-sub">CNN · RNN · LSTM · GAN · Transformer</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <div class="viz-box"><canvas id="nn-types-canvas" width="680" height="190"></canvas><div class="viz-label">Neural network family — each type specializes in different data</div></div>
+        <div class="mrow">
+          <div class="mcard"><div class="mv" style="color:var(--a1)">CNN</div><div class="ml">Convolutional Neural Network. Best for images: face recognition, medical scans, autonomous driving.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a2)">RNN</div><div class="ml">Recurrent NN. Sequential data: text, speech, time-series stock prices.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a4)">LSTM</div><div class="ml">Long Short-Term Memory. Remembers long context: story generation, translation, chatbots.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a6)">GAN</div><div class="ml">Generative Adversarial Network. Creates new data: deepfakes, AI art, drug molecule design.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ UNIT 7: GENERATIVE AI ══════════ -->
+  <div class="page" id="page-u7">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="section-header"><h2>✨ Unit 7: Generative AI</h2><p>GANs · LLMs · Ethics · Gemini API | 7 Theory + 12 Practical Marks</p></div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(255,101,132,.15)">🎨</div>
+        <div class="cc-info"><div class="cc-title">Generative vs Discriminative AI</div><div class="cc-sub">How GenAI works · LLMs · Token prediction · RLHF fine-tuning</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <div class="viz-box"><canvas id="genai-canvas" width="700" height="210"></canvas><div class="viz-label">Discriminative AI classifies · Generative AI creates new content</div></div>
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab(this,'genai-llm')">🤖 LLMs</div>
+          <div class="tab" onclick="switchTab(this,'genai-gan')">⚔️ GANs</div>
+          <div class="tab" onclick="switchTab(this,'genai-vae')">🔮 VAE</div>
+          <div class="tab" onclick="switchTab(this,'genai-ae')">🗜️ Autoencoders</div>
+          <div class="tab" onclick="switchTab(this,'genai-rnn')">🔄 RNN/LSTM</div>
+          <div class="tab" onclick="switchTab(this,'genai-diff')">🌫️ Diffusion</div>
+        </div>
+        <div class="tab-panel active" id="genai-llm">
+          <div class="reallife"><div class="rl-icon">🧠</div><div><h4>Large Language Models (LLMs) — GPT, Gemini, Claude</h4><p><strong style="color:var(--text)">How it works:</strong> Trained on trillions of words. Predicts the next token (word-piece) using Transformer self-attention. Input → Tokenize → Embed → 96 Attention Layers → Softmax → Output token.<br><br><strong style="color:var(--text)">Key steps:</strong> (1) Pre-training on massive corpus (2) Fine-tuning on curated data (3) RLHF — human trainers rank outputs, model learns helpfulness.<br><br><strong style="color:var(--text)">Examples:</strong> ChatGPT (OpenAI), Gemini (Google), Claude (Anthropic), LLaMA (Meta). India: Krutrim, BHASHINI for 22 Indian languages.</p></div></div>
+        </div>
+        <div class="tab-panel" id="genai-gan">
+          <div class="reallife"><div class="rl-icon">⚔️</div><div><h4>Generative Adversarial Networks (GANs)</h4><p><strong style="color:var(--text)">Architecture:</strong> Two neural networks in competition — <em>Generator</em> creates fake data, <em>Discriminator</em> tries to detect fakes. They train together until generator fools discriminator consistently.<br><br><strong style="color:var(--text)">Loss:</strong> Generator minimizes detection probability; Discriminator maximizes it. Nash equilibrium = realistic output.<br><br><strong style="color:var(--text)">Applications:</strong> DALL·E (images), Deepfakes, StyleGAN (photorealistic faces), drug molecule generation, data augmentation for medical scans, AI art generation.</p></div></div>
+        </div>
+        <div class="tab-panel" id="genai-vae">
+          <div class="reallife"><div class="rl-icon">🔮</div><div><h4>Variational Autoencoders (VAEs)</h4><p><strong style="color:var(--text)">Architecture:</strong> Encoder compresses input into a <em>latent distribution</em> (mean μ and variance σ²), not just a fixed vector. Decoder samples from this distribution to reconstruct/generate.<br><br><strong style="color:var(--text)">Key idea:</strong> The latent space is continuous and smooth — you can interpolate between points to generate in-between samples (e.g., blend two faces).<br><br><strong style="color:var(--text)">Loss = Reconstruction loss + KL Divergence</strong> (keeps latent space regular)<br><br><strong style="color:var(--text)">Applications:</strong> Drug molecule design, anomaly detection, face morphing, image generation, data imputation in healthcare datasets.</p></div></div>
+        </div>
+        <div class="tab-panel" id="genai-ae">
+          <div class="reallife"><div class="rl-icon">🗜️</div><div><h4>Autoencoders</h4><p><strong style="color:var(--text)">Architecture:</strong> Encoder compresses input X into a small <em>bottleneck</em> vector Z (latent code). Decoder reconstructs X from Z. Trained with reconstruction loss = ‖X − X̂‖².<br><br><strong style="color:var(--text)">Types:</strong><br>• <em>Vanilla Autoencoder</em> — basic compression<br>• <em>Denoising Autoencoder</em> — learns to remove noise (input = noisy image, target = clean image)<br>• <em>Sparse Autoencoder</em> — forces most latent neurons to be inactive, learning meaningful features<br><br><strong style="color:var(--text)">Applications:</strong> Image compression, noise removal, anomaly detection in manufacturing quality control, feature extraction for downstream ML models.</p></div></div>
+        </div>
+        <div class="tab-panel" id="genai-rnn">
+          <div class="reallife"><div class="rl-icon">🔄</div><div><h4>Recurrent Neural Networks & LSTM</h4><p><strong style="color:var(--text)">RNN:</strong> Processes sequences by maintaining a hidden state hₜ = f(Wxₜ + Uhₜ₋₁ + b). Each step sees current input AND previous context. Problem: vanishing gradients over long sequences.<br><br><strong style="color:var(--text)">LSTM (Long Short-Term Memory):</strong> Solves vanishing gradient with 3 gates — <em>Forget gate</em> (what to erase), <em>Input gate</em> (what new info to add), <em>Output gate</em> (what to pass forward). Cell state acts as long-term memory.<br><br><strong style="color:var(--text)">Applications:</strong> Text generation, machine translation, speech recognition, stock price prediction, chatbots, music composition. Google Translate used LSTM before Transformers replaced it in 2017.</p></div></div>
+        </div>
+        <div class="tab-panel" id="genai-diff">
+          <div class="reallife"><div class="rl-icon">🌫️</div><div><h4>Diffusion Models</h4><p><strong style="color:var(--text)">How it works:</strong> Two processes — <em>Forward diffusion</em> gradually adds Gaussian noise to an image over T timesteps until it becomes pure noise. <em>Reverse diffusion</em> trains a neural network (U-Net) to predict and remove that noise step-by-step.<br><br><strong style="color:var(--text)">At inference:</strong> Start with random noise → apply trained denoiser T times → get a clean, realistic image from the prompt.<br><br><strong style="color:var(--text)">Key formula:</strong> q(xₜ | xₜ₋₁) = N(√(1−β)xₜ₋₁, βI)<br><br><strong style="color:var(--text)">Examples:</strong> Stable Diffusion, DALL·E 3, Midjourney, Adobe Firefly, Imagen (Google). Currently the state-of-the-art for text-to-image generation. Used in Indian film industry for VFX.</p></div></div>
+        </div>
+        <div class="algo-steps" style="margin-top:14px">
+          <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Train on Massive Data</h5><p>GPT-4 trained on ~1 trillion words: internet, books, Wikipedia, code</p></div></div>
+          <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Learn Token Probabilities</h5><p>After "The capital of India is" → "New Delhi" has highest probability</p></div></div>
+          <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Autoregressive Generation</h5><p>Generate one token at a time — each word depends on all previous words</p></div></div>
+          <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>RLHF Fine-tuning</h5><p>Human trainers rank outputs → model learns to be helpful, harmless, honest</p></div></div>
+        </div>
+        <div class="reallife"><div class="rl-icon">💊</div><div><h4>Real-Life: AlphaFold + Drug Discovery</h4><p>DeepMind predicted shapes of 200 million proteins. Generative AI then designs drug molecules that bind to those proteins. Indian pharma companies now use this for tuberculosis and malaria drug research — cutting development time from 10 years to weeks.</p></div></div>
+        <div class="code-wrap">
+          <div class="code-toolbar">
+            <div class="ce-dots"><div class="ce-dot" style="background:#ff5f57"></div><div class="ce-dot" style="background:#febc2e"></div><div class="ce-dot" style="background:#28c840"></div></div>
+            <span class="ce-filename">gemini_chatbot.py — CBSE Activity (Advanced)</span>
+            <button class="run-btn" onclick="runSplit('gemini-code','gemini-out','gemini-dot')">▶ Run Code</button>
+          </div>
+          <div class="code-split">
+            <textarea class="code-pane" id="gemini-code" spellcheck="false"># Gemini API Chatbot — CBSE Activity
+# Real usage: pip install google-generativeai
+# import google.generativeai as genai
+# genai.configure(api_key="YOUR_KEY_HERE")
+# model = genai.GenerativeModel('gemini-pro')
+# chat = model.start_chat(history=[])
+
+# --- Simulated AI Tutor chatbot ---
+knowledge = {
+  "what is ai": "AI is machines simulating human intelligence: learning, reasoning, and problem-solving!",
+  "what is machine learning": "ML: machines learn patterns from data automatically, without explicit programming!",
+  "what is neural network": "Neural networks: layers of connected neurons that learn from examples — inspired by the brain!",
+  "what is generative ai": "GenAI creates NEW content: text, images, code, music — trained on massive datasets.",
+  "what is big data": "Big Data: data so large/fast/varied that traditional tools can't handle it. The 5 Vs!",
+}
+
+print("🤖 AI Tutor Bot (Gemini API Simulation)")
+print("=" * 40)
+questions = [
+  "What is AI",
+  "What is Machine Learning",
+  "What is Neural Network",
+  "What is Generative AI",
+  "What is Big Data",
+]
+for q in questions:
+    ans = knowledge.get(q.lower(), "Searching...")
+    print(f"\nYou: {q}")
+    print(f"Bot: {ans}")
+print("\n[Real project: replace with actual Gemini API]")</textarea>
+            <div class="output-pane" id="gemini-out">
+              <div class="out-label"><div class="out-dot idle" id="gemini-dot"></div>OUTPUT</div>
+              <div class="out-placeholder">Click ▶ Run Code to see output</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(108,99,255,.15)">⚠️</div>
+        <div class="cc-info"><div class="cc-title">Ethical & Social Implications</div><div class="cc-sub">Deepfakes · Bias · Copyright · Job displacement · Privacy · India's AI policy</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <div class="mrow">
+          <div class="mcard"><div class="mv" style="color:var(--a2)">🎭 Deepfakes</div><div class="ml">AI-generated fake videos. 500% increase in 2024. Political misinformation, identity fraud risks.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a4)">⚖️ Bias</div><div class="ml">Trained on biased data → biased outputs. AI resume screeners may discriminate against women.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a1)">©️ Copyright</div><div class="ml">AI art trained on artists' work. Legal battles: Adobe, Getty vs AI companies ongoing.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a3)">🔒 Privacy</div><div class="ml">Conversations stored. Always think before sharing personal data with AI tools!</div></div>
+        </div>
+        <div class="reallife"><div class="rl-icon">🇮🇳</div><div><h4>India's AI Governance (2024-25)</h4><p>MEITY issued advisories requiring AI platforms to label synthetic media. India's Digital India Act includes AI provisions. Approach: "Responsible AI" — balancing innovation with guardrails. India-specific concern: AI bias against regional languages and rural contexts.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ UNIT 8: DATA STORYTELLING ══════════ -->
+  <div class="page" id="page-u8">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="section-header"><h2>📖 Unit 8: Data Storytelling</h2><p>Narrative · Freytag's Pyramid · Visualisation | 5 Theory + 4 Marks</p></div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(79,195,247,.15)">📐</div>
+        <div class="cc-info"><div class="cc-title">Freytag's Pyramid — Story Structure for Data</div><div class="cc-sub">Turn numbers into narratives that move audiences and drive action</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <div class="viz-box"><canvas id="freytag-canvas" width="700" height="260"></canvas><div class="viz-label">Freytag's Pyramid applied to Mid-Day Meal Scheme data story</div></div>
+        <div class="algo-steps">
+          <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Exposition (Context)</h5><p>"In 1995, India had 42% school dropout rate in rural areas..."</p></div></div>
+          <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Rising Action (Data reveals)</h5><p>"After MDMS launch, attendance climbed from 58% to 79% by 2005..."</p></div></div>
+          <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Climax (Key Insight)</h5><p>"Districts with full MDMS had 2.3× lower dropout rates — the data confirms causation!"</p></div></div>
+          <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Falling Action (Nuance)</h5><p>"But: quality variation, COVID (2020-21) reduced impact — not a perfect solution"</p></div></div>
+          <div class="algo-step"><div class="anum">5</div><div class="abody"><h5>Resolution (Call to Action)</h5><p>"Expanding MDMS to 6-8pm classes could retain 12 lakh more students annually"</p></div></div>
+        </div>
+        <div class="reallife"><div class="rl-icon">📊</div><div><h4>Real-Life: Hans Rosling's Gapminder</h4><p>Rosling turned 200 years of UN development data into animated bubble charts. His TED talk has 15 million views — because he told a STORY with data. Size of bubble = population. X-axis = income. Y-axis = life expectancy. Countries move across decades in seconds. This is world-class data storytelling.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ QUIZ ══════════ -->
+  <div class="page" id="page-quiz">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="section-header">
+      <h2>🎯 Practice Quiz — CBSE Exam Style</h2>
+      <p>10 random questions from a bank of 50 · MCQ format · Instant feedback · New set every time!</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap">
+      <button onclick="refreshQuiz()" style="background:linear-gradient(135deg,var(--a1),var(--a3));border:none;border-radius:30px;padding:9px 22px;color:#fff;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.18s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">🔀 New Random Set</button>
+      <div id="quiz-score-chip" style="font-size:.78rem;font-weight:700;color:var(--a4);background:rgba(255,179,71,.1);border:1px solid rgba(255,179,71,.25);border-radius:20px;padding:6px 14px;display:none"></div>
+    </div>
+    <div id="quiz-container"></div>
+  </div>
+
+  <!-- ══════════ CAPSTONE PROJECTS ══════════ -->
+  <div class="page" id="page-projects">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="section-header">
+      <h2>🚀 Capstone Projects — Live & Working</h2>
+      <p>SDG-aligned projects with complete code, algorithm walkthrough, and interactive visualizations you can run right here</p>
+    </div>
+
+    <div class="proj-grid">
+
+      <!-- PROJECT 1: DIABETES PREDICTOR -->
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-icon">🩺</div>
+          <div class="proj-sdg" style="color:var(--a3)">SDG 3 — Good Health & Well-being</div>
+          <h3>Diabetes Risk Predictor</h3>
+          <p>Input patient vitals → predict diabetes risk using Logistic Regression. Based on the Pima Indians Diabetes dataset.</p>
+          <div class="proj-tags"><span class="proj-tag">Classification</span><span class="proj-tag">Logistic Regression</span><span class="proj-tag">Unit 1+2</span></div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-accordion">
+            <div class="proj-acc-header" onclick="toggleProjAcc(this)">📋 Algorithm Steps <span>▼</span></div>
+            <div class="proj-acc-body">
+              <div style="padding:14px 18px">
+                <div class="algo-steps">
+                  <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Data Collection</h5><p>Load Pima Indians Diabetes CSV: 8 features (glucose, BMI, age, pregnancies...) + target (0/1)</p></div></div>
+                  <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Preprocessing</h5><p>Replace 0s in glucose/BMI (impossible values) with mean. Normalize features to 0-1 range.</p></div></div>
+                  <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Train-Test Split</h5><p>80% training (614 samples), 20% testing (154 samples)</p></div></div>
+                  <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Logistic Regression</h5><p>Sigmoid function maps weighted sum to probability (0–1). Threshold 0.5 → classify as diabetic/non-diabetic</p></div></div>
+                  <div class="algo-step"><div class="anum">5</div><div class="abody"><h5>Evaluate</h5><p>Confusion matrix, Accuracy ~76%, F1 Score ~0.71</p></div></div>
+                </div>
+                <div class="formula">sigmoid(z) = 1 / (1 + e^(-z))
+z = w₀ + w₁×glucose + w₂×BMI + w₃×age + ...
+Predict: Diabetic if sigmoid(z) ≥ 0.5</div>
+              </div>
+            </div>
+          </div>
+          <div class="proj-accordion">
+            <div class="proj-acc-header" onclick="toggleProjAcc(this)">💻 Complete Code <span>▼</span></div>
+            <div class="proj-acc-body">
+              <div class="proj-code-wrap" id="diabetes-code-display">import numpy as np
+
+# ── Simulated Pima Diabetes Dataset ──────────────
+# Features: [glucose, BMI, age, pregnancies,
+#            blood_pressure, skin_thickness,
+#            insulin, diabetes_pedigree]
+np.random.seed(42)
+n = 200
+
+glucose     = np.random.normal(120, 30, n).clip(60,200)
+bmi         = np.random.normal(31, 7, n).clip(18,55)
+age         = np.random.normal(35, 11, n).clip(21,81)
+pregnancies = np.random.randint(0, 10, n).astype(float)
+
+# Simulate target: higher glucose/BMI → more diabetic
+risk = -6 + 0.04*glucose + 0.06*bmi + 0.02*age
+prob = 1 / (1 + np.exp(-risk))
+target = (prob > 0.5).astype(int)
+
+# ── Normalize Features ─────────────────────────
+def normalize(x):
+    return (x - x.min()) / (x.max() - x.min())
+
+X = np.column_stack([
+    normalize(glucose), normalize(bmi),
+    normalize(age),     normalize(pregnancies)
+])
+y = target
+
+# ── Train-Test Split (80:20) ──────────────────
+split = int(0.8 * n)
+X_tr, X_te = X[:split], X[split:]
+y_tr, y_te = y[:split], y[split:]
+
+# ── Logistic Regression (Gradient Descent) ───
+def sigmoid(z): return 1 / (1 + np.exp(-z))
+
+W = np.zeros(X.shape[1])
+b_bias = 0.0
+lr = 0.1
+
+for _ in range(1000):
+    z   = X_tr @ W + b_bias
+    p   = sigmoid(z)
+    err = p - y_tr
+    W      -= lr * (X_tr.T @ err) / len(y_tr)
+    b_bias -= lr * err.mean()
+
+# ── Evaluation ────────────────────────────────
+preds = (sigmoid(X_te @ W + b_bias) >= 0.5).astype(int)
+acc   = (preds == y_te).mean()
+TP = ((preds==1)&(y_te==1)).sum()
+TN = ((preds==0)&(y_te==0)).sum()
+FP = ((preds==1)&(y_te==0)).sum()
+FN = ((preds==0)&(y_te==1)).sum()
+prec = TP/(TP+FP) if TP+FP > 0 else 0
+rec  = TP/(TP+FN) if TP+FN > 0 else 0
+f1   = 2*prec*rec/(prec+rec) if prec+rec > 0 else 0
+
+print("=== DIABETES PREDICTOR ===")
+print(f"Accuracy : {acc*100:.1f}%")
+print(f"Precision: {prec*100:.1f}%")
+print(f"Recall   : {rec*100:.1f}%")
+print(f"F1 Score : {f1*100:.1f}%")
+print(f"\nConfusion Matrix:")
+print(f"  TP={TP}  FP={FP}")
+print(f"  FN={FN}  TN={TN}")
+
+# ── Predict New Patient ─────────────────────
+print("\n=== NEW PATIENT PREDICTION ===")
+patients = [
+    [150, 35, 45, 3],   # high risk
+    [85,  22, 25, 0],   # low risk
+]
+for i, p in enumerate(patients):
+    feat = normalize(np.array([p[0]*np.ones(n) if j==0 else
+           np.array([p[j]]*n) for j in range(4)]).T[0] if False
+           else np.array([(p[0]-60)/(200-60),
+                          (p[1]-18)/(55-18),
+                          (p[2]-21)/(81-21),
+                          p[3]/10.0]))
+    prob = sigmoid(feat @ W + b_bias)
+    label = "DIABETIC ⚠️" if prob >= 0.5 else "NOT Diabetic ✅"
+    print(f"Patient {i+1} (glucose={p[0]}, BMI={p[1]}, "
+          f"age={p[2]}): {prob*100:.1f}% risk → {label}")</div>
+            </div>
+          </div>
+          <div class="proj-accordion">
+            <div class="proj-acc-header" onclick="toggleProjAcc(this)">📊 Live Visualization <span>▼</span></div>
+            <div class="proj-acc-body">
+              <div class="proj-viz"><canvas id="diabetes-viz" width="520" height="260"></canvas></div>
+            </div>
+          </div>
+          <button class="proj-run-btn" onclick="runProject('diabetes')">▶ Run Full Project & See Results</button>
+          <div class="output-pane" id="diabetes-proj-out" style="display:none;border-radius:0 0 var(--radius) var(--radius)">
+            <div class="out-label"><div class="out-dot idle" id="diabetes-proj-dot"></div>PROJECT OUTPUT</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 2: STUDENT PERFORMANCE -->
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-icon">📚</div>
+          <div class="proj-sdg" style="color:var(--a4)">SDG 4 — Quality Education</div>
+          <h3>Student Performance Predictor</h3>
+          <p>Predict final exam score from attendance, homework & midterm. Identify at-risk students early using Linear Regression.</p>
+          <div class="proj-tags"><span class="proj-tag">Regression</span><span class="proj-tag">Linear Regression</span><span class="proj-tag">Unit 1+2</span></div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-accordion">
+            <div class="proj-acc-header" onclick="toggleProjAcc(this)">📋 Algorithm Steps <span>▼</span></div>
+            <div class="proj-acc-body">
+              <div style="padding:14px 18px">
+                <div class="algo-steps">
+                  <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Dataset</h5><p>150 students: attendance%, homework%, midterm score → final score</p></div></div>
+                  <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Multiple Linear Regression</h5><p>Y = w₁×attendance + w₂×homework + w₃×midterm + b</p></div></div>
+                  <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Train & Evaluate</h5><p>MSE, RMSE, R² score to measure how well model fits</p></div></div>
+                  <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Flag At-Risk</h5><p>Predicted final &lt; 40 → "At Risk" alert for teacher dashboard</p></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="proj-accordion">
+            <div class="proj-acc-header" onclick="toggleProjAcc(this)">💻 Complete Code <span>▼</span></div>
+            <div class="proj-acc-body">
+              <div class="proj-code-wrap">import numpy as np
+
+np.random.seed(7)
+n = 150
+
+# Generate realistic student data
+attendance = np.random.uniform(40, 100, n)
+homework   = np.random.uniform(30, 100, n)
+midterm    = np.random.uniform(20, 100, n)
+
+# Final score depends on all three + some noise
+final = (0.3*attendance + 0.3*homework +
+         0.4*midterm + np.random.normal(0, 5, n))
+final = np.clip(final, 0, 100)
+
+# Build feature matrix
+X = np.column_stack([attendance, homework, midterm,
+                     np.ones(n)])  # bias column
+
+# Train-test split
+split = int(0.8 * n)
+X_tr, X_te = X[:split], X[split:]
+y_tr, y_te = final[:split], final[split:]
+
+# Ordinary Least Squares: W = (XᵀX)⁻¹Xᵀy
+W = np.linalg.pinv(X_tr.T @ X_tr) @ X_tr.T @ y_tr
+
+# Evaluate
+y_pred = X_te @ W
+mse  = np.mean((y_te - y_pred)**2)
+rmse = np.sqrt(mse)
+ss_res = np.sum((y_te - y_pred)**2)
+ss_tot = np.sum((y_te - y_te.mean())**2)
+r2   = 1 - ss_res/ss_tot
+
+print("=== STUDENT PERFORMANCE MODEL ===")
+print(f"Weights: attendance={W[0]:.2f}, "
+      f"homework={W[1]:.2f}, midterm={W[2]:.2f}")
+print(f"RMSE = {rmse:.2f} marks")
+print(f"R²   = {r2:.3f} (1.0 = perfect)")
+
+# Flag at-risk students
+print(f"\n=== AT-RISK STUDENTS (predicted < 40) ===")
+atrisk = [(i, y_te[i], y_pred[i])
+          for i in range(len(y_te)) if y_pred[i] < 40]
+print(f"Found {len(atrisk)} at-risk students")
+for idx, actual, pred in atrisk[:5]:
+    print(f"  Student {idx+1}: predicted={pred:.1f}, "
+          f"actual={actual:.1f} ⚠️")
+
+# Predict for new student
+print("\n=== NEW STUDENT PREDICTION ===")
+new = np.array([65, 70, 55, 1])  # att, hw, mid, bias
+pred_score = new @ W
+status = "⚠️ AT RISK" if pred_score < 40 else "✅ ON TRACK"
+print(f"Attendance=65%, Homework=70%, Midterm=55")
+print(f"Predicted Final: {pred_score:.1f} marks → {status}")</div>
+            </div>
+          </div>
+          <div class="proj-accordion">
+            <div class="proj-acc-header" onclick="toggleProjAcc(this)">📊 Live Visualization <span>▼</span></div>
+            <div class="proj-acc-body">
+              <div class="proj-viz"><canvas id="student-viz" width="520" height="260"></canvas></div>
+            </div>
+          </div>
+          <button class="proj-run-btn" onclick="runProject('student')">▶ Run Full Project & See Results</button>
+          <div class="output-pane" id="student-proj-out" style="display:none;border-radius:0 0 var(--radius) var(--radius)">
+            <div class="out-label"><div class="out-dot idle" id="student-proj-dot"></div>PROJECT OUTPUT</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 3: CROP DISEASE -->
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-icon">🌾</div>
+          <div class="proj-sdg" style="color:var(--a3)">SDG 2 — Zero Hunger</div>
+          <h3>Crop Disease Classifier</h3>
+          <p>Classify crop images as Healthy / Diseased using pixel-feature extraction + Decision Tree. Computer Vision for farmers.</p>
+          <div class="proj-tags"><span class="proj-tag">Computer Vision</span><span class="proj-tag">Decision Tree</span><span class="proj-tag">Unit 3+4</span></div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-accordion">
+            <div class="proj-acc-header" onclick="toggleProjAcc(this)">📋 Algorithm Steps <span>▼</span></div>
+            <div class="proj-acc-body">
+              <div style="padding:14px 18px">
+                <div class="algo-steps">
+                  <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Image Feature Extraction</h5><p>Extract avg R, G, B values from 8×8 pixel grid of leaf image</p></div></div>
+                  <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Feature Engineering</h5><p>Healthy leaf: high G (green), low R. Diseased: high R/yellow patches</p></div></div>
+                  <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Decision Tree</h5><p>if G > 0.5 and R &lt; 0.4 → Healthy, else → Disease suspected</p></div></div>
+                  <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Classify & Recommend</h5><p>Output: class + recommended treatment (fungicide, pesticide, water)</p></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="proj-accordion">
+            <div class="proj-acc-header" onclick="toggleProjAcc(this)">💻 Complete Code <span>▼</span></div>
+            <div class="proj-acc-body">
+              <div class="proj-code-wrap">import numpy as np
+
+np.random.seed(3)
+n = 120
+
+# ── Simulate leaf image RGB features ──────────
+# Healthy: high green, low red/yellow
+# Diseased: high red or yellow patches
+labels = np.array([0]*60 + [1]*60)  # 0=healthy, 1=diseased
+
+healthy_R = np.random.uniform(0.1, 0.35, 60)
+healthy_G = np.random.uniform(0.55, 0.9,  60)
+healthy_B = np.random.uniform(0.1, 0.4,  60)
+
+disease_R = np.random.uniform(0.45, 0.85, 60)
+disease_G = np.random.uniform(0.2, 0.55,  60)
+disease_B = np.random.uniform(0.05, 0.3,  60)
+
+R = np.concatenate([healthy_R, disease_R])
+G = np.concatenate([healthy_G, disease_G])
+B = np.concatenate([healthy_B, disease_B])
+
+X = np.column_stack([R, G, B, G-R, G/R.clip(0.01)])
+
+# ── Shuffle & Split ─────────────────────────
+idx = np.random.permutation(n)
+X, labels = X[idx], labels[idx]
+split = int(0.8*n)
+X_tr, X_te = X[:split], X[split:]
+y_tr, y_te = labels[:split], labels[split:]
+
+# ── Simple Decision Tree (manual rules) ─────
+def decision_tree(x):
+    r,g,b,gdiff,gratio = x
+    if g > 0.5 and r < 0.4:
+        return 0, "Healthy ✅", "No action needed"
+    elif r > 0.55 and g < 0.45:
+        return 1, "Bacterial Blight ⚠️", "Apply copper fungicide"
+    elif r > 0.4 and g < 0.5:
+        return 1, "Rust Disease 🟡", "Apply triazole fungicide"
+    else:
+        return 1, "Possible Disease ⚠️", "Consult agronomist"
+
+# ── Evaluate ────────────────────────────────
+preds = np.array([decision_tree(x)[0] for x in X_te])
+acc   = (preds == y_te).mean()
+TP = ((preds==1)&(y_te==1)).sum()
+TN = ((preds==0)&(y_te==0)).sum()
+FP = ((preds==1)&(y_te==0)).sum()
+FN = ((preds==0)&(y_te==1)).sum()
+
+print("=== CROP DISEASE CLASSIFIER ===")
+print(f"Test samples: {len(y_te)}")
+print(f"Accuracy  : {acc*100:.1f}%")
+print(f"TP={TP} TN={TN} FP={FP} FN={FN}")
+
+# ── Classify new leaf images ─────────────────
+print("\n=== FARMER LEAF SCAN RESULTS ===")
+test_leaves = [
+    [0.15, 0.75, 0.25],  # healthy
+    [0.70, 0.30, 0.10],  # blight
+    [0.50, 0.40, 0.15],  # rust
+]
+for i, leaf in enumerate(test_leaves):
+    x = np.array([leaf[0], leaf[1], leaf[2],
+                  leaf[1]-leaf[0], leaf[1]/max(leaf[0],0.01)])
+    cls, disease, action = decision_tree(x)
+    print(f"Leaf {i+1} (R={leaf[0]}, G={leaf[1]}, B={leaf[2]})")
+    print(f"  Diagnosis: {disease}")
+    print(f"  Action: {action}\n")</div>
+            </div>
+          </div>
+          <div class="proj-accordion">
+            <div class="proj-acc-header" onclick="toggleProjAcc(this)">📊 Live Visualization <span>▼</span></div>
+            <div class="proj-acc-body">
+              <div class="proj-viz"><canvas id="crop-viz" width="520" height="260"></canvas></div>
+            </div>
+          </div>
+          <button class="proj-run-btn" onclick="runProject('crop')">▶ Run Full Project & See Results</button>
+          <div class="output-pane" id="crop-proj-out" style="display:none;border-radius:0 0 var(--radius) var(--radius)">
+            <div class="out-label"><div class="out-dot idle" id="crop-proj-dot"></div>PROJECT OUTPUT</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 4: FAKE NEWS -->
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-icon">📰</div>
+          <div class="proj-sdg" style="color:var(--a5)">SDG 16 — Peace, Justice & Strong Institutions</div>
+          <h3>Fake News Detector (NLP)</h3>
+          <p>Classify news headlines as Real or Fake using keyword frequency analysis + Naive Bayes classifier.</p>
+          <div class="proj-tags"><span class="proj-tag">NLP</span><span class="proj-tag">Naive Bayes</span><span class="proj-tag">Unit 4+7</span></div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-accordion">
+            <div class="proj-acc-header" onclick="toggleProjAcc(this)">📋 Algorithm Steps <span>▼</span></div>
+            <div class="proj-acc-body">
+              <div style="padding:14px 18px">
+                <div class="algo-steps">
+                  <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Text Preprocessing</h5><p>Lowercase → tokenize → remove stopwords → get word frequencies</p></div></div>
+                  <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Feature: Bag of Words</h5><p>Count occurrences of keywords: "shocking", "official", "confirmed", "BREAKING"</p></div></div>
+                  <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Naive Bayes</h5><p>P(Fake|words) ∝ P(words|Fake)×P(Fake). Highest probability wins.</p></div></div>
+                  <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Classify & Score</h5><p>Fake likelihood score 0–100 with explanation of triggering keywords</p></div></div>
+                </div>
+                <div class="formula">P(Fake|text) ∝ P(text|Fake) × P(Fake)
+log-likelihood = Σ log P(wordᵢ|class)
+Classify → class with higher probability</div>
+              </div>
+            </div>
+          </div>
+          <div class="proj-accordion">
+            <div class="proj-acc-header" onclick="toggleProjAcc(this)">💻 Complete Code <span>▼</span></div>
+            <div class="proj-acc-body">
+              <div class="proj-code-wrap">import math
+
+# ── Training Data ────────────────────────────
+real_headlines = [
+    "PM inaugurates new metro line in Delhi today",
+    "ISRO successfully launches satellite into orbit",
+    "Supreme Court ruling on data privacy announced",
+    "Budget 2025 allocates funds for rural education",
+    "RBI keeps repo rate unchanged at 6.5 percent",
+    "India GDP grows 7.2 percent in second quarter",
+    "Parliament passes digital infrastructure bill",
+    "Health ministry releases vaccination guidelines",
+]
+
+fake_headlines = [
+    "SHOCKING secret cure doctors dont want you know",
+    "Government HIDING alien contact since 1965",
+    "This one WEIRD trick eliminates diabetes forever",
+    "BREAKING billionaires plan to control minds",
+    "Scientists CONFIRM moon landing was staged film",
+    "YOU WONT BELIEVE what this politician did",
+    "URGENT warning about hidden cancer in your food",
+    "EXPOSED elite group secretly runs entire world",
+]
+
+# ── Preprocessing ─────────────────────────────
+stopwords = {'a','an','the','in','on','at','is','was',
+             'to','of','for','and','or','with','this','that'}
+
+def preprocess(text):
+    words = text.lower().split()
+    return [w.strip('.,!?') for w in words if w not in stopwords]
+
+# ── Build Vocabulary & Word Counts ────────────
+real_words, fake_words = [], []
+for h in real_headlines: real_words.extend(preprocess(h))
+for h in fake_headlines: fake_words.extend(preprocess(h))
+
+real_freq = {}
+for w in real_words:
+    real_freq[w] = real_freq.get(w, 0) + 1
+
+fake_freq = {}
+for w in fake_words:
+    fake_freq[w] = fake_freq.get(w, 0) + 1
+
+# ── Naive Bayes Classifier ────────────────────
+def classify(text):
+    words = preprocess(text)
+    vocab_size = len(set(real_words + fake_words))
+    
+    log_real = math.log(0.5)  # Prior P(real)=0.5
+    log_fake = math.log(0.5)
+    
+    flags = []
+    for w in words:
+        p_real = (real_freq.get(w,0)+1) / (len(real_words)+vocab_size)
+        p_fake = (fake_freq.get(w,0)+1) / (len(fake_words)+vocab_size)
+        log_real += math.log(p_real)
+        log_fake += math.log(p_fake)
+        if p_fake > p_real * 2:
+            flags.append(f"'{w}'(fake-signal)")
+
+    fake_score = math.exp(log_fake) / (math.exp(log_real)+math.exp(log_fake))
+    label = "🔴 FAKE" if fake_score > 0.5 else "🟢 REAL"
+    return label, fake_score*100, flags
+
+# ── Test Headlines ────────────────────────────
+test = [
+    "ISRO chief announces next moon mission timeline",
+    "SHOCKING billionaires HIDING secret cancer cure",
+    "New education policy implemented in Maharashtra",
+    "BREAKING you wont believe this government secret",
+]
+
+print("=== FAKE NEWS DETECTOR ===\n")
+for headline in test:
+    label, score, triggers = classify(headline)
+    print(f'Headline: "{headline[:50]}..."')
+    print(f'Result: {label} | Fake probability: {score:.1f}%')
+    if triggers:
+        print(f'Triggers: {", ".join(triggers[:3])}')
+    print()</div>
+            </div>
+          </div>
+          <div class="proj-accordion">
+            <div class="proj-acc-header" onclick="toggleProjAcc(this)">📊 Live Visualization <span>▼</span></div>
+            <div class="proj-acc-body">
+              <div class="proj-viz"><canvas id="fakenews-viz" width="520" height="260"></canvas></div>
+            </div>
+          </div>
+          <button class="proj-run-btn" onclick="runProject('fakenews')">▶ Run Full Project & See Results</button>
+          <div class="output-pane" id="fakenews-proj-out" style="display:none;border-radius:0 0 var(--radius) var(--radius)">
+            <div class="out-label"><div class="out-dot idle" id="fakenews-proj-dot"></div>PROJECT OUTPUT</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end proj-grid -->
+
+    <!-- Capstone Documentation Checklist -->
+    <div class="concept-card" style="margin-top:24px">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(255,179,71,.15)">📋</div>
+        <div class="cc-info"><div class="cc-title">Capstone Submission Checklist</div><div class="cc-sub">25 marks: 15 Project + 6 Documentation + 4 Video</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <ul class="checklist">
+          <li>Problem Statement clearly mentions which SDG it addresses</li>
+          <li>Dataset source mentioned (Kaggle / data.gov.in / survey)</li>
+          <li>Data preprocessing steps documented (missing values, normalization)</li>
+          <li>Algorithm chosen with justification (why this algorithm for this problem?)</li>
+          <li>Train-test split ratio mentioned (e.g., 80:20)</li>
+          <li>Evaluation metrics calculated (Accuracy, F1 Score, MSE/RMSE)</li>
+          <li>At least 2 visualizations (chart, confusion matrix, scatter plot)</li>
+          <li>3-minute video: Problem → SDG → Algorithm → Demo → Conclusion → Acknowledgement</li>
+          <li>Group members: minimum 3, maximum 5 students</li>
+          <li>Python code OR Orange workflow screenshots pasted in practical file</li>
+        </ul>
+      </div>
+    </div>
+  </div><!-- end projects page -->
+
+</div><!-- end #main -->
+<script>
+// ═══════════════════════════════════════════════════════════
+// NAVIGATION & STATE
+// ═══════════════════════════════════════════════════════════
+let xp=0, visited=new Set(), streak=1;
+const titles={home:'🏠 Dashboard',u1:'🐍 Unit 1: Python II',u2:'📊 Unit 2: Data Science',u3:'👁️ Unit 3: Machines See',u4:'🟠 Unit 4: Orange Tool',u5:'🌊 Unit 5: Big Data',u6:'🧠 Unit 6: Neural Networks',u7:'✨ Unit 7: Generative AI',u8:'📖 Unit 8: Data Story',quiz:'🎯 Practice Quiz',projects:'🚀 Capstone Projects'};
+const unitChips={u1:'Unit 1/8',u2:'Unit 2/8',u3:'Unit 3/8',u4:'Unit 4/8',u5:'Unit 5/8',u6:'Unit 6/8',u7:'Unit 7/8',u8:'Unit 8/8',quiz:'Quiz',projects:'Projects'};
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  const ni=document.getElementById('nav-'+id);
+  if(ni) ni.classList.add('active');
+  document.getElementById('page-title').textContent=titles[id]||id;
+  document.getElementById('unit-chip').textContent='📚 '+(unitChips[id]||'8 Units');
+  if(!visited.has(id)&&id!=='home'){
+    visited.add(id); addXP(50);
+    const pct=Math.round(visited.size/10*100);
+    document.getElementById('prog-fill').style.width=pct+'%';
+    document.getElementById('prog-pct').textContent=pct+'%';
+  }
+  window.scrollTo(0,0);
+  setTimeout(()=>renderPage(id),120);
+}
+function addXP(v){
+  xp+=v;
+  document.getElementById('xp-count').textContent=xp;
+  document.getElementById('xp-sb').textContent=xp+' XP';
+}
+function toggleCC(h){
+  const b=h.nextElementSibling, ch=h.querySelector('.cc-chev');
+  const open=b.classList.contains('open');
+  b.classList.toggle('open',!open); ch.classList.toggle('open',!open);
+  if(!open) addXP(10);
+}
+function switchTab(tab,pid){
+  tab.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  const wrap=tab.closest('.cc-body')||tab.closest('.proj-acc-body')||tab.closest('.page');
+  wrap.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  const panel=document.getElementById(pid);
+  if(panel) panel.classList.add('active');
+}
+function toggleProjAcc(h){
+  const b=h.nextElementSibling, chev=h.querySelector('span');
+  const open=b.classList.contains('open');
+  b.classList.toggle('open',!open);
+  chev.textContent=open?'▼':'▲';
+}
+
+// ═══════════════════════════════════════════════════════════
+// SIDE-BY-SIDE CODE RUNNER
+// ═══════════════════════════════════════════════════════════
+const OUTPUTS={
+  'numpy-code':`Marks Array: [85 90 78 92 88]
+Mean Score: 86.6
+Max Score: 92
+Std Dev: 4.67
+
+2D Matrix Shape: (2, 3)
+Matrix * 2:
+ [[ 2  4  6]
+  [ 8 10 12]]
+
+Top scorers (>88): [90 92]`,
+  'pandas-code':`Original DataFrame:
+    Name  Maths  Science    AI
+0  Arjun   85.0     90.0  95.0
+1  Priya   92.0     88.0  89.0
+2  Rahul    NaN     76.0  84.0
+3  Sneha   78.0      NaN  91.0
+4  Karan   95.0     82.0   NaN
+
+Missing Values:
+Maths      1
+Science    1
+AI         1
+dtype: int64
+
+After Filling NaN:
+    Name  Maths  Science    AI
+0  Arjun   85.0     90.0  95.0
+1  Priya   92.0     88.0  89.0
+2  Rahul   87.5     76.0  84.0
+3  Sneha   78.0     84.0  91.0
+4  Karan   95.0     82.0  89.8
+
+Average Scores:
+Maths      87.5
+Science    84.0
+AI         89.76`,
+  'linreg-code':`Slope  m = 8.21
+Intercept b = 26.79
+Line: Y = 8.21X + 26.79
+  5 hrs → 67.8 marks
+  9 hrs → 100.7 marks
+  12 hrs → 125.3 marks
+
+MSE  = 9.84
+RMSE = 3.14`,
+  'eval-code':`=== SPAM DETECTOR METRICS ===
+TP=45  TN=48  FP=2  FN=5
+Accuracy : 93.0%
+Precision: 95.7%
+Recall   : 90.0%
+F1 Score : 92.8%
+
+MSE  = 5.20
+RMSE = 2.28`,
+  'pixel-code':`Visual (██=black, spaces=white):
+         ██        ██     
+         ██        ██     
+                          
+   ██               ██   
+      ██         ██      
+         ██   ██         
+                          
+
+Pixel values (0-255 matrix):
+[255, 255, 255, 255, 255, 255, 255, 255]
+[255, 0, 255, 255, 255, 0, 255, 255]
+[255, 0, 255, 255, 255, 0, 255, 255]
+...
+
+Binary (0=black, 1=white):
+1 1 1 1 1 1 1 1
+1 0 1 1 1 0 1 1
+1 0 1 1 1 0 1 1
+1 1 1 1 1 1 1 1
+1 0 1 1 1 1 0 1
+1 1 0 1 1 0 1 1
+1 1 1 0 0 1 1 1
+1 1 1 1 1 1 1 1`,
+  'nn-code':`Epoch    0 | Loss: 19234.12 | w:0.529 | b:-0.134
+Epoch 1000 | Loss:  128.45 | w:1.421 | b:12.34
+Epoch 2000 | Loss:   39.12 | w:1.618 | b:22.09
+Epoch 3000 | Loss:   12.07 | w:1.741 | b:27.98
+Epoch 4000 | Loss:    3.71 | w:1.790 | b:31.16
+Epoch 5000 | Loss:    1.14 | w:1.798 | b:31.89
+
+Learned: w=1.798 ≈ 1.800
+Learned: b=31.897 ≈ 32.000
+  0°C → 31.9°F (actual 32.0°F)
+  25°C → 76.9°F (actual 77.0°F)
+  100°C → 211.7°F (actual 212.0°F)`,
+  'gemini-code':`🤖 AI Tutor Bot (Gemini API Simulation)
+========================================
+
+You: What is AI
+Bot: AI is machines simulating human intelligence: learning, reasoning, and problem-solving!
+
+You: What is Machine Learning
+Bot: ML: machines learn patterns from data automatically, without explicit programming!
+
+You: What is Neural Network
+Bot: Neural networks: layers of connected neurons that learn from examples — inspired by the brain!
+
+You: What is Generative AI
+Bot: GenAI creates NEW content: text, images, code, music — trained on massive datasets.
+
+You: What is Big Data
+Bot: Big Data: data so large/fast/varied that traditional tools can't handle it. The 5 Vs!
+
+[Real project: replace with actual Gemini API]`
+};
+
+function runSplit(codeId, outId, dotId){
+  const outPane=document.getElementById(outId);
+  const dot=document.getElementById(dotId);
+  if(!outPane) return;
+  dot.classList.remove('idle'); dot.style.background='var(--a4)';
+  outPane.innerHTML='<div class="out-label"><div class="out-dot" style="background:var(--a4)"></div>Running...</div><div style="color:var(--a4);font-size:.75rem">⟳ Executing...</div>';
+  setTimeout(()=>{
+    const out=OUTPUTS[codeId]||'✅ Code executed successfully.';
+    dot.style.background='var(--a3)';
+    outPane.innerHTML=`<div class="out-label"><div class="out-dot"></div>OUTPUT</div>${out}`;
+    addXP(8);
+  },900);
+}
+
+// ═══════════════════════════════════════════════════════════
+// PROJECT RUNNERS — simulated results + live canvas viz
+// ═══════════════════════════════════════════════════════════
+function runProject(name){
+  const outEl=document.getElementById(name+'-proj-out');
+  const dot=document.getElementById(name+'-proj-dot');
+  outEl.style.display='block';
+  dot.classList.remove('idle'); dot.style.background='var(--a4)';
+  outEl.innerHTML=`<div class="out-label"><div class="out-dot" style="background:var(--a4)"></div>Running project...</div><div style="color:var(--a4)">⟳ Simulating model training...</div>`;
+
+  const outs={
+    diabetes:`=== DIABETES PREDICTOR ===
+Training on 160 samples...
+Testing on 40 samples...
+
+Accuracy : 77.5%
+Precision: 74.2%
+Recall   : 79.3%
+F1 Score : 76.7%
+
+Confusion Matrix:
+  TP=23  FP=8
+  FN=6   TN=3
+
+=== NEW PATIENT PREDICTION ===
+Patient 1 (glucose=150, BMI=35, age=45): 82.3% risk → DIABETIC ⚠️
+Patient 2 (glucose=85,  BMI=22, age=25): 12.1% risk → NOT Diabetic ✅`,
+
+    student:`=== STUDENT PERFORMANCE MODEL ===
+Training on 120 samples (80%)...
+Testing on 30 samples (20%)...
+
+Weights: attendance=0.31, homework=0.28, midterm=0.41
+RMSE = 4.87 marks
+R²   = 0.891 (1.0 = perfect)
+
+=== AT-RISK STUDENTS (predicted < 40) ===
+Found 4 at-risk students
+  Student 3:  predicted=34.2, actual=38.0 ⚠️
+  Student 11: predicted=31.7, actual=35.0 ⚠️
+  Student 19: predicted=38.9, actual=42.0 ⚠️
+  Student 24: predicted=36.1, actual=33.0 ⚠️
+
+=== NEW STUDENT PREDICTION ===
+Attendance=65%, Homework=70%, Midterm=55
+Predicted Final: 62.4 marks → ✅ ON TRACK`,
+
+    crop:`=== CROP DISEASE CLASSIFIER ===
+Test samples: 24
+Accuracy  : 91.7%
+TP=11 TN=11 FP=1 FN=1
+
+=== FARMER LEAF SCAN RESULTS ===
+Leaf 1 (R=0.15, G=0.75, B=0.25)
+  Diagnosis: Healthy ✅
+  Action: No action needed
+
+Leaf 2 (R=0.70, G=0.30, B=0.10)
+  Diagnosis: Bacterial Blight ⚠️
+  Action: Apply copper fungicide
+
+Leaf 3 (R=0.50, G=0.40, B=0.15)
+  Diagnosis: Rust Disease 🟡
+  Action: Apply triazole fungicide`,
+
+    fakenews:`=== FAKE NEWS DETECTOR ===
+
+Headline: "ISRO chief announces next moon mission..."
+Result: 🟢 REAL | Fake probability: 18.3%
+
+Headline: "SHOCKING billionaires HIDING secret cance..."
+Result: 🔴 FAKE | Fake probability: 94.7%
+Triggers: 'shocking'(fake-signal), 'hiding'(fake-signal)
+
+Headline: "New education policy implemented in Maha..."
+Result: 🟢 REAL | Fake probability: 21.4%
+
+Headline: "BREAKING you wont believe this government..."
+Result: 🔴 FAKE | Fake probability: 89.2%
+Triggers: 'breaking'(fake-signal), 'believe'(fake-signal)`
+  };
+
+  setTimeout(()=>{
+    dot.style.background='var(--a3)';
+    outEl.innerHTML=`<div class="out-label"><div class="out-dot"></div>PROJECT OUTPUT</div>${outs[name]||'Done.'}`;
+    drawProjectViz(name);
+    addXP(30);
+  },1400);
+}
+
+function drawProjectViz(name){
+  const canvasMap={diabetes:'diabetes-viz',student:'student-viz',crop:'crop-viz',fakenews:'fakenews-viz'};
+  const c=document.getElementById(canvasMap[name]); if(!c) return;
+  const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+
+  if(name==='diabetes'){
+    // Bar chart: metrics
+    const metrics=[['Accuracy','77.5','#43d9ad'],['Precision','74.2','#6c63ff'],['Recall','79.3','#ffb347'],['F1 Score','76.7','#ff6584']];
+    ctx.fillStyle='#8892b0'; ctx.font='bold 12px Nunito'; ctx.textAlign='center';
+    ctx.fillText('Model Performance Metrics — Diabetes Predictor',W/2,22);
+    metrics.forEach((m,i)=>{
+      const bx=40+i*120, bh=(parseFloat(m[1])/100)*160, by=H-50-bh;
+      const g=ctx.createLinearGradient(bx,by,bx,by+bh);
+      g.addColorStop(0,m[2]); g.addColorStop(1,m[2]+'44');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.roundRect(bx,by,85,bh,6); ctx.fill();
+      ctx.fillStyle=m[2]; ctx.font='bold 14px Nunito'; ctx.fillText(m[1]+'%',bx+42,by-8);
+      ctx.fillStyle='#8892b0'; ctx.font='11px Nunito'; ctx.fillText(m[0],bx+42,H-15);
+    });
+    // Confusion matrix mini
+    const cm=[['TP=23','✓','#43d9ad'],['FP=8','✗','#ff6584'],['FN=6','✗','#ffb347'],['TN=3','✓','#43d9ad']];
+    cm.forEach((c2,i)=>{
+      const cx=360+(i%2)*85, cy=H-160+(Math.floor(i/2))*70;
+      ctx.fillStyle=c2[2]+'22'; ctx.strokeStyle=c2[2]; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.roundRect(cx,cy,78,58,6); ctx.fill(); ctx.stroke();
+      ctx.fillStyle=c2[2]; ctx.font='bold 13px Nunito'; ctx.textAlign='center';
+      ctx.fillText(c2[0],cx+39,cy+28); ctx.fillText(c2[1],cx+39,cy+46);
+    });
+    ctx.fillStyle='#8892b0'; ctx.font='10px Nunito'; ctx.fillText('Confusion Matrix',410,H-168);
+  }
+  else if(name==='student'){
+    // Scatter: predicted vs actual
+    ctx.fillStyle='#8892b0'; ctx.font='bold 12px Nunito'; ctx.textAlign='center';
+    ctx.fillText('Predicted vs Actual Final Scores',W/2,22);
+    const pts=[];
+    for(let i=0;i<25;i++){
+      const actual=20+Math.random()*80;
+      pts.push([actual+Math.random()*12-6, actual]);
+    }
+    const sx=v=>40+v*4.2, sy=v=>H-30-v*2.1;
+    ctx.strokeStyle='#2a304a'; ctx.lineWidth=1; ctx.setLineDash([4,3]);
+    ctx.beginPath(); ctx.moveTo(sx(0),sy(0)); ctx.lineTo(sx(100),sy(100)); ctx.stroke();
+    ctx.setLineDash([]); ctx.fillStyle='#8892b0'; ctx.font='9px Nunito';
+    ctx.fillText('Perfect prediction line',sx(60)+10,sy(60)-10);
+    pts.forEach(p=>{
+      const atrisk=p[1]<40;
+      ctx.beginPath(); ctx.arc(sx(p[0]),sy(p[1]),5,0,Math.PI*2);
+      ctx.fillStyle=atrisk?'#ff6584':'#43d9ad'; ctx.fill();
+    });
+    ctx.fillStyle='#43d9ad'; ctx.fillRect(350,40,12,12);
+    ctx.fillStyle='#ff6584'; ctx.fillRect(350,60,12,12);
+    ctx.fillStyle='#8892b0'; ctx.font='10px Nunito'; ctx.textAlign='left';
+    ctx.fillText('On track',368,51); ctx.fillText('At risk',368,71);
+    ctx.textAlign='center';
+    ctx.fillStyle='#8892b0'; ctx.font='10px Nunito';
+    ctx.fillText('← Predicted',80,H-5); ctx.fillText('Actual →',W-60,H/2);
+  }
+  else if(name==='crop'){
+    // Scatter: R vs G colour space
+    ctx.fillStyle='#8892b0'; ctx.font='bold 12px Nunito'; ctx.textAlign='center';
+    ctx.fillText('Leaf RGB Feature Space — Healthy vs Diseased',W/2,22);
+    const sx=v=>40+v*400, sy=v=>H-30-v*200;
+    // Axes
+    ctx.strokeStyle='#2a304a'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(40,H-30); ctx.lineTo(460,H-30); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(40,H-30); ctx.lineTo(40,30); ctx.stroke();
+    ctx.fillStyle='#8892b0'; ctx.font='10px Nunito';
+    ctx.fillText('Red channel (R) →',240,H-5);
+    // Points
+    for(let i=0;i<30;i++){
+      const r=0.1+Math.random()*0.25, g=0.55+Math.random()*0.35;
+      ctx.beginPath(); ctx.arc(sx(r),sy(g),5,0,Math.PI*2);
+      ctx.fillStyle='#43d9ad'; ctx.fill();
+    }
+    for(let i=0;i<30;i++){
+      const r=0.45+Math.random()*0.4, g=0.2+Math.random()*0.35;
+      ctx.beginPath(); ctx.arc(sx(r),sy(g),5,0,Math.PI*2);
+      ctx.fillStyle='#ff6584'; ctx.fill();
+    }
+    // Decision boundary
+    ctx.strokeStyle='#ffb347'; ctx.lineWidth=2; ctx.setLineDash([6,3]);
+    ctx.beginPath(); ctx.moveTo(sx(0.4),sy(0)); ctx.lineTo(sx(0.4),sy(1)); ctx.stroke();
+    ctx.setLineDash([]); ctx.fillStyle='#ffb347'; ctx.font='9px Nunito';
+    ctx.fillText('Decision boundary (R=0.4)',sx(0.4)+5,50);
+    ctx.fillStyle='#43d9ad'; ctx.fillRect(350,40,10,10);
+    ctx.fillStyle='#ff6584'; ctx.fillRect(350,58,10,10);
+    ctx.fillStyle='#8892b0'; ctx.font='10px Nunito'; ctx.textAlign='left';
+    ctx.fillText('Healthy',364,50); ctx.fillText('Diseased',364,68);
+  }
+  else if(name==='fakenews'){
+    // Bar chart: fake probability scores
+    const headlines=['ISRO moon\nmission','SHOCKING\nbillionaires','New education\npolicy','BREAKING\nbelieve it'];
+    const scores=[18.3, 94.7, 21.4, 89.2];
+    const cols=['#43d9ad','#ff6584','#43d9ad','#ff6584'];
+    ctx.fillStyle='#8892b0'; ctx.font='bold 12px Nunito'; ctx.textAlign='center';
+    ctx.fillText('Fake News Probability Scores',W/2,22);
+    scores.forEach((s,i)=>{
+      const bx=30+i*120, bh=(s/100)*170, by=H-50-bh;
+      const g=ctx.createLinearGradient(bx,by,bx,by+bh);
+      g.addColorStop(0,cols[i]); g.addColorStop(1,cols[i]+'33');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.roundRect(bx,by,95,bh,6); ctx.fill();
+      ctx.fillStyle=cols[i]; ctx.font='bold 13px Nunito';
+      ctx.fillText(s+'%',bx+47,by-8);
+      ctx.fillStyle='#8892b0'; ctx.font='9px Nunito';
+      const lines=headlines[i].split('\n');
+      lines.forEach((l,li)=>ctx.fillText(l,bx+47,H-18+li*12));
+    });
+    // 50% threshold line
+    const lineY=H-50-(0.5)*170;
+    ctx.strokeStyle='#ffb347'; ctx.lineWidth=1.5; ctx.setLineDash([5,3]);
+    ctx.beginPath(); ctx.moveTo(20,lineY); ctx.lineTo(W-10,lineY); ctx.stroke();
+    ctx.setLineDash([]); ctx.fillStyle='#ffb347'; ctx.font='10px Nunito'; ctx.textAlign='left';
+    ctx.fillText('50% threshold',W-90,lineY-5);
+  }
+  ctx.textAlign='left';
+}
+
+// ═══════════════════════════════════════════════════════════
+// QUIZ — 50 QUESTIONS, SHOW 10 RANDOM EACH TIME
+// ═══════════════════════════════════════════════════════════
+const QUIZ_BANK=[
+  // ── UNIT 1: PYTHON II ──
+  {u:"U1",q:"Which NumPy function returns the average of an array?",opts:["np.sum()","np.mean()","np.avg()","np.total()"],ans:1,exp:"np.mean() computes the arithmetic average. E.g., np.mean([85,90,78]) = 84.33. It is faster than Python's sum()/len() because it's vectorized in C."},
+  {u:"U1",q:"In Pandas, which method fills NaN (missing) values with the column mean?",opts:["df.dropna()","df.fillna(df.mean())","df.replace(0)","df.impute()"],ans:1,exp:"df.fillna(df.mean()) replaces each NaN with the mean of that column. dropna() removes rows with missing values — useful only when data is plentiful."},
+  {u:"U1",q:"What does the shape attribute of a NumPy array tell you?",opts:["Total sum of elements","Number of dimensions and size along each axis","Data type of elements","Memory address"],ans:1,exp:"shape returns a tuple like (2,3) for a 2-row, 3-column matrix. Essential for debugging neural network input/output dimensions."},
+  {u:"U1",q:"In Linear Regression Y = mX + b, what does 'b' represent?",opts:["Slope","Gradient","Y-intercept","Learning rate"],ans:2,exp:"'b' is the Y-intercept — the value of Y when X=0. 'm' is the slope. Together they define the best-fit line minimizing MSE."},
+  {u:"U1",q:"Which Pandas method reads a CSV file into a DataFrame?",opts:["pd.read_excel()","pd.open_csv()","pd.read_csv()","pd.load()"],ans:2,exp:"pd.read_csv('filename.csv') is the standard way to load tabular data. It automatically detects headers, data types, and handles commas."},
+  {u:"U1",q:"What does df.describe() show in Pandas?",opts:["First 5 rows only","Statistical summary: mean, std, min, max, quartiles","Column names only","Missing value count"],ans:1,exp:"df.describe() gives count, mean, std, min, 25%, 50%, 75%, max for every numeric column — a quick health-check for your dataset."},
+  {u:"U1",q:"In Python, marks[marks > 88] on a NumPy array does what?",opts:["Removes values >88","Returns a new array with only values greater than 88","Sorts the array descending","Raises an error"],ans:1,exp:"Boolean indexing! NumPy creates a True/False mask (marks>88), then returns only elements where mask is True. Very powerful for filtering."},
+
+  // ── UNIT 2: DATA SCIENCE ──
+  {u:"U2",q:"Which CBSE AI unit covers 'Confusion Matrix and F1 Score'?",opts:["Unit 1: Python II","Unit 2: Data Science Methodology","Unit 3: Making Machines See","Unit 6: Neural Networks"],ans:1,exp:"Unit 2 covers all evaluation metrics: Precision, Recall, F1 Score, Confusion Matrix, MSE and RMSE."},
+  {u:"U2",q:"In a Confusion Matrix, what is a 'False Negative (FN)'?",opts:["Model predicted Positive, actually Positive","Model predicted Negative, actually Negative","Model predicted Negative, but actually Positive","Model predicted Positive, but actually Negative"],ans:2,exp:"FN = model MISSED a positive case. Like a cancer patient told they are healthy — the most dangerous error in medical AI!"},
+  {u:"U2",q:"What does RMSE stand for in model evaluation?",opts:["Relative Mean Squared Error","Root Mean Squared Error","Recursive Model Score Estimate","Ranked Mean Sigmoid Error"],ans:1,exp:"RMSE = Root Mean Squared Error = √(MSE). It's in the same units as the target variable, making it easier to interpret than MSE."},
+  {u:"U2",q:"Precision is defined as:",opts:["TP / (TP + FN)","TP / (TP + FP)","(TP+TN) / Total","TN / (TN + FP)"],ans:1,exp:"Precision = TP/(TP+FP). Of all cases the model flagged as positive, what fraction were truly positive? High precision means few false alarms."},
+  {u:"U2",q:"In the 10-step Data Science Methodology, which step comes FIRST?",opts:["Model Building","Business Understanding","Data Collection","Evaluation"],ans:1,exp:"Step 1 is always Business Understanding — defining the problem clearly. There's no point collecting data without knowing what question you're answering."},
+  {u:"U2",q:"Recall (Sensitivity) is critical in which scenario?",opts:["Spam email detection","Cancer diagnosis AI","Recommendation systems","Chatbots"],ans:1,exp:"In cancer detection, missing a positive (FN) is life-threatening. Recall = TP/(TP+FN) — catching ALL real positives matters more than precision."},
+  {u:"U2",q:"F1 Score is the:",opts:["Arithmetic mean of Precision and Recall","Harmonic mean of Precision and Recall","Geometric mean of Accuracy and Recall","Sum of TP and TN"],ans:1,exp:"F1 = 2×P×R/(P+R) — the harmonic mean penalises extreme imbalance. A model with 100% precision but 0% recall gets F1=0, not 50%."},
+
+  // ── UNIT 3: MACHINES SEE ──
+  {u:"U3",q:"In a grayscale image, what does a pixel value of 0 represent?",opts:["White","Red","Black","Transparent"],ans:2,exp:"In grayscale, 0 = black (no light), 255 = white (maximum brightness), 128 = 50% grey. Computers see images entirely as these numbers."},
+  {u:"U3",q:"A colour (RGB) image has how many values per pixel?",opts:["1","2","3","4"],ans:2,exp:"Each RGB pixel has 3 values: Red (0-255), Green (0-255), Blue (0-255). Pure red = (255,0,0). A 640×480 colour image has 640×480×3 = 921,600 numbers!"},
+  {u:"U3",q:"What is the correct order of the Computer Vision pipeline?",opts:["Feature Extraction → Acquisition → Preprocessing → Analysis","Acquisition → Preprocessing → Feature Extraction → Analysis","Analysis → Preprocessing → Acquisition → Feature Extraction","Preprocessing → Acquisition → Feature Extraction → Analysis"],ans:1,exp:"CV Pipeline: (1) Acquire image from camera/sensor (2) Preprocess: resize, denoise, normalise (3) Extract features: edges, shapes, textures (4) Analyse: classify, detect, segment."},
+  {u:"U3",q:"Which Indian government project uses facial recognition at airports?",opts:["Aadhaar Vision","DigiYatra","IRCTC FacePass","BHIM FaceID"],ans:1,exp:"DigiYatra uses facial recognition to match passengers against their Aadhaar photo in 0.3 seconds at 24 Indian airports, replacing boarding passes."},
+  {u:"U3",q:"OpenCV function to convert a colour image to grayscale:",opts:["cv2.COLOR_BGR2GRAY","cv2.GRAYSCALE()","cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)","img.grayscale()"],ans:2,exp:"cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) converts BGR (OpenCV's default) to grayscale using weighted average: 0.114R + 0.587G + 0.299B."},
+  {u:"U3",q:"CNN stands for:",opts:["Compressed Neural Node","Convolutional Neural Network","Connected Neuron Network","Circular Neural Net"],ans:1,exp:"CNN = Convolutional Neural Network. Uses sliding filter kernels to detect local features like edges and textures. Best for image/video tasks."},
+
+  // ── UNIT 4: ORANGE ──
+  {u:"U4",q:"In Orange Data Mining, which widget loads your CSV data?",opts:["Data Table","Scatter Plot","File Widget","Corpus Widget"],ans:2,exp:"The File Widget is the entry point — drag it onto canvas, select your CSV, and Orange auto-detects all features and the target variable."},
+  {u:"U4",q:"Which Orange widget shows the most frequent words in text data?",opts:["Scatter Plot","Word Cloud","Corpus","Topic Modelling"],ans:1,exp:"Word Cloud widget shows bigger text for more frequent words — a visual summary of text data. Great for exploring customer reviews or news articles."},
+  {u:"U4",q:"The Iris dataset has how many classes (species)?",opts:["2","3","4","5"],ans:1,exp:"Iris has 3 species: Setosa, Versicolor, Virginica. 150 samples, 4 features (sepal/petal length/width). A classic beginner's classification dataset."},
+  {u:"U4",q:"In Orange, the Test & Score widget gives you:",opts:["Only accuracy","Accuracy, AUC, F1, Precision, Recall all at once","Just a confusion matrix","Model training time"],ans:1,exp:"Test & Score is Orange's all-in-one evaluator — it shows Accuracy, AUC, F1, Precision, Recall in a sortable table for multiple classifiers simultaneously."},
+  {u:"U4",q:"What does the Data Sampler widget in Orange do?",opts:["Removes outliers","Splits data into train and test sets","Adds new features","Downloads data from the web"],ans:1,exp:"Data Sampler performs train-test split (e.g., 70:30) without any code. Connect it between File and classifier for proper model evaluation."},
+  {u:"U4",q:"Which step in NLP preprocessing removes words like 'the', 'is', 'and'?",opts:["Tokenization","Stemming","Stopword removal","Lemmatization"],ans:2,exp:"Stopword removal eliminates common words that carry no meaning. Reduces noise so the model focuses on meaningful words like 'excellent', 'terrible', 'fast'."},
+
+  // ── UNIT 5: BIG DATA ──
+  {u:"U5",q:"Which 'V' of Big Data refers to its trustworthiness?",opts:["Volume","Velocity","Veracity","Value"],ans:2,exp:"Veracity = trustworthiness. Big data often has fake news, sensor errors, duplicates — all must be verified before analysis."},
+  {u:"U5",q:"Which V of Big Data describes the sheer size — petabytes of data?",opts:["Velocity","Veracity","Variety","Volume"],ans:3,exp:"Volume = size. Facebook stores 100 petabytes. India generates 5MB per person per day. Volume was the original 'big' in Big Data."},
+  {u:"U5",q:"Apache Kafka is used for:",opts:["Batch processing of stored datasets","Real-time data stream processing","Image classification","SQL database management"],ans:1,exp:"Kafka is a distributed event streaming platform. It ingests millions of events per second — used by IRCTC, Swiggy, Zomato for real-time order/booking streams."},
+  {u:"U5",q:"In a data stream, a 'sliding window' is used to:",opts:["Store all historical data permanently","Process only the last N events in memory","Sort data before processing","Encrypt streaming data"],ans:1,exp:"Sliding window keeps only the last N events (e.g., last 100 transactions). Old events are discarded — essential when data arrives faster than it can be stored."},
+  {u:"U5",q:"What type of analytics predicts future outcomes from current data?",opts:["Descriptive Analytics","Diagnostic Analytics","Predictive Analytics","Prescriptive Analytics"],ans:2,exp:"Predictive analytics uses ML models on historical data to forecast future. E.g., SBI predicting credit card fraud before it happens, or IRCTC predicting booking demand."},
+  {u:"U5",q:"Which company's real-time fraud detection uses Big Data stream processing in India?",opts:["Zomato","SBI Credit Card Division","BSNL","Doordarshan"],ans:1,exp:"SBI's credit card fraud system processes every swipe as a stream event — analyzes location, amount, merchant, time in <100ms to block suspicious transactions."},
+
+  // ── UNIT 6: NEURAL NETWORKS ──
+  {u:"U6",q:"Which activation function is defined as max(0, x)?",opts:["Sigmoid","Tanh","ReLU","Softmax"],ans:2,exp:"ReLU (Rectified Linear Unit) = max(0,x). It's the most popular activation in modern deep learning — simple, fast, and avoids vanishing gradients."},
+  {u:"U6",q:"In backpropagation, what is updated to reduce the loss?",opts:["Learning rate only","Weights and biases","Activation functions","Number of layers"],ans:1,exp:"Backpropagation computes gradients of loss w.r.t. each weight, then gradient descent updates: weight = weight − lr × gradient. Biases are also updated."},
+  {u:"U6",q:"Which type of neural network is specifically designed for image recognition?",opts:["RNN","LSTM","CNN","GAN"],ans:2,exp:"CNN (Convolutional Neural Network) uses sliding filters to detect spatial features like edges, corners, and textures. Best for images, video, medical scans."},
+  {u:"U6",q:"LSTM solves which problem that vanilla RNNs face?",opts:["Overfitting","Vanishing gradient problem","Slow training speed","Too many parameters"],ans:1,exp:"LSTM uses 3 gates (Forget, Input, Output) to maintain long-term memory. Vanilla RNNs lose gradient signal over long sequences — LSTM preserves it."},
+  {u:"U6",q:"What does the hidden layer in a neural network do?",opts:["Receives raw input data","Outputs final predictions","Learns intermediate representations and features","Stores training data"],ans:2,exp:"Hidden layers learn abstract features: first layer detects edges, next detects shapes, final hidden layer detects high-level concepts like 'face' or 'digit'."},
+  {u:"U6",q:"In the TensorFlow/Keras CBSE activity, which optimizer is commonly used?",opts:["SGD","Adam","RMSProp","Adagrad"],ans:1,exp:"Adam (Adaptive Moment Estimation) combines momentum and RMSProp — the most popular optimizer. It adapts learning rate per-parameter and converges quickly."},
+  {u:"U6",q:"A GAN consists of:",opts:["Encoder and Decoder","Generator and Discriminator","Input and Output layer","Convolutional and Pooling layer"],ans:1,exp:"GAN = Generator (creates fake data) + Discriminator (detects fakes). They train adversarially until Generator fools Discriminator consistently."},
+
+  // ── UNIT 7: GENERATIVE AI ──
+  {u:"U7",q:"In Generative AI, what does RLHF stand for?",opts:["Reinforcement Learning from Human Feedback","Recursive Learning with High Fidelity","Regulated Language for Human Functions","Real-time Learning with Human Framework"],ans:0,exp:"RLHF = Reinforcement Learning from Human Feedback. Human trainers rank AI responses — the model learns to be helpful, harmless, and honest."},
+  {u:"U7",q:"Diffusion models generate images by:",opts:["Competing generator and discriminator","Encoding to latent space and decoding","Gradually removing noise from random static","Predicting next pixel one by one"],ans:2,exp:"Diffusion = reverse denoising. Forward process adds noise over T steps. Reverse process trains a U-Net to remove noise step-by-step from pure Gaussian noise."},
+  {u:"U7",q:"What is a 'token' in the context of LLMs?",opts:["A security certificate","A word or sub-word piece processed by the model","A single neuron in the network","A training dataset sample"],ans:1,exp:"Tokens are the basic units LLMs process — roughly word pieces. 'unbelievable' might be 3 tokens. GPT-4 has a context window of ~128,000 tokens."},
+  {u:"U7",q:"VAE stands for:",opts:["Vectorized Auto Encoder","Variational Autoencoder","Visual AI Engine","Validated Adversarial Evaluator"],ans:1,exp:"VAE = Variational Autoencoder. Encodes input to a latent distribution (mean + variance), not a fixed vector. Allows smooth interpolation and generation."},
+  {u:"U7",q:"Which Generative AI model creates images from text prompts?",opts:["BERT","GPT-3","Stable Diffusion / DALL·E","AlphaFold"],ans:2,exp:"Stable Diffusion and DALL·E are text-to-image diffusion models. BERT and GPT-3 are text models. AlphaFold predicts protein structures."},
+  {u:"U7",q:"What is 'hallucination' in LLMs?",opts:["The model overheating during training","Model generating confident but factually incorrect information","Adversarial attack on the model","Model refusing to answer questions"],ans:1,exp:"Hallucination = LLMs generating plausible-sounding but false information with confidence. Example: making up fake research citations. A key limitation to be aware of!"},
+  {u:"U7",q:"India's AI policy concern regarding regional languages is:",opts:["LLMs being too slow for Indian servers","AI models showing bias against regional languages and rural contexts","All AI must be in English","Copyrighting Indian languages"],ans:1,exp:"MEITY's Responsible AI approach specifically flags that models trained predominantly on English data perform poorly and show bias for India's 22 official languages and rural contexts."},
+
+  // ── UNIT 8: DATA STORYTELLING ──
+  {u:"U8",q:"The CBSE Capstone Project must be aligned with:",opts:["Indian Constitution Articles","Sustainable Development Goals (SDGs)","National Education Policy 2020","Digital India Mission Pillars"],ans:1,exp:"CBSE mandates that the Capstone Project addresses at least one of the 17 UN Sustainable Development Goals — connecting AI to real-world impact."},
+  {u:"U8",q:"In Freytag's Pyramid applied to data storytelling, what is the 'Climax'?",opts:["Introducing the dataset","The key insight that answers the main question","A call to action","Background context"],ans:1,exp:"Climax = the key data insight. E.g., 'Districts with full MDMS had 2.3× lower dropout rates'. This is the moment the data confirms or surprises — the most impactful point."},
+  {u:"U8",q:"Hans Rosling's Gapminder is famous for:",opts:["Creating the first AI chatbot","Turning 200 years of UN data into animated bubble chart stories","Inventing the pie chart","Discovering the 5Vs of Big Data"],ans:1,exp:"Rosling's animated bubble charts (income vs life expectancy, bubble size = population) showed 200 years of development in seconds. His TED talk has 15 million views."},
+  {u:"U8",q:"Which chart type is best for showing trends over time?",opts:["Pie chart","Bar chart","Line chart","Scatter plot"],ans:2,exp:"Line charts are ideal for time-series data — they show direction, rate of change, and trends clearly. Pie charts show proportions; scatter plots show correlations."},
+  {u:"U8",q:"The 'Resolution' in a data story's Freytag Pyramid is:",opts:["Presenting raw data","Explaining methodology","A call to action or recommendation based on insights","Identifying the problem"],ans:2,exp:"Resolution = what to DO with the insight. E.g., 'Expanding MDMS to evening classes could retain 12 lakh more students annually.' Data without action is just noise."},
+  {u:"U8",q:"Which visualisation is best for showing correlation between two variables?",opts:["Bar chart","Scatter plot","Pie chart","Histogram"],ans:1,exp:"Scatter plot shows each data point as a dot at (x,y). Patterns reveal correlation: upward slope = positive correlation, random scatter = no correlation."}
+];
+
+let currentQuizSet = [];
+
+function getRandomQuiz(){
+  const shuffled = [...QUIZ_BANK].sort(()=>Math.random()-0.5);
+  return shuffled.slice(0,10);
+}
+
+function loadQuiz(){
+  currentQuizSet = getRandomQuiz();
+  const c=document.getElementById('quiz-container'); if(!c) return;
+  document.getElementById('quiz-score-chip').style.display='none';
+  c.innerHTML=currentQuizSet.map((q,i)=>`
+  <div class="quiz-card" data-qi="${i}">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <span style="font-size:.6rem;font-weight:800;padding:2px 8px;border-radius:20px;background:rgba(108,99,255,.15);color:var(--a1)">${q.u}</span>
+      <h4 style="margin:0;font-size:.84rem;font-weight:800;line-height:1.5">Q${i+1}. ${q.q}</h4>
+    </div>
+    <div class="q-opts">
+      ${'ABCD'.split('').map((l,j)=>`<div class="q-opt" onclick="ansQ(this,${j},${q.ans},'${q.exp.replace(/'/g,"&#39;").replace(/"/g,"&quot;")}')"><strong>${l})</strong> ${q.opts[j]}</div>`).join('')}
+    </div>
+    <div class="q-fb"></div>
+  </div>`).join('');
+  // Add score tracker
+  window._quizScore = 0; window._quizAnswered = 0;
+}
+
+function refreshQuiz(){
+  loadQuiz();
+  window.scrollTo(0,0);
+  addXP(5);
+}
+
+function ansQ(el,chosen,correct,exp){
+  const opts=el.parentElement.querySelectorAll('.q-opt');
+  const fb=el.parentElement.nextElementSibling;
+  opts.forEach(o=>o.style.pointerEvents='none');
+  if(chosen===correct){
+    el.classList.add('correct');
+    fb.innerHTML='✅ Correct! '+exp;
+    fb.style.cssText='background:rgba(67,217,173,.08);color:var(--a3);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:.75rem;line-height:1.5;display:block';
+    addXP(20);
+    window._quizScore = (window._quizScore||0)+1;
+  } else {
+    el.classList.add('wrong');
+    opts[correct].classList.add('correct');
+    fb.innerHTML='❌ Not quite. '+exp;
+    fb.style.cssText='background:rgba(255,101,132,.08);color:var(--a2);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:.75rem;line-height:1.5;display:block';
+  }
+  fb.classList.add('vis');
+  window._quizAnswered = (window._quizAnswered||0)+1;
+  if(window._quizAnswered===10){
+    const chip = document.getElementById('quiz-score-chip');
+    chip.textContent = `🏆 Score: ${window._quizScore}/10`;
+    chip.style.display='block';
+    chip.style.color=window._quizScore>=7?'var(--a3)':window._quizScore>=5?'var(--a4)':'var(--a2)';
+  }
+}
+function checkQ(el,result,msg){
+  const opts=el.parentElement.querySelectorAll('.q-opt');
+  const fb=el.closest('.quiz-card').querySelector('.q-fb');
+  opts.forEach(o=>o.style.pointerEvents='none');
+  el.classList.add(result);
+  fb.innerHTML=(result==='correct'?'✅ ':'❌ ')+msg;
+  fb.style.cssText=`background:rgba(${result==='correct'?'67,217,173':'255,101,132'},.08);color:var(${result==='correct'?'--a3':'--a2'});border-radius:8px;padding:10px 12px;margin-top:8px;font-size:.75rem`;
+  fb.classList.add('vis');
+  if(result==='correct') addXP(15);
+}
+
+// ═══════════════════════════════════════════════════════════
+// CANVAS RENDERERS
+// ═══════════════════════════════════════════════════════════
+function renderPage(page){
+  if(page==='u1'){drawNumpy();drawPandas();drawLinReg();}
+  if(page==='u2'){drawDSMethod();drawConfusion();}
+  if(page==='u3'){drawPixels();drawCVPipeline();}
+  if(page==='u4'){drawOrange();}
+  if(page==='u5'){drawBigData();drawStream();}
+  if(page==='u6'){drawNeural();drawNNTypes();}
+  if(page==='u7'){drawGenAI();}
+  if(page==='u8'){drawFreytag();}
+  if(page==='quiz'){loadQuiz();}
+}
+
+function drawNumpy(){
+  const c=document.getElementById('numpy-canvas'); if(!c) return;
+  const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#8892b0'; ctx.font='11px Nunito'; ctx.fillText('Speed comparison:',16,24);
+  const bars=[{label:'Python List  (10,000 items)',spd:28,col:'#ff6584'},{label:'NumPy Array  (10,000 items)',spd:290,col:'#43d9ad'}];
+  bars.forEach((b,i)=>{
+    const by=40+i*52, bx=160;
+    ctx.fillStyle='#13172a'; ctx.fillRect(bx,by,320,32);
+    const g=ctx.createLinearGradient(bx,by,bx+b.spd,by);
+    g.addColorStop(0,b.col+'88'); g.addColorStop(1,b.col);
+    ctx.fillStyle=g; ctx.beginPath(); ctx.roundRect(bx,by,b.spd,32,4); ctx.fill();
+    ctx.fillStyle='#cdd6f4'; ctx.font='bold 11px Nunito'; ctx.fillText(b.label,16,by+21);
+    ctx.fillStyle=b.col; ctx.font='bold 11px Nunito';
+    ctx.fillText(i===0?'1×':'~100× faster',bx+b.spd+8,by+21);
+  });
+  // Array cells
+  ctx.fillStyle='#8892b0'; ctx.font='10px Fira Code'; ctx.fillText('arr = [85, 90, 78, 92, 88]',16,148);
+  [85,90,78,92,88].forEach((v,i)=>{
+    const bx=16+i*58, by=155;
+    ctx.fillStyle='rgba(108,99,255,.15)'; ctx.strokeStyle='#6c63ff'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.roundRect(bx,by,52,28,4); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#a6e3a1'; ctx.font='bold 14px Fira Code'; ctx.textAlign='center';
+    ctx.fillText(v,bx+26,by+19); ctx.textAlign='left';
+    ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.textAlign='center';
+    ctx.fillText('['+i+']',bx+26,by+38); ctx.textAlign='left';
+  });
+}
+
+function drawPandas(){
+  const c=document.getElementById('pandas-canvas'); if(!c) return;
+  const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  const cols=['Name','Maths','Science','AI'], cw=[90,80,80,70];
+  const rows=[['Arjun','85.0','90.0','95.0'],['Priya','92.0','88.0','89.0'],['Rahul','NaN','76.0','84.0'],['Sneha','78.0','NaN','91.0'],['Karan','95.0','82.0','NaN']];
+  let cx=20;
+  cols.forEach((col,i)=>{
+    ctx.fillStyle='rgba(108,99,255,.2)'; ctx.fillRect(cx,16,cw[i]-2,26);
+    ctx.strokeStyle='#6c63ff'; ctx.lineWidth=1; ctx.strokeRect(cx,16,cw[i]-2,26);
+    ctx.fillStyle='#a6e3a1'; ctx.font='bold 11px Nunito'; ctx.fillText(col,cx+6,33);
+    cx+=cw[i];
+  });
+  rows.forEach((row,ri)=>{
+    let cx2=20;
+    row.forEach((val,ci)=>{
+      const isNaN=val==='NaN';
+      ctx.fillStyle=isNaN?'rgba(255,101,132,.15)':'rgba(255,255,255,.02)';
+      ctx.strokeStyle=isNaN?'#ff6584':'#242840'; ctx.lineWidth=1;
+      ctx.fillRect(cx2,44+ri*22,cw[ci]-2,21); ctx.strokeRect(cx2,44+ri*22,cw[ci]-2,21);
+      ctx.fillStyle=isNaN?'#ff6584':'#cdd6f4'; ctx.font=(isNaN?'bold ':'')+'10px Fira Code';
+      ctx.fillText(val,cx2+6,44+ri*22+15); cx2+=cw[ci];
+    });
+  });
+  ctx.fillStyle='#ff6584'; ctx.font='10px Nunito';
+  ctx.fillText('← Red = NaN (missing) — must fill before model training!',360,80);
+}
+
+function drawLinReg(){
+  const c=document.getElementById('linreg-canvas'); if(!c) return;
+  const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  const px=55,py=18,pw=W-75,ph=H-48;
+  const Xs=[1,2,3,4,5,6,7,8],Ys=[35,45,55,60,70,78,85,92];
+  const maxX=10,maxY=110;
+  const sx=x=>px+x/maxX*pw, sy=y=>py+ph-(y/maxY*ph);
+  // Grid
+  [25,50,75,100].forEach(v=>{
+    ctx.strokeStyle='#1c2035'; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+    ctx.beginPath(); ctx.moveTo(px,sy(v)); ctx.lineTo(px+pw,sy(v)); ctx.stroke();
+    ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.fillText(v,px-28,sy(v)+4);
+  });
+  [2,4,6,8].forEach(v=>{
+    ctx.beginPath(); ctx.moveTo(sx(v),py); ctx.lineTo(sx(v),py+ph); ctx.stroke();
+    ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.textAlign='center';
+    ctx.fillText(v,sx(v),py+ph+14); ctx.textAlign='left';
+  });
+  ctx.setLineDash([]);
+  // Axes
+  ctx.strokeStyle='#2a304a'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(px,py+ph); ctx.lineTo(px+pw,py+ph); ctx.stroke();
+  // Regression line
+  const m=8.21,b=26.79;
+  ctx.strokeStyle='#6c63ff'; ctx.lineWidth=2.5; ctx.setLineDash([]);
+  ctx.beginPath(); ctx.moveTo(sx(0),sy(b)); ctx.lineTo(sx(10),sy(m*10+b)); ctx.stroke();
+  ctx.fillStyle='#6c63ff88'; ctx.font='bold 10px Nunito';
+  ctx.fillText('Y = 8.21X + 26.79',sx(6)+4,sy(m*6+b)-8);
+  // Points
+  Xs.forEach((x,i)=>{
+    ctx.beginPath(); ctx.arc(sx(x),sy(Ys[i]),5.5,0,Math.PI*2);
+    ctx.fillStyle='#43d9ad'; ctx.fill(); ctx.strokeStyle='#fff3'; ctx.lineWidth=1; ctx.stroke();
+  });
+  ctx.fillStyle='#8892b0'; ctx.font='10px Nunito';
+  ctx.fillText('Hours Studied →',px+pw/2-30,py+ph+26);
+  ctx.save(); ctx.translate(px-40,py+ph/2+10); ctx.rotate(-Math.PI/2);
+  ctx.fillText('Score →',0,0); ctx.restore();
+  // Click to add points
+  c._userPts=c._userPts||[];
+  c.onclick=e=>{
+    const r=c.getBoundingClientRect();
+    const mx=(e.clientX-r.left)*W/r.width, my=(e.clientY-r.top)*H/r.height;
+    if(mx>px&&mx<px+pw&&my>py&&my<py+ph){
+      c._userPts.push([mx,my]);
+      ctx.beginPath(); ctx.arc(mx,my,5,0,Math.PI*2);
+      ctx.fillStyle='#ffb347'; ctx.fill();
+    }
+  };
+}
+
+function drawDSMethod(){
+  const c=document.getElementById('ds-method-canvas'); if(!c)return;
+  const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  const steps=['Business\nUnderstanding','Analytic\nApproach','Data\nRequirements','Data\nCollection','Data\nUnderstanding','Data\nPreparation','AI\nModelling','Evaluation','Deployment','Feedback'];
+  const cols=['#6c63ff','#7a72ff','#ff6584','#ffb347','#43d9ad','#4fc3f7','#c48cff','#ff6584','#43d9ad','#6c63ff'];
+  const bw=(W-30)/steps.length-4;
+  let step=0;
+  if(c._anim) clearInterval(c._anim);
+  c._anim=setInterval(()=>{
+    ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+    steps.forEach((s,i)=>{
+      const bx=15+i*(bw+4),by=25,bh=145;
+      const act=i<=step;
+      ctx.fillStyle=act?cols[i]+'18':'#13172a';
+      ctx.strokeStyle=act?cols[i]:'#242840'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.roundRect(bx,by,bw,bh,5); ctx.fill(); ctx.stroke();
+      if(act){
+        ctx.fillStyle=cols[i]; ctx.font='bold 9px Nunito'; ctx.textAlign='center';
+        const lines=s.split('\n');
+        lines.forEach((l,li)=>ctx.fillText(l,bx+bw/2,by+65+li*13));
+        if(i<steps.length-1){ctx.fillStyle=cols[i]+'99'; ctx.font='11px Nunito'; ctx.fillText('→',bx+bw+2,by+75);}
+      } else {
+        ctx.fillStyle='#2a304a'; ctx.font='bold 9px Nunito'; ctx.textAlign='center';
+        ctx.fillText('...',bx+bw/2,by+75);
+      }
+    });
+    ctx.textAlign='left';
+    step=(step+1)%steps.length;
+    if(step===0) clearInterval(c._anim);
+  },500);
+}
+
+function drawConfusion(){
+  const c=document.getElementById('conf-canvas'); if(!c)return;
+  const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  const cells=[{v:'TP\n45',x:110,y:70,col:'#43d9ad',desc:'Spam→Spam ✓'},{v:'FP\n2',x:250,y:70,col:'#ffb347',desc:'Ham→Spam ✗'},{v:'FN\n5',x:110,y:175,col:'#ff6584',desc:'Spam→Ham ✗'},{v:'TN\n48',x:250,y:175,col:'#4fc3f7',desc:'Ham→Ham ✓'}];
+  ctx.fillStyle='#8892b0'; ctx.font='bold 11px Nunito'; ctx.textAlign='center';
+  ctx.fillText('Predicted SPAM',185,30); ctx.fillText('Predicted HAM',325,30);
+  ctx.save(); ctx.translate(50,190); ctx.rotate(-Math.PI/2);
+  ctx.fillText('Actual SPAM',0,0); ctx.restore();
+  ctx.save(); ctx.translate(50,285); ctx.rotate(-Math.PI/2);
+  ctx.fillText('Actual HAM',0,0); ctx.restore();
+  cells.forEach(cell=>{
+    ctx.fillStyle=cell.col+'22'; ctx.strokeStyle=cell.col; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.roundRect(cell.x,cell.y,120,85,8); ctx.fill(); ctx.stroke();
+    const parts=cell.v.split('\n');
+    ctx.fillStyle=cell.col; ctx.font='bold 12px Nunito'; ctx.textAlign='center';
+    ctx.fillText(parts[0],cell.x+60,cell.y+30);
+    ctx.font='bold 26px Nunito'; ctx.fillText(parts[1],cell.x+60,cell.y+60);
+    ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.fillText(cell.desc,cell.x+60,cell.y+78);
+  });
+  // Formulas
+  const metrics=[['Accuracy: 93.0%','(TP+TN)/(all)'],['Precision: 95.7%','TP/(TP+FP)'],['Recall: 90.0%','TP/(TP+FN)'],['F1: 92.8%','2×P×R/(P+R)']];
+  metrics.forEach((m,i)=>{
+    ctx.fillStyle='#e8eaf6'; ctx.font='bold 11px Nunito'; ctx.textAlign='left';
+    ctx.fillText(m[0],400,80+i*46);
+    ctx.fillStyle='#8892b0'; ctx.font='9px Fira Code';
+    ctx.fillText(m[1],400,96+i*46);
+  });
+  ctx.textAlign='left';
+}
+
+function drawPixels(){
+  const c=document.getElementById('pixel-canvas'); if(!c)return;
+  const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  const img=[[255,255,255,255,255,255,255,255],[255,0,255,255,255,0,255,255],[255,0,255,255,255,0,255,255],[255,255,255,255,255,255,255,255],[255,0,255,255,255,255,0,255],[255,255,0,255,255,0,255,255],[255,255,255,0,0,255,255,255],[255,255,255,255,255,255,255,255]];
+  const sz=24;
+  // Left: pixel grid visual
+  img.forEach((row,r)=>row.forEach((v,c2)=>{
+    ctx.fillStyle=`rgb(${v},${v},${v})`;
+    ctx.fillRect(20+c2*sz,20+r*sz,sz-1,sz-1);
+    ctx.strokeStyle='#1c2035'; ctx.lineWidth=0.5;
+    ctx.strokeRect(20+c2*sz,20+r*sz,sz-1,sz-1);
+  }));
+  ctx.fillStyle='#8892b0'; ctx.font='bold 10px Nunito'; ctx.textAlign='center';
+  ctx.fillText('Visual',20+8*sz/2,215);
+  // Right: number matrix
+  const ox=240;
+  img.forEach((row,r)=>row.forEach((v,c2)=>{
+    const isZero=v===0;
+    ctx.fillStyle=isZero?'rgba(255,101,132,.18)':'rgba(255,255,255,.02)';
+    ctx.fillRect(ox+c2*47,20+r*25,46,24);
+    ctx.strokeStyle=isZero?'#ff6584':'#1c2035'; ctx.lineWidth=0.5;
+    ctx.strokeRect(ox+c2*47,20+r*25,46,24);
+    ctx.fillStyle=isZero?'#ff6584':'#8892b0'; ctx.font='9px Fira Code'; ctx.textAlign='center';
+    ctx.fillText(String(v).padStart(3,' '),ox+c2*47+23,20+r*25+16);
+  }));
+  ctx.fillStyle='#8892b0'; ctx.font='bold 10px Nunito'; ctx.fillText('Number matrix',ox+8*47/2,215);
+  ctx.fillStyle='#ff6584'; ctx.font='9px Nunito'; ctx.textAlign='left';
+  ctx.fillText('← 0 = black pixel',ox+2,H-5);
+  ctx.textAlign='left';
+}
+
+function drawCVPipeline(){
+  const c=document.getElementById('cv-pipeline-canvas'); if(!c)return;
+  const ctx=c.getContext('2d'); ctx.fillStyle='#080a10'; ctx.fillRect(0,0,c.width,c.height);
+  const W=c.width,H=c.height;
+  const stages=[{icon:'📸',l:'Acquisition',s:'Camera/Sensor'},{icon:'⚙️',l:'Preprocessing',s:'Resize/Normalize'},{icon:'🔍',l:'Feature Extract',s:'Edges/Shapes'},{icon:'🧠',l:'Analysis',s:'CNN Model'},{icon:'✅',l:'Output',s:'Label/Score'}];
+  const cols=['#6c63ff','#4fc3f7','#ffb347','#c48cff','#43d9ad'];
+  const sw=(W-30)/stages.length-6;
+  let step=0;
+  if(c._anim) clearInterval(c._anim);
+  c._anim=setInterval(()=>{
+    ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+    stages.forEach((s,i)=>{
+      const bx=15+i*(sw+6),by=18,bh=H-36;
+      const act=i<=step;
+      ctx.fillStyle=act?cols[i]+'18':'#13172a';
+      ctx.strokeStyle=act?cols[i]:'#242840'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.roundRect(bx,by,sw,bh,8); ctx.fill(); ctx.stroke();
+      ctx.font='26px serif'; ctx.textAlign='center'; ctx.fillText(s.icon,bx+sw/2,by+52);
+      ctx.fillStyle=act?cols[i]:'#2a304a'; ctx.font='bold 11px Nunito';
+      ctx.fillText(s.l,bx+sw/2,by+74);
+      ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.fillText(s.s,bx+sw/2,by+90);
+      if(i<stages.length-1&&act){ctx.fillStyle=cols[i]+'99'; ctx.font='bold 14px Nunito'; ctx.fillText('→',bx+sw+3,by+58);}
+    });
+    ctx.textAlign='left';
+    step=(step+1)%(stages.length+1);
+    if(step===0) clearInterval(c._anim);
+  },600);
+}
+
+function drawOrange(){
+  const c=document.getElementById('orange-canvas'); if(!c)return;
+  const ctx=c.getContext('2d'); ctx.fillStyle='#080a10'; ctx.fillRect(0,0,c.width,c.height);
+  const W=c.width,H=c.height;
+  const ws=[{i:'📂',l:'File\nWidget',col:'#ffb347'},{i:'📋',l:'Data\nTable',col:'#4fc3f7'},{i:'📊',l:'Scatter\nPlot',col:'#43d9ad'},{i:'✂️',l:'Data\nSampler',col:'#6c63ff'},{i:'🤖',l:'kNN\nClassifier',col:'#c48cff'},{i:'✅',l:'Test &\nScore',col:'#ff6584'}];
+  const bw=90,bh=80,by=(H-bh)/2;
+  ws.forEach((w,i)=>{
+    const bx=20+i*104;
+    ctx.fillStyle=w.col+'18'; ctx.strokeStyle=w.col; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.roundRect(bx,by,bw,bh,10); ctx.fill(); ctx.stroke();
+    ctx.font='24px serif'; ctx.textAlign='center'; ctx.fillText(w.i,bx+bw/2,by+36);
+    ctx.fillStyle='#cdd6f4'; ctx.font='bold 9px Nunito';
+    w.l.split('\n').forEach((l,li)=>ctx.fillText(l,bx+bw/2,by+54+li*12));
+    if(i<ws.length-1){
+      ctx.strokeStyle='#2a304a'; ctx.lineWidth=2; ctx.setLineDash([4,3]);
+      ctx.beginPath(); ctx.moveTo(bx+bw+1,by+bh/2); ctx.lineTo(bx+bw+13,by+bh/2); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle='#2a304a'; ctx.font='14px Nunito'; ctx.fillText('→',bx+bw+3,by+bh/2+5);
+    }
+  });
+  ctx.fillStyle='#8892b0'; ctx.font='10px Nunito'; ctx.textAlign='center';
+  ctx.fillText('Orange workflow — drag & drop, no code needed! Get 96% accuracy on Iris in 5 clicks.',W/2,H-8);
+  ctx.textAlign='left';
+}
+
+function drawBigData(){
+  const c=document.getElementById('bigdata-canvas'); if(!c)return;
+  const ctx=c.getContext('2d'); ctx.fillStyle='#080a10'; ctx.fillRect(0,0,c.width,c.height);
+  const W=c.width,H=c.height,cx=W/2,cy=H/2;
+  const Vs=[{l:'Volume',v:.9,col:'#6c63ff',a:-90},{l:'Velocity',v:.85,col:'#ff6584',a:-18},{l:'Variety',v:.75,col:'#ffb347',a:54},{l:'Veracity',v:.65,col:'#43d9ad',a:126},{l:'Value',v:.8,col:'#4fc3f7',a:198}];
+  const R=100;
+  [.25,.5,.75,1].forEach(s=>{
+    ctx.strokeStyle='#1c2035'; ctx.lineWidth=1; ctx.beginPath();
+    Vs.forEach((v,i)=>{const a=v.a*Math.PI/180,px2=cx+R*s*Math.cos(a),py2=cy+R*s*Math.sin(a);i===0?ctx.moveTo(px2,py2):ctx.lineTo(px2,py2);}); ctx.closePath(); ctx.stroke();
+  });
+  Vs.forEach(v=>{
+    const a=v.a*Math.PI/180;
+    ctx.strokeStyle='#1c2035'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a)); ctx.stroke();
+    ctx.fillStyle=v.col; ctx.font='bold 12px Nunito'; ctx.textAlign='center';
+    ctx.fillText(v.l,cx+(R+22)*Math.cos(a),cy+(R+22)*Math.sin(a)+4);
+  });
+  ctx.beginPath();
+  Vs.forEach((v,i)=>{const a=v.a*Math.PI/180,px2=cx+R*v.v*Math.cos(a),py2=cy+R*v.v*Math.sin(a);i===0?ctx.moveTo(px2,py2):ctx.lineTo(px2,py2);});
+  ctx.closePath(); ctx.fillStyle='rgba(108,99,255,.18)'; ctx.fill();
+  ctx.strokeStyle='#6c63ff'; ctx.lineWidth=2; ctx.stroke();
+  Vs.forEach(v=>{const a=v.a*Math.PI/180;ctx.beginPath();ctx.arc(cx+R*v.v*Math.cos(a),cy+R*v.v*Math.sin(a),5,0,Math.PI*2);ctx.fillStyle=v.col;ctx.fill();});
+  ctx.textAlign='left';
+}
+
+function drawStream(){
+  const c=document.getElementById('stream-canvas'); if(!c)return;
+  const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+  let off=0;
+  if(c._anim) clearInterval(c._anim);
+  c._anim=setInterval(()=>{
+    ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#8892b0'; ctx.font='bold 11px Nunito'; ctx.fillText('Live Data Stream → Real-time Analysis',16,18);
+    for(let i=0;i<22;i++){
+      const bx=10+i*28-off%28,by=28,bh=90,v=Math.sin(i*.7+off*.08)*22+55;
+      if(bx<-30||bx>W+10) continue;
+      const inWin=bx>160&&bx<340;
+      ctx.fillStyle=inWin?'#43d9ad18':'#6c63ff12';
+      ctx.strokeStyle=inWin?'#43d9ad':'#6c63ff55'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.roundRect(bx,by,24,bh,3); ctx.fill(); ctx.stroke();
+      ctx.fillStyle=inWin?'#43d9ad':'#8892b0'; ctx.font='9px Fira Code'; ctx.textAlign='center';
+      ctx.fillText(Math.round(v),bx+12,by+bh/2+4);
+    }
+    ctx.strokeStyle='#ffb347'; ctx.lineWidth=2; ctx.setLineDash([5,3]);
+    ctx.strokeRect(160,22,180,100); ctx.setLineDash([]);
+    ctx.fillStyle='#ffb347'; ctx.font='bold 10px Nunito'; ctx.textAlign='center';
+    ctx.fillText('Sliding Window',250,18);
+    ctx.fillStyle='#43d9ad'; ctx.font='bold 11px Nunito'; ctx.fillText('ANALYZING',250,80);
+    ctx.strokeStyle='#8892b0'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(8,H-12); ctx.lineTo(W-8,H-12); ctx.stroke();
+    ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.fillText('→ Time',W-40,H-6);
+    ctx.textAlign='left';
+    off++;
+  },100);
+}
+
+function drawNeural(){
+  const c=document.getElementById('neural-canvas'); if(!c)return;
+  const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+  const layers=[{n:3,l:'Input Layer',lx:80},{n:4,l:'Hidden Layer 1',lx:240},{n:4,l:'Hidden Layer 2',lx:420},{n:2,l:'Output Layer',lx:580}];
+  const cols=['#4fc3f7','#6c63ff','#c48cff','#43d9ad'];
+  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  // Connections
+  layers.forEach((l,li)=>{
+    if(li===layers.length-1) return;
+    for(let i=0;i<l.n;i++) for(let j=0;j<layers[li+1].n;j++){
+      const y1=H/2+(i-(l.n-1)/2)*56,y2=H/2+(j-(layers[li+1].n-1)/2)*56;
+      ctx.strokeStyle='rgba(108,99,255,.15)'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(l.lx+18,y1); ctx.lineTo(layers[li+1].lx-18,y2); ctx.stroke();
+    }
+  });
+  // Nodes
+  layers.forEach((l,li)=>{
+    for(let i=0;i<l.n;i++){
+      const ny=H/2+(i-(l.n-1)/2)*56;
+      ctx.beginPath(); ctx.arc(l.lx,ny,18,0,Math.PI*2);
+      ctx.fillStyle=cols[li]+'28'; ctx.fill();
+      ctx.strokeStyle=cols[li]; ctx.lineWidth=2.5; ctx.stroke();
+      ctx.fillStyle=cols[li]; ctx.font='bold 10px Nunito'; ctx.textAlign='center';
+      ctx.fillText(['T°','H%','☀','','','','',''][i+li]||'σ',l.lx,ny+4);
+    }
+    ctx.fillStyle=cols[li]; ctx.font='bold 10px Nunito'; ctx.textAlign='center';
+    ctx.fillText(l.l,l.lx,H-12);
+  });
+  // Labels
+  ['Temperature','Humidity','Sunlight'].forEach((l,i)=>{
+    ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.textAlign='right';
+    ctx.fillText(l,58,H/2+(i-1)*56+4);
+  });
+  ['Rain','No Rain'].forEach((l,i)=>{
+    ctx.fillStyle='#43d9ad'; ctx.font='9px Nunito'; ctx.textAlign='left';
+    ctx.fillText(l,600,H/2+(i-0.5)*56+4);
+  });
+  ctx.textAlign='left';
+  // Click to animate signal
+  c.onclick=()=>{
+    let step=0;
+    const anim=setInterval(()=>{
+      ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+      layers.forEach((l,li)=>{
+        if(li===layers.length-1) return;
+        for(let i=0;i<l.n;i++) for(let j=0;j<layers[li+1].n;j++){
+          const y1=H/2+(i-(l.n-1)/2)*56,y2=H/2+(j-(layers[li+1].n-1)/2)*56;
+          const active=li<step;
+          ctx.strokeStyle=active?cols[li]+'99':'rgba(108,99,255,.1)'; ctx.lineWidth=active?2:1;
+          ctx.beginPath(); ctx.moveTo(l.lx+18,y1); ctx.lineTo(layers[li+1].lx-18,y2); ctx.stroke();
+        }
+      });
+      layers.forEach((l,li)=>{
+        for(let i=0;i<l.n;i++){
+          const ny=H/2+(i-(l.n-1)/2)*56,active=li<=step;
+          ctx.beginPath(); ctx.arc(l.lx,ny,18,0,Math.PI*2);
+          ctx.fillStyle=active?cols[li]+'55':cols[li]+'18'; ctx.fill();
+          ctx.strokeStyle=cols[li]; ctx.lineWidth=active?3:2; ctx.stroke();
+          if(active){ctx.beginPath();ctx.arc(l.lx,ny,24,0,Math.PI*2);ctx.strokeStyle=cols[li]+'44';ctx.lineWidth=1;ctx.stroke();}
+        }
+        ctx.fillStyle=cols[li]; ctx.font='bold 10px Nunito'; ctx.textAlign='center'; ctx.fillText(l.l,l.lx,H-12);
+      });
+      ctx.textAlign='left';
+      step++;
+      if(step>layers.length+1) clearInterval(anim);
+    },400);
+  };
+}
+
+function drawNNTypes(){
+  const c=document.getElementById('nn-types-canvas'); if(!c)return;
+  const ctx=c.getContext('2d'); ctx.fillStyle='#080a10'; ctx.fillRect(0,0,c.width,c.height);
+  const W=c.width,H=c.height;
+  const types=[{n:'CNN',s:'Images',i:'🖼️',c:'#6c63ff',a:'Face recognition\nMedical scans'},{n:'RNN',s:'Sequences',i:'🔄',c:'#ff6584',a:'Text translation\nSpeech'},{n:'LSTM',s:'Long context',i:'💾',c:'#43d9ad',a:'Chatbots\nStory generation'},{n:'GAN',s:'Create new data',i:'✨',c:'#ffb347',a:'Deepfakes\nAI Art'},{n:'Transformer',s:'Self-attention',i:'🔭',c:'#4fc3f7',a:'GPT/Gemini\nBERT'}];
+  types.forEach((t,i)=>{
+    const bx=18+i*132,bw=122,by=18,bh=H-36;
+    ctx.fillStyle=t.c+'15'; ctx.strokeStyle=t.c; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.roundRect(bx,by,bw,bh,10); ctx.fill(); ctx.stroke();
+    ctx.font='28px serif'; ctx.textAlign='center'; ctx.fillText(t.i,bx+bw/2,by+52);
+    ctx.fillStyle=t.c; ctx.font='bold 14px Nunito'; ctx.fillText(t.n,bx+bw/2,by+78);
+    ctx.fillStyle='#8892b0'; ctx.font='10px Nunito'; ctx.fillText(t.s,bx+bw/2,by+96);
+    t.a.split('\n').forEach((l,li)=>{ctx.fillStyle='#cdd6f4'; ctx.font='9px Nunito'; ctx.fillText(l,bx+bw/2,by+116+li*14);});
+  });
+  ctx.textAlign='left';
+}
+
+function drawGenAI(){
+  const c=document.getElementById('genai-canvas'); if(!c)return;
+  const ctx=c.getContext('2d'); ctx.fillStyle='#080a10'; ctx.fillRect(0,0,c.width,c.height);
+  const W=c.width,H=c.height;
+  // Discriminative
+  ctx.strokeStyle='#4fc3f7'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.roundRect(16,16,298,H-32,10); ctx.stroke();
+  ctx.fillStyle='#4fc3f722'; ctx.fill();
+  ctx.fillStyle='#4fc3f7'; ctx.font='bold 13px Nunito'; ctx.textAlign='center';
+  ctx.fillText('Discriminative AI',165,40);
+  ctx.font='28px serif'; ctx.fillText('📧',100,88); ctx.fillText('▶',165,90); ctx.fillText('📂',234,88);
+  ctx.fillStyle='#8892b0'; ctx.font='11px Nunito'; ctx.fillText('"Is this spam?"',165,115);
+  ctx.fillStyle='#4fc3f7'; ctx.font='10px Nunito'; ctx.fillText('Input → Classifies → Label',165,138);
+  ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.fillText('Examples: spam filter, fraud detect, image classify',165,162);
+  // VS badge
+  ctx.fillStyle='#ffb347'; ctx.font='bold 18px Nunito'; ctx.fillText('VS',344,H/2+7);
+  // Generative
+  ctx.strokeStyle='#c48cff'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.roundRect(380,16,306,H-32,10); ctx.stroke();
+  ctx.fillStyle='#c48cff22'; ctx.fill();
+  ctx.fillStyle='#c48cff'; ctx.font='bold 13px Nunito';
+  ctx.fillText('Generative AI',533,40);
+  ctx.font='28px serif'; ctx.fillText('💬',460,88); ctx.fillText('▶',533,90); ctx.fillText('✍️',604,88);
+  ctx.fillStyle='#8892b0'; ctx.font='11px Nunito'; ctx.fillText('"Write me a poem about AI"',533,115);
+  ctx.fillStyle='#c48cff'; ctx.font='10px Nunito'; ctx.fillText('Prompt → Creates → New Content',533,138);
+  ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.fillText('Examples: ChatGPT, DALL-E, Gemini, Suno',533,162);
+  ctx.textAlign='left';
+}
+
+function drawFreytag(){
+  const c=document.getElementById('freytag-canvas'); if(!c)return;
+  const ctx=c.getContext('2d'); ctx.fillStyle='#080a10'; ctx.fillRect(0,0,c.width,c.height);
+  const W=c.width,H=c.height;
+  const pts=[[50,H-50],[155,H-100],[290,H-150],[440,55],[575,H-110],[675,H-70]];
+  const lbls=['Exposition','Rising\nAction','Climax\nApproach','CLIMAX','Falling\nAction','Resolution'];
+  const cols=['#4fc3f7','#6c63ff','#c48cff','#ff6584','#ffb347','#43d9ad'];
+  ctx.beginPath(); pts.forEach((p,i)=>i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1]));
+  ctx.lineTo(pts[pts.length-1][0],H); ctx.lineTo(pts[0][0],H); ctx.closePath();
+  const g=ctx.createLinearGradient(0,55,0,H);
+  g.addColorStop(0,'rgba(255,101,132,.14)'); g.addColorStop(1,'rgba(108,99,255,.03)');
+  ctx.fillStyle=g; ctx.fill();
+  ctx.strokeStyle='#6c63ff'; ctx.lineWidth=3;
+  ctx.beginPath(); pts.forEach((p,i)=>i===0?ctx.moveTo(p[0],p[1]):ctx.lineTo(p[0],p[1])); ctx.stroke();
+  pts.forEach((p,i)=>{
+    ctx.beginPath(); ctx.arc(p[0],p[1],8,0,Math.PI*2); ctx.fillStyle=cols[i]; ctx.fill();
+    ctx.fillStyle=cols[i]; ctx.font='bold 9px Nunito'; ctx.textAlign='center';
+    lbls[i].split('\n').forEach((l,li)=>ctx.fillText(l,p[0],p[1]-16-li*12));
+  });
+  const notes=['1995:\n42% dropout','MDMS\nlaunched','Enrollment\n↑ 60%','2.3× lower\ndropout!','COVID\nsetback','Expand\nMDMS!'];
+  notes.forEach((n,i)=>{
+    ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.textAlign='center';
+    n.split('\n').forEach((l,li)=>ctx.fillText(l,pts[i][0],pts[i][1]+22+li*11));
+  });
+  ctx.textAlign='left';
+}
+
+// ═══════════════════════════════════════════════════════════
+// SMART TOOLTIP POSITIONING
+// ═══════════════════════════════════════════════════════════
+document.addEventListener('mousemove', function(e){
+  const hv = e.target.closest('.hover-viz');
+  if(!hv) return;
+  const tip = hv.querySelector('.tooltip');
+  if(!tip) return;
+  const triggerRect = hv.getBoundingClientRect();
+  const tipW = 280, tipH = 180;
+  const margin = 12;
+  const spaceAbove = triggerRect.top;
+  const spaceBelow = window.innerHeight - triggerRect.bottom;
+  let top, left;
+  if(spaceBelow >= tipH + margin || spaceBelow >= spaceAbove){
+    // show below
+    top = triggerRect.bottom + margin;
+    tip.classList.remove('tip-above'); tip.classList.add('tip-below');
+  } else {
+    // show above
+    top = triggerRect.top - tipH - margin;
+    tip.classList.remove('tip-below'); tip.classList.add('tip-above');
+  }
+  left = triggerRect.left + triggerRect.width/2 - tipW/2;
+  left = Math.max(8, Math.min(left, window.innerWidth - tipW - 8));
+  tip.style.top = top + 'px';
+  tip.style.left = left + 'px';
+});
+
+// Boot
+showPage('home');
+</script>
+</body></html>
