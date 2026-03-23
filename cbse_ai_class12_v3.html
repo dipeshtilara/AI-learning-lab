@@ -10,13 +10,36 @@
   --bg:#0d0f1a;--surface:#13172a;--card:#181d30;--border:#242840;
   --a1:#6c63ff;--a2:#ff6584;--a3:#43d9ad;--a4:#ffb347;--a5:#4fc3f7;--a6:#c48cff;
   --text:#e8eaf6;--text2:#8892b0;--radius:14px;
+  --canvas-bg:#080a10;
 }
+[data-theme="light"]{
+  --bg:#f0f2ff;--surface:#ffffff;--card:#ffffff;--border:#d8dce8;
+  --text:#1a1d2e;--text2:#5a6080;
+  --canvas-bg:#f5f7ff;
+}
+*{transition:background-color .25s, border-color .25s, color .15s}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:5px}
+
+/* ─── LIGHT MODE OVERRIDES ─── */
+[data-theme="light"] #topbar{background:rgba(240,242,255,.92)}
+[data-theme="light"] .code-pane{color:#1a1d2e;background:#eef0ff}
+[data-theme="light"] .output-pane{background:#eef0ff;color:#0a7c5c}
+[data-theme="light"] .formula{background:#eef0ff;color:#2a7a3a}
+[data-theme="light"] .proj-code-wrap{background:#eef0ff;color:#1a1d2e}
+[data-theme="light"] .code-wrap{background:#eef0ff}
+[data-theme="light"] .unit-card{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+[data-theme="light"] .concept-card{box-shadow:0 2px 12px rgba(0,0,0,.05)}
+[data-theme="light"] .hero{background:linear-gradient(130deg,#e8e4ff 0%,#ddeeff 60%,#d4f5ef 100%)}
+[data-theme="light"] .hero p{color:var(--text2)}
+[data-theme="light"] .nav-item{color:var(--text2)}
+[data-theme="light"] .nav-item.active{color:var(--a1)}
+[data-theme="light"] .nav-item:hover{color:var(--text)}
+[data-theme="light"] .sb-brand-text p{color:var(--text2)}
 
 /* ─── SIDEBAR ─── */
 #sidebar{position:fixed;top:0;left:0;width:255px;height:100vh;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;z-index:200;display:flex;flex-direction:column}
@@ -272,6 +295,15 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <div class="tchip unit" id="unit-chip">📚 8 Units</div>
       <div class="tchip streak">🔥 <span id="streak-count">0</span> day streak</div>
       <div class="tchip xp">⭐ <span id="xp-count">0</span> XP</div>
+      <button id="theme-toggle" onclick="toggleTheme()" title="Toggle Light/Dark Mode" style="
+        background:var(--surface);border:1px solid var(--border);border-radius:30px;
+        padding:5px 13px;cursor:pointer;font-size:.8rem;font-weight:800;
+        color:var(--text2);font-family:'Nunito',sans-serif;display:flex;align-items:center;gap:6px;
+        white-space:nowrap;transition:.18s;
+      " onmouseover="this.style.borderColor='var(--a1)';this.style.color='var(--a1)'"
+         onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+        <span id="theme-icon">☀️</span><span id="theme-label">Light</span>
+      </button>
     </div>
   </div>
 
@@ -316,8 +348,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <div class="cc-body">
         <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:10px">NumPy provides <strong style="color:var(--text)">N-dimensional arrays</strong> with vectorized math — the backbone of every AI library. Operations that take seconds on Python lists complete in milliseconds on NumPy arrays.</p>
         <div class="viz-box">
-          <canvas id="numpy-canvas" width="620" height="170"></canvas>
-          <div class="viz-label">Python List vs NumPy Array — speed & structure comparison</div>
+          <canvas id="numpy-canvas" width="620" height="210"></canvas>
+          <div class="viz-label">⚡ Speed comparison (left) · 🔢 1D & 2D array memory layout (right)</div>
         </div>
         <div class="reallife"><div class="rl-icon">🌾</div><div><h4>Real-Life: ICAR Crop Yield Prediction</h4><p>India's agricultural research stores rainfall, soil pH, temperature for 10 lakh farms as NumPy arrays. Daily harvest forecasts that would take minutes with Python lists run in under 2 seconds.</p></div></div>
         <div class="code-wrap">
@@ -500,19 +532,223 @@ print(f"RMSE = {rmse:.2f}")</textarea>
       </div>
       <div class="cc-body">
         <div class="viz-box"><canvas id="ds-method-canvas" width="680" height="190"></canvas><div class="viz-label">Animated pipeline — each stage lights up sequentially</div></div>
-        <div class="algo-steps">
-          <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Business Understanding</h5><p>What problem are we solving? e.g., "Predict student dropout rate in rural schools"</p></div></div>
-          <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Analytic Approach</h5><p>Which ML type? Classification / Regression / Clustering / NLP</p></div></div>
-          <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Data Requirements</h5><p>What columns do we need? Attendance %, grades, family income, meals</p></div></div>
-          <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Data Collection</h5><p>Surveys, government portals (data.gov.in), school databases</p></div></div>
-          <div class="algo-step"><div class="anum">5</div><div class="abody"><h5>Data Understanding</h5><p>EDA — histograms, correlation heatmaps, outlier detection</p></div></div>
-          <div class="algo-step"><div class="anum">6</div><div class="abody"><h5>Data Preparation</h5><p>Clean NaN, encode categories, normalize, train-test split</p></div></div>
-          <div class="algo-step"><div class="anum">7</div><div class="abody"><h5>AI Modelling</h5><p>Train Decision Tree / Neural Network / Linear Regression</p></div></div>
-          <div class="algo-step"><div class="anum">8</div><div class="abody"><h5>Evaluation</h5><p>Test on unseen data — accuracy, F1, confusion matrix</p></div></div>
-          <div class="algo-step"><div class="anum">9</div><div class="abody"><h5>Deployment</h5><p>Web app, API, teacher dashboard showing at-risk students</p></div></div>
-          <div class="algo-step"><div class="anum">10</div><div class="abody"><h5>Feedback Loop</h5><p>Monitor predictions, gather new data, retrain — continuous improvement</p></div></div>
+        <!-- ── SPLIT LAYOUT: steps on left, pictorial on right ── -->
+        <style>
+          .ds-split{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;margin:14px 0}
+          @media(max-width:700px){.ds-split{grid-template-columns:1fr}}
+          .ds-pic-panel{position:sticky;top:60px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;min-height:200px;transition:.3s}
+          .ds-pic-inner{text-align:center}
+          .ds-pic-inner svg{max-width:100%;border-radius:8px}
+          .ds-pic-title{font-size:.72rem;font-weight:800;color:var(--a1);margin-bottom:6px;text-transform:uppercase;letter-spacing:.8px}
+          .ds-pic-desc{font-size:.72rem;color:var(--text2);line-height:1.6;margin-top:8px}
+          .ds-step-btn{cursor:pointer;border-left:3px solid transparent;padding-left:8px;transition:.18s;border-radius:0 8px 8px 0}
+          .ds-step-btn:hover,.ds-step-btn.active{border-left-color:var(--a1);background:rgba(108,99,255,.06)}
+          .ds-step-btn.active .anum{background:linear-gradient(135deg,var(--a3),var(--a1))}
+        </style>
+        <div class="ds-split">
+          <div class="algo-steps" id="ds-steps-list">
+            <div class="algo-step ds-step-btn active" onclick="dsShowPic(0,this)"><div class="anum">1</div><div class="abody"><h5>Business Understanding</h5><p>What problem are we solving? e.g., "Predict student dropout rate in rural schools." Define success criteria — what does a good answer look like?</p></div></div>
+            <div class="algo-step ds-step-btn" onclick="dsShowPic(1,this)"><div class="anum">2</div><div class="abody"><h5>Analytic Approach</h5><p>Which ML type? <strong style="color:var(--a1)">Classification</strong> (Yes/No) · <strong style="color:var(--a3)">Regression</strong> (number) · <strong style="color:var(--a4)">Clustering</strong> (groups) · <strong style="color:var(--a5)">NLP</strong> (text). Choose based on output type.</p></div></div>
+            <div class="algo-step ds-step-btn" onclick="dsShowPic(2,this)"><div class="anum">3</div><div class="abody"><h5>Data Requirements</h5><p>What columns do we need? Attendance %, grades, family income, meals — list every feature your model needs before collecting anything.</p></div></div>
+            <div class="algo-step ds-step-btn" onclick="dsShowPic(3,this)"><div class="anum">4</div><div class="abody"><h5>Data Collection</h5><p>Surveys, government portals (data.gov.in), school databases. Consider: primary (own survey) vs secondary (existing datasets). Check for bias in collection.</p></div></div>
+            <div class="algo-step ds-step-btn" onclick="dsShowPic(4,this)"><div class="anum">5</div><div class="abody"><h5>Data Understanding</h5><p>EDA — histograms, correlation heatmaps, outlier detection. Ask: are features normally distributed? Are any columns 90% empty? What does the target distribution look like?</p></div></div>
+            <div class="algo-step ds-step-btn" onclick="dsShowPic(5,this)"><div class="anum">6</div><div class="abody"><h5>Data Preparation</h5><p>Handle NaN (drop/mean/median impute), encode categories (one-hot/label), normalize (min-max/z-score), train-test split (80:20 or 70:30). <em>Garbage in = garbage out.</em></p></div></div>
+            <div class="algo-step ds-step-btn" onclick="dsShowPic(6,this)"><div class="anum">7</div><div class="abody"><h5>AI Modelling</h5><p>Train Decision Tree / Neural Network / Linear Regression. Tune <strong style="color:var(--text)">hyperparameters</strong> (depth, learning rate, epochs). Try multiple models and compare.</p></div></div>
+            <div class="algo-step ds-step-btn" onclick="dsShowPic(7,this)"><div class="anum">8</div><div class="abody"><h5>Evaluation</h5><p>Test on <strong style="color:var(--a2)">unseen</strong> data — accuracy, F1, confusion matrix. Never evaluate on training data — that's cheating! Use cross-validation for robustness.</p></div></div>
+            <div class="algo-step ds-step-btn" onclick="dsShowPic(8,this)"><div class="anum">9</div><div class="abody"><h5>Deployment</h5><p>Web app, API, teacher dashboard showing at-risk students. Wrap model in Flask/FastAPI. Set up monitoring for data drift — real-world data changes over time.</p></div></div>
+            <div class="algo-step ds-step-btn" onclick="dsShowPic(9,this)"><div class="anum">10</div><div class="abody"><h5>Feedback Loop</h5><p>Monitor predictions, gather new data, retrain — continuous improvement. Model degrades as the world changes. Schedule periodic retraining every quarter.</p></div></div>
+          </div>
+          <div class="ds-pic-panel" id="ds-pic-panel">
+            <div class="ds-pic-inner" id="ds-pic-inner">
+              <!-- filled by JS -->
+            </div>
+          </div>
         </div>
         <div class="reallife"><div class="rl-icon">🎓</div><div><h4>Real-Life: CBSE Dropout Prediction System</h4><p>A state education board followed all 10 steps to build a model flagging at-risk students. Teacher dashboard shows red/yellow/green indicators. Early intervention reduced dropouts by 18% in pilot districts.</p></div></div>
+        <script>
+        const dsPics=[
+          {title:'Step 1 — Business Understanding',svg:`<svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect width="260" height="170" rx="8" fill="#0a0c18"/>
+            <rect x="14" y="14" width="232" height="142" rx="10" fill="none" stroke="#6c63ff" stroke-width="1.5" stroke-dasharray="5,4"/>
+            <text x="130" y="38" text-anchor="middle" fill="#6c63ff" font-size="10" font-weight="700" font-family="Nunito,sans-serif">Problem Statement</text>
+            <rect x="28" y="46" width="204" height="42" rx="7" fill="#6c63ff22" stroke="#6c63ff" stroke-width="1"/>
+            <text x="130" y="63" text-anchor="middle" fill="#e8eaf6" font-size="9" font-family="Nunito,sans-serif">"Predict dropout rate</text>
+            <text x="130" y="78" text-anchor="middle" fill="#e8eaf6" font-size="9" font-family="Nunito,sans-serif">in rural schools"</text>
+            <line x1="28" y1="104" x2="232" y2="104" stroke="#6c63ff33" stroke-width="1"/>
+            <rect x="28" y="110" width="204" height="34" rx="7" fill="#43d9ad11" stroke="#43d9ad55" stroke-width="1"/>
+            <text x="44" y="122" fill="#43d9ad" font-size="9" font-family="Nunito,sans-serif" font-weight="700">✓ Success Criteria</text>
+            <text x="44" y="137" fill="#8892b0" font-size="8.5" font-family="Nunito,sans-serif">Flag 80%+ of at-risk students before dropout</text>
+          </svg>`,desc:'Define the exact problem + what a successful solution looks like before touching any data.'},
+          {title:'Step 2 — Analytic Approach',svg:`<svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect width="260" height="170" rx="8" fill="#0a0c18"/>
+            <text x="130" y="22" text-anchor="middle" fill="#8892b0" font-size="10" font-family="Nunito">Output type → Model type</text>
+            <rect x="15" y="30" width="52" height="52" rx="8" fill="#6c63ff22" stroke="#6c63ff" stroke-width="1.5"/>
+            <text x="41" y="52" text-anchor="middle" fill="#6c63ff" font-size="18">✅</text><text x="41" y="68" text-anchor="middle" fill="#6c63ff" font-size="9" font-family="Nunito">Classification</text><text x="41" y="79" text-anchor="middle" fill="#8892b0" font-size="8" font-family="Nunito">Yes / No</text>
+            <rect x="72" y="30" width="52" height="52" rx="8" fill="#43d9ad22" stroke="#43d9ad" stroke-width="1.5"/>
+            <text x="98" y="52" text-anchor="middle" fill="#43d9ad" font-size="18">📈</text><text x="98" y="68" text-anchor="middle" fill="#43d9ad" font-size="9" font-family="Nunito">Regression</text><text x="98" y="79" text-anchor="middle" fill="#8892b0" font-size="8" font-family="Nunito">A Number</text>
+            <rect x="129" y="30" width="52" height="52" rx="8" fill="#ffb34722" stroke="#ffb347" stroke-width="1.5"/>
+            <text x="155" y="52" text-anchor="middle" fill="#ffb347" font-size="18">🫧</text><text x="155" y="68" text-anchor="middle" fill="#ffb347" font-size="9" font-family="Nunito">Clustering</text><text x="155" y="79" text-anchor="middle" fill="#8892b0" font-size="8" font-family="Nunito">Groups</text>
+            <rect x="186" y="30" width="58" height="52" rx="8" fill="#4fc3f722" stroke="#4fc3f7" stroke-width="1.5"/>
+            <text x="215" y="52" text-anchor="middle" fill="#4fc3f7" font-size="18">💬</text><text x="215" y="68" text-anchor="middle" fill="#4fc3f7" font-size="9" font-family="Nunito">NLP</text><text x="215" y="79" text-anchor="middle" fill="#8892b0" font-size="8" font-family="Nunito">Text</text>
+            <text x="130" y="108" text-anchor="middle" fill="#6c63ff" font-size="20">↓</text>
+            <rect x="60" y="118" width="140" height="36" rx="8" fill="#6c63ff18" stroke="#6c63ff" stroke-width="1"/>
+            <text x="130" y="134" text-anchor="middle" fill="#e8eaf6" font-size="9.5" font-family="Nunito">Dropout = Classification</text>
+            <text x="130" y="148" text-anchor="middle" fill="#8892b0" font-size="9" font-family="Nunito">→ Decision Tree / Logistic Reg</text>
+          </svg>`,desc:'Match the type of answer needed (Yes/No, number, group, text) to the right family of ML algorithms.'},
+          {title:'Step 3 — Data Requirements',svg:`<svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect width="260" height="170" rx="8" fill="#0a0c18"/>
+            <rect x="20" y="16" width="220" height="28" rx="6" fill="#6c63ff22" stroke="#6c63ff" stroke-width="1"/>
+            <text x="130" y="34" text-anchor="middle" fill="#6c63ff" font-size="10.5" font-weight="700" font-family="Nunito">Feature Checklist</text>
+            ${[['Attendance %','#43d9ad',55],['Exam Grades','#ffb347',75],['Family Income','#ff6584',95],['Mid-Day Meal','#4fc3f7',115],['Distance to School','#c48cff',135],['Gender','#6c63ff',155]].map(([l,c,y])=>`<rect x="30" y="${y-9}" width="200" height="17" rx="5" fill="${c}11"/>
+            <circle cx="44" cy="${y}" r="5" fill="${c}"/><text x="56" y="${y+4}" fill="#e8eaf6" font-size="9.5" font-family="Nunito">${l}</text>`).join('')}
+          </svg>`,desc:'List every input column (feature) the model needs before collecting a single row of data.'},
+          {title:'Step 4 — Data Collection',svg:`<svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect width="260" height="170" rx="8" fill="#0a0c18"/>
+            <text x="130" y="16" text-anchor="middle" fill="#8892b0" font-size="9" font-family="Nunito,sans-serif">Data Sources</text>
+            <circle cx="50" cy="60" r="26" fill="#6c63ff18" stroke="#6c63ff" stroke-width="1.5"/>
+            <text x="50" y="55" text-anchor="middle" font-size="12" font-family="Nunito,sans-serif">📋</text>
+            <text x="50" y="69" text-anchor="middle" fill="#6c63ff" font-size="8" font-family="Nunito,sans-serif" font-weight="700">Surveys</text>
+            <text x="50" y="80" text-anchor="middle" fill="#8892b0" font-size="7" font-family="Nunito,sans-serif">Primary</text>
+            <line x1="77" y1="60" x2="97" y2="60" stroke="#6c63ff44" stroke-width="1" stroke-dasharray="3,2"/>
+            <circle cx="130" cy="60" r="26" fill="#43d9ad18" stroke="#43d9ad" stroke-width="1.5"/>
+            <text x="130" y="55" text-anchor="middle" font-size="12" font-family="Nunito,sans-serif">🏛</text>
+            <text x="130" y="69" text-anchor="middle" fill="#43d9ad" font-size="7.5" font-family="Nunito,sans-serif" font-weight="700">data.gov.in</text>
+            <text x="130" y="80" text-anchor="middle" fill="#8892b0" font-size="7" font-family="Nunito,sans-serif">Secondary</text>
+            <line x1="157" y1="60" x2="183" y2="60" stroke="#ffb34744" stroke-width="1" stroke-dasharray="3,2"/>
+            <circle cx="210" cy="60" r="26" fill="#ffb34718" stroke="#ffb347" stroke-width="1.5"/>
+            <text x="210" y="55" text-anchor="middle" font-size="12" font-family="Nunito,sans-serif">🏫</text>
+            <text x="210" y="69" text-anchor="middle" fill="#ffb347" font-size="8" font-family="Nunito,sans-serif" font-weight="700">School DB</text>
+            <text x="210" y="80" text-anchor="middle" fill="#8892b0" font-size="7" font-family="Nunito,sans-serif">Primary</text>
+            <circle cx="85" cy="128" r="26" fill="#ff658418" stroke="#ff6584" stroke-width="1.5"/>
+            <text x="85" y="123" text-anchor="middle" font-size="12" font-family="Nunito,sans-serif">📰</text>
+            <text x="85" y="137" text-anchor="middle" fill="#ff6584" font-size="8" font-family="Nunito,sans-serif" font-weight="700">News API</text>
+            <text x="85" y="148" text-anchor="middle" fill="#8892b0" font-size="7" font-family="Nunito,sans-serif">Secondary</text>
+            <circle cx="175" cy="128" r="26" fill="#4fc3f718" stroke="#4fc3f7" stroke-width="1.5"/>
+            <text x="175" y="123" text-anchor="middle" font-size="12" font-family="Nunito,sans-serif">📡</text>
+            <text x="175" y="137" text-anchor="middle" fill="#4fc3f7" font-size="8" font-family="Nunito,sans-serif" font-weight="700">Sensors</text>
+            <text x="175" y="148" text-anchor="middle" fill="#8892b0" font-size="7" font-family="Nunito,sans-serif">Primary</text>
+          </svg>`,desc:'Gather data from surveys (primary) or existing government/school databases (secondary). Watch for collection bias!'},
+          {title:'Step 5 — Data Understanding (EDA)',svg:`<svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect width="260" height="170" rx="8" fill="#0a0c18"/>
+            <text x="14" y="20" fill="#8892b0" font-size="9" font-family="Nunito">Histogram</text>
+            <rect x="14" y="24" width="100" height="60" rx="5" fill="#6c63ff11" stroke="#6c63ff44" stroke-width="1"/>
+            ${[14,22,34,28,18,10].map((h,i)=>`<rect x="${22+i*14}" y="${82-h}" width="10" height="${h}" rx="2" fill="#6c63ff"/>`).join('')}
+            <text x="124" y="20" fill="#8892b0" font-size="9" font-family="Nunito">Heatmap</text>
+            <rect x="124" y="24" width="120" height="60" rx="5" fill="#0a0c18" stroke="#6c63ff44" stroke-width="1"/>
+            ${[[1,.7,.3,.2],[.7,1,.6,.4],[.3,.6,1,.8],[.2,.4,.8,1]].map((row,i)=>row.map((v,j)=>`<rect x="${130+j*28}" y="${30+i*13}" width="24" height="10" rx="2" fill="rgba(67,217,173,${v*0.8})"/>`).join('')).join('')}
+            <text x="14" y="108" fill="#8892b0" font-size="9" font-family="Nunito">Outlier Detection</text>
+            <rect x="14" y="112" width="230" height="44" rx="5" fill="#ff658411" stroke="#ff658444" stroke-width="1"/>
+            ${[28,32,30,29,34,55,31,28,33,29,31,30].map((v,i)=>`<circle cx="${24+i*18}" cy="${150-v}" r="${v>45?5:3}" fill="${v>45?'#ff6584':'#43d9ad'}"/>`).join('')}
+            <text x="215" y="122" fill="#ff6584" font-size="9" font-family="Nunito">← outlier</text>
+          </svg>`,desc:'EDA (Exploratory Data Analysis): visualize distributions, find correlations, and spot outliers before modelling.'},
+          {title:'Step 6 — Data Preparation',svg:`<svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect width="260" height="170" rx="8" fill="#0a0c18"/>
+            <text x="130" y="18" text-anchor="middle" fill="#8892b0" font-size="9.5" font-family="Nunito">Raw Data → Clean Data Pipeline</text>
+            ${[['NaN → Mean','Handle Missing','#ff6584',38],['Cat → 0/1','Encode Labels','#ffb347',72],['0-1 Scale','Normalize','#43d9ad',106],['80:20','Train-Test Split','#6c63ff',140]].map(([tag,label,c,y])=>`
+            <rect x="20" y="${y-12}" width="80" height="24" rx="6" fill="${c}22" stroke="${c}" stroke-width="1.2"/>
+            <text x="60" y="${y}" text-anchor="middle" fill="${c}" font-size="9.5" font-family="Nunito" font-weight="700">${tag}</text>
+            <text x="20" y="${y+20}" fill="#8892b0" font-size="8.5" font-family="Nunito">${label}</text>
+            <path d="M 105 ${y} L 130 ${y}" stroke="${c}88" stroke-width="1.5" marker-end="url(#arr)"/>
+            <rect x="134" y="${y-10}" width="96" height="20" rx="5" fill="${c}11" stroke="${c}44" stroke-width="1"/>
+            `).join('')}
+            <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#8892b0"/></marker></defs>
+          </svg>`,desc:'Clean → Encode → Normalize → Split. Each step removes noise so the model can learn the true signal.'},
+          {title:'Step 7 — AI Modelling',svg:`<svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect width="260" height="170" rx="8" fill="#0a0c18"/>
+            <text x="130" y="18" text-anchor="middle" fill="#8892b0" font-size="9.5" font-family="Nunito">Train multiple models → compare</text>
+            <rect x="14" y="28" width="70" height="80" rx="8" fill="#6c63ff18" stroke="#6c63ff" stroke-width="1.5"/>
+            <text x="49" y="48" text-anchor="middle" fill="#6c63ff" font-size="10" font-family="Nunito" font-weight="700">Decision</text>
+            <text x="49" y="60" text-anchor="middle" fill="#6c63ff" font-size="10" font-family="Nunito" font-weight="700">Tree</text>
+            <line x1="29" y1="72" x2="69" y2="72" stroke="#6c63ff44" stroke-width="1"/>
+            <line x1="49" y1="72" x2="34" y2="90" stroke="#6c63ff" stroke-width="1.2"/>
+            <line x1="49" y1="72" x2="64" y2="90" stroke="#6c63ff" stroke-width="1.2"/>
+            <text x="49" y="104" text-anchor="middle" fill="#8892b0" font-size="8" font-family="Nunito">Acc: 88%</text>
+            <rect x="95" y="28" width="70" height="80" rx="8" fill="#43d9ad18" stroke="#43d9ad" stroke-width="1.5"/>
+            <text x="130" y="52" text-anchor="middle" fill="#43d9ad" font-size="10" font-family="Nunito" font-weight="700">Neural</text>
+            <text x="130" y="64" text-anchor="middle" fill="#43d9ad" font-size="10" font-family="Nunito" font-weight="700">Network</text>
+            ${[70,84,98].map(x=>`<circle cx="${x}" cy="80" r="5" fill="#43d9ad44" stroke="#43d9ad" stroke-width="1"/>`).join('')}
+            <text x="130" y="104" text-anchor="middle" fill="#8892b0" font-size="8" font-family="Nunito">Acc: 92%</text>
+            <rect x="176" y="28" width="70" height="80" rx="8" fill="#ffb34718" stroke="#ffb347" stroke-width="1.5"/>
+            <text x="211" y="52" text-anchor="middle" fill="#ffb347" font-size="10" font-family="Nunito" font-weight="700">Linear</text>
+            <text x="211" y="64" text-anchor="middle" fill="#ffb347" font-size="10" font-family="Nunito" font-weight="700">Regression</text>
+            <line x1="185" y1="90" x2="238" y2="75" stroke="#ffb347" stroke-width="1.5"/>
+            <text x="211" y="104" text-anchor="middle" fill="#8892b0" font-size="8" font-family="Nunito">RMSE: 4.2</text>
+            <rect x="60" y="122" width="140" height="28" rx="6" fill="#43d9ad22" stroke="#43d9ad" stroke-width="1.5"/>
+            <text x="130" y="140" text-anchor="middle" fill="#43d9ad" font-size="9.5" font-family="Nunito" font-weight="700">✓ Best model selected → NN</text>
+          </svg>`,desc:'Train several model types. Tune hyperparameters. Pick the one with best accuracy/F1 on the validation set.'},
+          {title:'Step 8 — Evaluation',svg:`<svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect width="260" height="170" rx="8" fill="#0a0c18"/>
+            <text x="130" y="18" text-anchor="middle" fill="#8892b0" font-size="9.5" font-family="Nunito">Confusion Matrix</text>
+            <rect x="70" y="26" width="60" height="50" rx="4" fill="#43d9ad22" stroke="#43d9ad" stroke-width="1.5"/>
+            <text x="100" y="46" text-anchor="middle" fill="#43d9ad" font-size="13" font-weight="900" font-family="Nunito">TP</text>
+            <text x="100" y="61" text-anchor="middle" fill="#43d9ad" font-size="9" font-family="Nunito">45</text>
+            <text x="100" y="72" text-anchor="middle" fill="#8892b0" font-size="7.5" font-family="Nunito">Correct ✓</text>
+            <rect x="132" y="26" width="60" height="50" rx="4" fill="#ff658422" stroke="#ff6584" stroke-width="1.5"/>
+            <text x="162" y="46" text-anchor="middle" fill="#ff6584" font-size="13" font-weight="900" font-family="Nunito">FP</text>
+            <text x="162" y="61" text-anchor="middle" fill="#ff6584" font-size="9" font-family="Nunito">2</text>
+            <text x="162" y="72" text-anchor="middle" fill="#8892b0" font-size="7.5" font-family="Nunito">False Alarm</text>
+            <rect x="70" y="80" width="60" height="50" rx="4" fill="#ff658422" stroke="#ff6584" stroke-width="1.5"/>
+            <text x="100" y="100" text-anchor="middle" fill="#ff6584" font-size="13" font-weight="900" font-family="Nunito">FN</text>
+            <text x="100" y="115" text-anchor="middle" fill="#ff6584" font-size="9" font-family="Nunito">5</text>
+            <text x="100" y="126" text-anchor="middle" fill="#8892b0" font-size="7.5" font-family="Nunito">Missed ⚠</text>
+            <rect x="132" y="80" width="60" height="50" rx="4" fill="#43d9ad22" stroke="#43d9ad" stroke-width="1.5"/>
+            <text x="162" y="100" text-anchor="middle" fill="#43d9ad" font-size="13" font-weight="900" font-family="Nunito">TN</text>
+            <text x="162" y="115" text-anchor="middle" fill="#43d9ad" font-size="9" font-family="Nunito">48</text>
+            <text x="162" y="126" text-anchor="middle" fill="#8892b0" font-size="7.5" font-family="Nunito">Correct ✓</text>
+            <text x="130" y="155" text-anchor="middle" fill="#6c63ff" font-size="9" font-family="Nunito">Accuracy = (45+48)/(45+48+2+5) = 93%</text>
+          </svg>`,desc:'Always evaluate on held-out test data. Confusion matrix shows exactly which types of errors your model makes.'},
+          {title:'Step 9 — Deployment',svg:`<svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect width="260" height="170" rx="8" fill="#0a0c18"/>
+            <text x="130" y="16" text-anchor="middle" fill="#8892b0" font-size="9" font-family="Nunito,sans-serif">Model → Live Product</text>
+            <rect x="14" y="24" width="52" height="40" rx="7" fill="#6c63ff22" stroke="#6c63ff" stroke-width="1.5"/>
+            <text x="40" y="40" text-anchor="middle" font-size="14">🧠</text>
+            <text x="40" y="57" text-anchor="middle" fill="#6c63ff" font-size="7.5" font-family="Nunito,sans-serif">Trained Model</text>
+            <path d="M 68 44 L 84 44" stroke="#8892b0" stroke-width="1.5" marker-end="url(#a2)"/>
+            <rect x="86" y="24" width="52" height="40" rx="7" fill="#43d9ad22" stroke="#43d9ad" stroke-width="1.5"/>
+            <text x="112" y="40" text-anchor="middle" font-size="14">⚙️</text>
+            <text x="112" y="57" text-anchor="middle" fill="#43d9ad" font-size="7.5" font-family="Nunito,sans-serif">Flask API</text>
+            <path d="M 140 44 L 156 44" stroke="#8892b0" stroke-width="1.5" marker-end="url(#a2)"/>
+            <rect x="158" y="24" width="88" height="40" rx="7" fill="#ffb34722" stroke="#ffb347" stroke-width="1.5"/>
+            <text x="202" y="40" text-anchor="middle" font-size="14">📱</text>
+            <text x="202" y="57" text-anchor="middle" fill="#ffb347" font-size="7.5" font-family="Nunito,sans-serif">Teacher Dashboard</text>
+            <rect x="14" y="76" width="232" height="82" rx="8" fill="#0d1020" stroke="#6c63ff44" stroke-width="1"/>
+            <text x="28" y="92" fill="#43d9ad" font-size="8.5" font-family="Nunito,sans-serif" font-weight="700">● Student Risk Dashboard</text>
+            <rect x="18" y="98" width="72" height="54" rx="5" fill="#1a1f35"/>
+            <text x="54" y="113" text-anchor="middle" fill="#e8eaf6" font-size="8" font-family="Nunito,sans-serif" font-weight="700">Amit Kumar</text>
+            <circle cx="28" cy="130" r="4" fill="#ff6584"/>
+            <text x="35" y="134" fill="#ff6584" font-size="7.5" font-family="Nunito,sans-serif">High Risk</text>
+            <rect x="94" y="98" width="72" height="54" rx="5" fill="#1a1f35"/>
+            <text x="130" y="113" text-anchor="middle" fill="#e8eaf6" font-size="8" font-family="Nunito,sans-serif" font-weight="700">Priya Sharma</text>
+            <circle cx="104" cy="130" r="4" fill="#ffb347"/>
+            <text x="111" y="134" fill="#ffb347" font-size="7.5" font-family="Nunito,sans-serif">Medium</text>
+            <rect x="170" y="98" width="72" height="54" rx="5" fill="#1a1f35"/>
+            <text x="206" y="113" text-anchor="middle" fill="#e8eaf6" font-size="8" font-family="Nunito,sans-serif" font-weight="700">Rohit Mehta</text>
+            <circle cx="180" cy="130" r="4" fill="#43d9ad"/>
+            <text x="187" y="134" fill="#43d9ad" font-size="7.5" font-family="Nunito,sans-serif">Safe</text>
+            <defs><marker id="a2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#8892b0"/></marker></defs>
+          </svg>`,desc:'Wrap model in a REST API (Flask/FastAPI). Build a dashboard that teachers can use to take action on predictions.'},
+          {title:'Step 10 — Feedback Loop',svg:`<svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <rect width="260" height="170" rx="8" fill="#0a0c18"/>
+            <text x="130" y="18" text-anchor="middle" fill="#8892b0" font-size="9.5" font-family="Nunito">Continuous Improvement Cycle</text>
+            ${[['Deploy',40,50,'#6c63ff'],['Monitor',200,50,'#4fc3f7'],['New Data',200,120,'#ffb347'],['Retrain',40,120,'#43d9ad']].map(([l,x,y,c])=>`<circle cx="${x}" cy="${y}" r="22" fill="${c}18" stroke="${c}" stroke-width="1.5"/>
+            <text x="${x}" y="${y+5}" text-anchor="middle" fill="${c}" font-size="9.5" font-family="Nunito" font-weight="700">${l}</text>`).join('')}
+            <path d="M 63,50 Q 130,30 177,50" fill="none" stroke="#6c63ff88" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <path d="M 200,73 L 200,98" fill="none" stroke="#4fc3f788" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <path d="M 177,120 Q 130,140 63,120" fill="none" stroke="#ffb34788" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <path d="M 40,98 L 40,73" fill="none" stroke="#43d9ad88" stroke-width="1.5" marker-end="url(#arr3)"/>
+            <text x="130" y="92" text-anchor="middle" fill="#c48cff" font-size="22">♻️</text>
+            <text x="130" y="165" text-anchor="middle" fill="#8892b0" font-size="8" font-family="Nunito">Model degrades → retrain quarterly</text>
+            <defs><marker id="arr3" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#8892b0"/></marker></defs>
+          </svg>`,desc:'World changes → data drifts → model performance drops. Schedule quarterly retraining with fresh data to stay accurate.'}
+        ];
+        function dsShowPic(idx,btn){
+          document.querySelectorAll('.ds-step-btn').forEach(b=>b.classList.remove('active'));
+          if(btn)btn.classList.add('active');
+          const p=dsPics[idx];
+          document.getElementById('ds-pic-inner').innerHTML=`<div class="ds-pic-title">${p.title}</div>${p.svg}<div class="ds-pic-desc">${p.desc}</div>`;
+        }
+        dsShowPic(0,null);
+        </script>
       </div>
     </div>
 
@@ -927,17 +1163,63 @@ print("\n[Real project: replace with actual Gemini API]")</textarea>
     <div class="concept-card">
       <div class="cc-header" onclick="toggleCC(this)">
         <div class="cc-icon" style="background:rgba(108,99,255,.15)">⚠️</div>
-        <div class="cc-info"><div class="cc-title">Ethical & Social Implications</div><div class="cc-sub">Deepfakes · Bias · Copyright · Job displacement · Privacy · India's AI policy</div></div>
+        <div class="cc-info"><div class="cc-title">Ethical & Social Implications of Generative AI</div><div class="cc-sub">Deepfakes · Bias · Copyright · Job displacement · Privacy · India's AI policy</div></div>
         <span class="cc-chev">▼</span>
       </div>
       <div class="cc-body">
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:12px">Generative AI is the most powerful technology since the internet — but power brings responsibility. The CBSE syllabus requires students to critically evaluate these risks, not just celebrate capabilities.</p>
         <div class="mrow">
-          <div class="mcard"><div class="mv" style="color:var(--a2)">🎭 Deepfakes</div><div class="ml">AI-generated fake videos. 500% increase in 2024. Political misinformation, identity fraud risks.</div></div>
-          <div class="mcard"><div class="mv" style="color:var(--a4)">⚖️ Bias</div><div class="ml">Trained on biased data → biased outputs. AI resume screeners may discriminate against women.</div></div>
-          <div class="mcard"><div class="mv" style="color:var(--a1)">©️ Copyright</div><div class="ml">AI art trained on artists' work. Legal battles: Adobe, Getty vs AI companies ongoing.</div></div>
-          <div class="mcard"><div class="mv" style="color:var(--a3)">🔒 Privacy</div><div class="ml">Conversations stored. Always think before sharing personal data with AI tools!</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a2)">🎭 Deepfakes</div><div class="ml">AI-generated fake videos/audio indistinguishable from real. 500% increase in 2024. Used for political misinformation, voice fraud (fake CEO calls), non-consensual intimate imagery. Mitigation: C2PA watermarking standards, digital provenance tools.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a4)">⚖️ Bias & Fairness</div><div class="ml">Trained on biased internet data → biased outputs. AI resume screeners discriminate against women and minorities. GPT models underperform in Hindi/Tamil. DALL-E generates Western-centric images for "doctor." Fix: diverse training data, bias audits, fairness metrics.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a1)">©️ Copyright & IP</div><div class="ml">GenAI trained on copyrighted art/books without consent. Legal battles: Getty vs Stability AI, NYT vs OpenAI, Indian music companies concerned. Output may contain memorized copyrighted content. Ongoing: "training data rights" legislation globally.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a3)">🔒 Privacy</div><div class="ml">Prompts stored → may be used for retraining. ChatGPT accidentally leaked user conversation titles in 2023. Sensitive medical/legal info shared with AI → potential breach. Rule: never share Aadhaar, bank details, patient data with AI tools.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a5)">💼 Job Displacement</div><div class="ml">Roles at risk: content writers, basic coders, call center agents, data entry, paralegals. WEF: 85M jobs displaced but 97M new AI-adjacent jobs by 2025. Key skill: prompt engineering, AI literacy, human oversight. India: 45M IT workers need upskilling.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a6)">🌍 Misinformation</div><div class="ml">LLMs "hallucinate" — confidently state false facts. AI-generated fake news, medical advice, legal guidance can cause real harm. Mitigation: RAG (retrieval-augmented generation), citations, human fact-checking. Always verify AI outputs for critical decisions.</div></div>
         </div>
-        <div class="reallife"><div class="rl-icon">🇮🇳</div><div><h4>India's AI Governance (2024-25)</h4><p>MEITY issued advisories requiring AI platforms to label synthetic media. India's Digital India Act includes AI provisions. Approach: "Responsible AI" — balancing innovation with guardrails. India-specific concern: AI bias against regional languages and rural contexts.</p></div></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0">
+          <h4 style="font-size:.82rem;font-weight:800;color:var(--a4);margin-bottom:10px">⚖️ Ethical Framework: 4 Questions to Ask Before Using GenAI</h4>
+          <div class="algo-steps">
+            <div class="algo-step"><div class="anum" style="background:linear-gradient(135deg,#ff6584,#ffb347)">1</div><div class="abody"><h5>Is it Truthful?</h5><p>Can the AI's output be verified? Never trust a GenAI output for medical, legal, or financial decisions without independent verification from authoritative sources.</p></div></div>
+            <div class="algo-step"><div class="anum" style="background:linear-gradient(135deg,#ffb347,#43d9ad)">2</div><div class="abody"><h5>Is it Harmful?</h5><p>Could this content hurt someone physically, emotionally, or reputationally? Deepfakes, targeted abuse, instructions for dangerous activities — refuse to create or share these.</p></div></div>
+            <div class="algo-step"><div class="anum" style="background:linear-gradient(135deg,#43d9ad,#4fc3f7)">3</div><div class="abody"><h5>Is it Fair?</h5><p>Does this AI output reinforce stereotypes, exclude minorities, or reflect only one cultural perspective? Critically examine whose voices are represented in training data.</p></div></div>
+            <div class="algo-step"><div class="anum" style="background:linear-gradient(135deg,#4fc3f7,#6c63ff)">4</div><div class="abody"><h5>Is it Transparent?</h5><p>Are you disclosing AI involvement when it matters — in academic work, journalism, creative content? Claiming AI-generated work as fully human is dishonest.</p></div></div>
+          </div>
+        </div>
+        <div class="reallife"><div class="rl-icon">🇮🇳</div><div><h4>India's AI Governance Framework (2024-25)</h4><p><strong style="color:var(--text)">MEITY Advisories:</strong> All AI platforms must label synthetic media with visible watermarks. Platforms with 5M+ users must conduct bias audits. <strong style="color:var(--text)">Digital India Act:</strong> Includes provisions for AI accountability and algorithmic transparency.<br><strong style="color:var(--text)">BHASHINI Project:</strong> Government initiative to build AI tools for 22 Indian languages — countering English-language bias. <strong style="color:var(--text)">India-specific risks:</strong> AI bias against Dalit names in hiring tools, deepfakes targeting female politicians, misinformation in regional languages spreading faster than moderation can act.</p></div></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(67,217,173,.15)">🔭</div>
+        <div class="cc-info"><div class="cc-title">Future of Generative AI</div><div class="cc-sub">Multimodal AI · AGI · Autonomous Agents · India's AI opportunity</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:12px">Generative AI is evolving from single-modality text tools to multimodal, agentic systems that can reason, plan, and act. Understanding where the field is heading is essential for Class XII students who will work in this landscape.</p>
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab(this,'fut-multimodal')">🖼️ Multimodal</div>
+          <div class="tab" onclick="switchTab(this,'fut-agents')">🤖 AI Agents</div>
+          <div class="tab" onclick="switchTab(this,'fut-agi')">🧬 Towards AGI</div>
+          <div class="tab" onclick="switchTab(this,'fut-india')">🇮🇳 India's Role</div>
+        </div>
+        <div class="tab-panel active" id="fut-multimodal">
+          <div class="reallife"><div class="rl-icon">🖼️</div><div><h4>Multimodal AI — See, Hear, Read, Speak</h4><p><strong style="color:var(--text)">What it is:</strong> AI that processes multiple data types simultaneously — text + image + audio + video in one model.<br><strong style="color:var(--text)">Examples:</strong> GPT-4o (text+voice+image), Gemini 1.5 Pro (1M token context, video understanding), Claude's vision, Google's Project Astra (real-time camera understanding).<br><strong style="color:var(--text)">How it works:</strong> Different encoders for each modality feed into a shared transformer. Text tokens + image patches + audio spectrograms all become vectors in the same embedding space.<br><strong style="color:var(--text)">Applications:</strong> Doctor describes symptoms AND uploads X-ray → AI analyzes both. Student writes question AND draws diagram → AI solves it. Blind user holds up phone → AI describes scene in Hindi.</p></div></div>
+        </div>
+        <div class="tab-panel" id="fut-agents">
+          <div class="reallife"><div class="rl-icon">🤖</div><div><h4>AI Agents — From Answering to Acting</h4><p><strong style="color:var(--text)">What is an agent?</strong> An LLM given tools (browser, calculator, email, code runner) that can complete multi-step tasks autonomously. Perceive → Think → Act → Observe → Repeat.<br><strong style="color:var(--text)">Architecture:</strong> Agent = LLM + Memory (short/long-term) + Tools + Planning (ReAct / Chain-of-Thought). Uses "tool calls" to interact with external systems.<br><strong style="color:var(--text)">Examples:</strong> AutoGPT, Devin (AI software engineer), Google's Project Mariner (browser agent), Claude Computer Use (controls desktop). Indian startup use case: AI agent that files GST returns, books CA appointments, and responds to IT notices autonomously.<br><strong style="color:var(--text)">Risks:</strong> Autonomous AI acting in the world → mistakes have real consequences. Human-in-the-loop oversight crucial for high-stakes decisions.</p></div></div>
+        </div>
+        <div class="tab-panel" id="fut-agi">
+          <div class="reallife"><div class="rl-icon">🧬</div><div><h4>Towards AGI — Artificial General Intelligence</h4><p><strong style="color:var(--text)">Current AI (Narrow AI):</strong> Excels at specific tasks — chess, image recognition, text generation — but cannot generalize across domains without retraining.<br><strong style="color:var(--text)">AGI definition:</strong> A system that can perform any intellectual task a human can, including reasoning, learning from minimal examples, and applying knowledge to completely new domains.<br><strong style="color:var(--text)">How far?</strong> OpenAI, Google DeepMind, Anthropic all claim to be "close" — but definitions vary. Current LLMs still fail basic causal reasoning, have no persistent memory, and cannot reliably plan more than a few steps ahead.<br><strong style="color:var(--text)">Key missing pieces:</strong> Embodied learning (robots), causal reasoning, true world models, efficiency (GPT-4 uses ~500 MW of electricity vs brain's 20W).<br><strong style="color:var(--text)">What to expect by 2030:</strong> AI that can conduct autonomous scientific research, write and test software end-to-end, and pass any university exam in any subject.</p></div></div>
+        </div>
+        <div class="tab-panel" id="fut-india">
+          <div class="reallife"><div class="rl-icon">🇮🇳</div><div><h4>India's AI Opportunity — INDIAai Mission</h4><p><strong style="color:var(--text)">INDIAai Mission (₹10,372 crore, 2024):</strong> 10,000 GPUs for researchers, AI startups, universities. Goal: Make India a global AI powerhouse by 2030.<br><strong style="color:var(--text)">Unique Indian advantages:</strong> (1) 500M+ smartphone users generating unique data (2) 22 official languages — massive NLP opportunity (3) Largest tech talent pool globally (4) Digital public infrastructure (Aadhaar, UPI, ONDC) as AI training ground.<br><strong style="color:var(--text)">BHASHINI:</strong> Government's language AI platform — real-time translation across 22 languages, voice interfaces for farmers and non-English speakers.<br><strong style="color:var(--text)">High-impact sectors:</strong> AgriAI (crop disease, weather forecasting for 140M farmers), HealthAI (diagnostics for rural clinics), EduAI (personalized learning in mother tongue), GovAI (automating 1B+ citizen service touchpoints).<br><strong style="color:var(--text)">Your opportunity:</strong> The next ChatGPT for India — an AI that truly understands Indian context, languages, and needs — is yet to be built. That's your generation's challenge.</p></div></div>
+        </div>
+        <div class="mrow" style="margin-top:14px">
+          <div class="mcard"><div class="mv" style="color:var(--a3)">2025</div><div class="ml">Real-time multimodal AI, autonomous coding agents, voice AI in all devices</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a1)">2027</div><div class="ml">AI scientists co-authoring research, personalized AI tutors, autonomous vehicles mainstream</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a4)">2030</div><div class="ml">AI-driven drug discovery, AGI prototypes, AI handling 30% of white-collar tasks</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -945,26 +1227,260 @@ print("\n[Real project: replace with actual Gemini API]")</textarea>
   <!-- ══════════ UNIT 8: DATA STORYTELLING ══════════ -->
   <div class="page" id="page-u8">
     <button class="back-btn" onclick="showPage('home')">← Back</button>
-    <div class="section-header"><h2>📖 Unit 8: Data Storytelling</h2><p>Narrative · Freytag's Pyramid · Visualisation | 5 Theory + 4 Marks</p></div>
+    <div class="section-header"><h2>📖 Unit 8: Data Storytelling</h2><p>Narrative · Freytag's Pyramid · Visualisation Types · Ethics | 5 Theory + 4 Marks</p></div>
 
+    <!-- CARD 1: What IS Storytelling -->
     <div class="concept-card">
       <div class="cc-header" onclick="toggleCC(this)">
-        <div class="cc-icon" style="background:rgba(79,195,247,.15)">📐</div>
-        <div class="cc-info"><div class="cc-title">Freytag's Pyramid — Story Structure for Data</div><div class="cc-sub">Turn numbers into narratives that move audiences and drive action</div></div>
+        <div class="cc-icon" style="background:rgba(79,195,247,.15)">📚</div>
+        <div class="cc-info"><div class="cc-title">Introduction to Storytelling & Its Elements</div><div class="cc-sub">Why humans are wired for stories · The 6 elements every story needs</div></div>
         <span class="cc-chev">▼</span>
       </div>
       <div class="cc-body">
-        <div class="viz-box"><canvas id="freytag-canvas" width="700" height="260"></canvas><div class="viz-label">Freytag's Pyramid applied to Mid-Day Meal Scheme data story</div></div>
-        <div class="algo-steps">
-          <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Exposition (Context)</h5><p>"In 1995, India had 42% school dropout rate in rural areas..."</p></div></div>
-          <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Rising Action (Data reveals)</h5><p>"After MDMS launch, attendance climbed from 58% to 79% by 2005..."</p></div></div>
-          <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Climax (Key Insight)</h5><p>"Districts with full MDMS had 2.3× lower dropout rates — the data confirms causation!"</p></div></div>
-          <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Falling Action (Nuance)</h5><p>"But: quality variation, COVID (2020-21) reduced impact — not a perfect solution"</p></div></div>
-          <div class="algo-step"><div class="anum">5</div><div class="abody"><h5>Resolution (Call to Action)</h5><p>"Expanding MDMS to 6-8pm classes could retain 12 lakh more students annually"</p></div></div>
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:12px">Storytelling is humanity's oldest technology for transferring knowledge. Neuroscience shows that when we hear a story, <strong style="color:var(--text)">mirror neurons</strong> fire as if we are experiencing the events ourselves — facts alone don't do this. A story activates 7 areas of the brain; a bullet list activates 2.</p>
+        <div class="mrow">
+          <div class="mcard"><div class="mv" style="color:var(--a1)">🎭 Character</div><div class="ml">Who is affected? Give the audience someone to root for. In data: the person behind the statistic — "Meena, a 14-year-old who dropped out of school."</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a2)">⚔️ Conflict</div><div class="ml">What problem exists? Tension drives engagement. Data story: "Despite 95% enrollment, 40% of girls drop out by Grade 9 — why?"</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a3)">🌍 Setting</div><div class="ml">When and where? Context makes data meaningful. "Rural Rajasthan, 2019, 250km from the nearest hospital."</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a4)">📋 Plot</div><div class="ml">Sequence of events with cause-and-effect. Data: the timeline of policy changes and corresponding outcome shifts.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a5)">💬 Theme</div><div class="ml">The central message or truth. "Access to sanitation directly determines girls' school retention."</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a6)">🎯 Resolution</div><div class="ml">What should change? Every data story needs a clear call to action — otherwise it's just information, not a story.</div></div>
         </div>
-        <div class="reallife"><div class="rl-icon">📊</div><div><h4>Real-Life: Hans Rosling's Gapminder</h4><p>Rosling turned 200 years of UN development data into animated bubble charts. His TED talk has 15 million views — because he told a STORY with data. Size of bubble = population. X-axis = income. Y-axis = life expectancy. Countries move across decades in seconds. This is world-class data storytelling.</p></div></div>
+        <div class="reallife"><div class="rl-icon">🧠</div><div><h4>Why Storytelling Works: The Neuroscience</h4><p><strong style="color:var(--text)">Neural coupling:</strong> A speaker's brain activity synchronizes with listeners' brains during story — but NOT during fact lists. <strong style="color:var(--text)">Oxytocin effect:</strong> Stories trigger oxytocin release → empathy → action. <strong style="color:var(--text)">Memory retention:</strong> Information in story form is 22× more memorable than facts alone (Stanford research). <strong style="color:var(--text)">The "So What" test:</strong> Every data story must answer "So what should I do differently because of this data?"</p></div></div>
       </div>
     </div>
+
+    <!-- CARD 2: Data Storytelling -->
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(108,99,255,.15)">📊</div>
+        <div class="cc-info"><div class="cc-title">Introduction to Data Storytelling & Why It's Powerful</div><div class="cc-sub">The 3-circle Venn diagram · Data alone is not enough · Real power of narrative</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:12px"><strong style="color:var(--text)">Data Storytelling</strong> is the practice of building a compelling narrative around data, supported by visualizations, to communicate insights to a specific audience in a way that drives understanding and action.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:14px 0">
+          <div>
+            <h4 style="font-size:.8rem;font-weight:800;color:var(--a1);margin-bottom:8px">The 3-Circle Venn Model</h4>
+            <svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:220px;display:block;margin:0 auto">
+              <circle cx="110" cy="75" r="55" fill="#6c63ff18" stroke="#6c63ff" stroke-width="1.5"/>
+              <circle cx="80" cy="125" r="55" fill="#43d9ad18" stroke="#43d9ad" stroke-width="1.5"/>
+              <circle cx="140" cy="125" r="55" fill="#ffb34718" stroke="#ffb347" stroke-width="1.5"/>
+              <text x="110" y="35" text-anchor="middle" fill="#6c63ff" font-size="11" font-weight="700" font-family="Nunito">Data</text>
+              <text x="36" y="170" text-anchor="middle" fill="#43d9ad" font-size="11" font-weight="700" font-family="Nunito">Visuals</text>
+              <text x="184" y="170" text-anchor="middle" fill="#ffb347" font-size="11" font-weight="700" font-family="Nunito">Narrative</text>
+              <text x="110" y="108" text-anchor="middle" fill="#e8eaf6" font-size="9.5" font-weight="800" font-family="Nunito">Data</text>
+              <text x="110" y="120" text-anchor="middle" fill="#e8eaf6" font-size="9.5" font-weight="800" font-family="Nunito">Story</text>
+            </svg>
+            <p style="font-size:.74rem;color:var(--text2);text-align:center;margin-top:4px">All 3 must overlap for true data storytelling</p>
+          </div>
+          <div>
+            <h4 style="font-size:.8rem;font-weight:800;color:var(--a2);margin-bottom:8px">Why Data Alone Fails</h4>
+            <div class="algo-steps">
+              <div class="algo-step"><div class="anum" style="background:#ff6584">!</div><div class="abody"><h5>Numbers are abstract</h5><p style="font-size:.72rem">"3 million people" means nothing. "The entire population of Lucknow, gone" — that lands.</p></div></div>
+              <div class="algo-step"><div class="anum" style="background:#ffb347">!</div><div class="abody"><h5>No context = no meaning</h5><p style="font-size:.72rem">A 40% dropout rate is alarming — but only if you know the national average is 15%.</p></div></div>
+              <div class="algo-step"><div class="anum" style="background:#43d9ad">✓</div><div class="abody"><h5>Story creates urgency</h5><p style="font-size:.72rem">Stories trigger emotion → emotion triggers action. Pure data triggers neither.</p></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="reallife"><div class="rl-icon">📊</div><div><h4>The Power: Hans Rosling's Gapminder</h4><p>Rosling turned 200 years of UN development data into animated bubble charts. His TED talk "200 countries, 200 years in 4 minutes" has 15M+ views. He didn't just show data — he told the story of humanity's progress against poverty and disease. The data existed for decades. The story made it matter. <strong style="color:var(--text)">Key lesson:</strong> A great visualization + narrative can change policy, shift funding, and save lives.</p></div></div>
+      </div>
+    </div>
+
+    <!-- CARD 3: Essential Elements -->
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(255,101,132,.15)">🧱</div>
+        <div class="cc-info"><div class="cc-title">Essential Elements of Data Storytelling</div><div class="cc-sub">Audience · Context · Insight · Narrative arc · Visual encoding · Call to Action</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <div class="algo-steps">
+          <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Know Your Audience</h5><p>A politician needs a headline and one chart. A scientist needs methodology and p-values. A parent needs "what does this mean for my child?" Always ask: what does THIS audience already know, and what decision do they need to make?</p></div></div>
+          <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Start with Context</h5><p>Orient the audience before showing data. "In India today, 1 in 3 rural girls does not complete secondary school." This one sentence sets stakes before any chart appears.</p></div></div>
+          <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Surface the Key Insight</h5><p>Never make the audience find it themselves. Label your chart: "Districts with MDMS have 2.3× lower dropout rates." The insight should be in the title, not buried in the data.</p></div></div>
+          <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Build a Narrative Arc</h5><p>Follow a logical progression: What was the problem? What changed? What does the data show? What should we do? Even a 3-slide presentation should follow this arc.</p></div></div>
+          <div class="algo-step"><div class="anum">5</div><div class="abody"><h5>Choose the Right Visual</h5><p>Comparison → Bar chart. Trend over time → Line chart. Part-of-whole → Pie/donut (use sparingly). Relationship → Scatter plot. Distribution → Histogram. Geography → Choropleth map. Wrong chart = wrong story.</p></div></div>
+          <div class="algo-step"><div class="anum">6</div><div class="abody"><h5>End with a Call to Action</h5><p>"Based on this data, we recommend expanding MDMS to evening classes, which could retain 12 lakh additional students annually at a cost of ₹240 per student per year." Specific, actionable, data-backed.</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 4: Freytag's Pyramid -->
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(79,195,247,.15)">📐</div>
+        <div class="cc-info"><div class="cc-title">Narrative Structure: Freytag's Pyramid Applied to Data</div><div class="cc-sub">5-act structure · From exposition to resolution · CBSE exam favourite</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:10px">Gustav Freytag (1863) identified the 5-act structure used in all great dramas. Data storytellers borrow this exact framework — it works because human brains are wired for this narrative shape.</p>
+        <div class="viz-box"><canvas id="freytag-canvas" width="700" height="260"></canvas><div class="viz-label">Freytag's Pyramid applied to Mid-Day Meal Scheme data story</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px">
+            <h4 style="font-size:.8rem;font-weight:800;color:var(--a5);margin-bottom:8px">📖 In Literature (Hamlet)</h4>
+            <div style="font-size:.76rem;color:var(--text2);line-height:1.9">
+              <div><span style="color:var(--a5);font-weight:700">Exposition:</span> Prince Hamlet returns to Denmark</div>
+              <div><span style="color:var(--a5);font-weight:700">Rising Action:</span> Discovers father was murdered</div>
+              <div><span style="color:var(--a5);font-weight:700">Climax:</span> Hamlet stages "The Mousetrap" play</div>
+              <div><span style="color:var(--a5);font-weight:700">Falling Action:</span> Plans go wrong, Ophelia dies</div>
+              <div><span style="color:var(--a5);font-weight:700">Resolution:</span> Tragic duel; everyone dies</div>
+            </div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px">
+            <h4 style="font-size:.8rem;font-weight:800;color:var(--a3);margin-bottom:8px">📊 In Data (MDMS Story)</h4>
+            <div style="font-size:.76rem;color:var(--text2);line-height:1.9">
+              <div><span style="color:var(--a3);font-weight:700">Exposition:</span> 42% dropout rate in rural India, 1995</div>
+              <div><span style="color:var(--a3);font-weight:700">Rising Action:</span> Mid-Day Meal Scheme launched</div>
+              <div><span style="color:var(--a3);font-weight:700">Climax:</span> Districts with MDMS → 2.3× lower dropout!</div>
+              <div><span style="color:var(--a3);font-weight:700">Falling Action:</span> COVID reversed gains; quality varies</div>
+              <div><span style="color:var(--a3);font-weight:700">Resolution:</span> Expand MDMS to retain 12L more students</div>
+            </div>
+          </div>
+        </div>
+        <div class="algo-steps" style="margin-top:8px">
+          <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Exposition (Context)</h5><p>"In 1995, India had 42% school dropout rate in rural areas. Children, especially girls, were leaving school hungry, unable to concentrate, or working instead of studying."</p></div></div>
+          <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Rising Action (Data reveals a change)</h5><p>"After MDMS launch in 1995 (then expanded nationally in 2001), attendance climbed from 58% to 79% by 2005. The data began to tell a hopeful story."</p></div></div>
+          <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Climax (The Key Insight — most important point)</h5><p>"Districts with full MDMS coverage had <strong style="color:var(--a2)">2.3× lower dropout rates</strong> than districts with partial coverage. The data confirms this isn't coincidence — it's causation."</p></div></div>
+          <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Falling Action (Complications, nuance)</h5><p>"But: COVID-19 (2020-21) reduced impact. Quality variation across states is high. Contractor corruption in 14% of districts. The story is not simple."</p></div></div>
+          <div class="algo-step"><div class="anum">5</div><div class="abody"><h5>Resolution (Call to Action)</h5><p>"Expanding MDMS to 6-8pm evening classes could retain 12 lakh more students annually at ₹240/student/year — the most cost-effective education intervention in Indian history."</p></div></div>
+        </div>
+        <div class="reallife"><div class="rl-icon">📊</div><div><h4>CBSE Exam Tip: How to Apply Freytag's Pyramid in Answers</h4><p>If asked to "tell a data story about <topic>," use exactly this 5-part structure. Label each section explicitly (Exposition, Rising Action, Climax, Falling Action, Resolution). Examiners look for: (1) context before data, (2) a clear peak insight labeled as the climax, (3) acknowledgment of complications, (4) an actionable conclusion. Practice this structure with any dataset — climate data, COVID data, economic data.</p></div></div>
+      </div>
+    </div>
+
+    <!-- CARD 5: Types of Data & Visualizations -->
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(255,179,71,.15)">📈</div>
+        <div class="cc-info"><div class="cc-title">Types of Data and Visualizations</div><div class="cc-sub">Which chart for which data type — the most important design decision</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:10px">The #1 mistake in data storytelling is choosing the wrong chart type. Each chart encodes a specific type of relationship — use the wrong one and your story becomes confusing or misleading.</p>
+        <div style="overflow-x:auto;margin:12px 0">
+          <table style="width:100%;border-collapse:collapse;font-size:.78rem">
+            <tr style="background:var(--surface)"><th style="padding:10px 12px;text-align:left;color:var(--a1);font-size:.72rem;border-bottom:1px solid var(--border)">Data Type</th><th style="padding:10px 12px;text-align:left;color:var(--a1);font-size:.72rem;border-bottom:1px solid var(--border)">Question Answered</th><th style="padding:10px 12px;text-align:left;color:var(--a1);font-size:.72rem;border-bottom:1px solid var(--border)">Best Chart</th><th style="padding:10px 12px;text-align:left;color:var(--a1);font-size:.72rem;border-bottom:1px solid var(--border)">Example</th></tr>
+            <tr><td style="padding:9px 12px;color:var(--text);border-bottom:1px solid #24284022">Comparison</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022">How do categories differ?</td><td style="padding:9px 12px;color:var(--a3);font-weight:700;border-bottom:1px solid #24284022">Bar / Column chart</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022;font-size:.72rem">State-wise dropout rates comparison</td></tr>
+            <tr style="background:rgba(255,255,255,.02)"><td style="padding:9px 12px;color:var(--text);border-bottom:1px solid #24284022">Trend / Time</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022">How does X change over time?</td><td style="padding:9px 12px;color:var(--a3);font-weight:700;border-bottom:1px solid #24284022">Line chart</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022;font-size:.72rem">Annual enrollment 2000-2024</td></tr>
+            <tr><td style="padding:9px 12px;color:var(--text);border-bottom:1px solid #24284022">Part of Whole</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022">What % makes up the total?</td><td style="padding:9px 12px;color:var(--a3);font-weight:700;border-bottom:1px solid #24284022">Pie / Donut chart</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022;font-size:.72rem">Budget allocation by sector</td></tr>
+            <tr style="background:rgba(255,255,255,.02)"><td style="padding:9px 12px;color:var(--text);border-bottom:1px solid #24284022">Relationship</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022">Do X and Y correlate?</td><td style="padding:9px 12px;color:var(--a3);font-weight:700;border-bottom:1px solid #24284022">Scatter plot</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022;font-size:.72rem">Income vs school attendance</td></tr>
+            <tr><td style="padding:9px 12px;color:var(--text);border-bottom:1px solid #24284022">Distribution</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022">How is data spread?</td><td style="padding:9px 12px;color:var(--a3);font-weight:700;border-bottom:1px solid #24284022">Histogram / Box plot</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022;font-size:.72rem">Score distribution across students</td></tr>
+            <tr style="background:rgba(255,255,255,.02)"><td style="padding:9px 12px;color:var(--text);border-bottom:1px solid #24284022">Geography</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022">Where is this happening?</td><td style="padding:9px 12px;color:var(--a3);font-weight:700;border-bottom:1px solid #24284022">Choropleth map</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022;font-size:.72rem">District-wise literacy rates</td></tr>
+            <tr><td style="padding:9px 12px;color:var(--text);border-bottom:1px solid #24284022">Flow / Process</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022">How does X lead to Y?</td><td style="padding:9px 12px;color:var(--a3);font-weight:700;border-bottom:1px solid #24284022">Sankey / Flow diagram</td><td style="padding:9px 12px;color:var(--text2);border-bottom:1px solid #24284022;font-size:.72rem">Student journey from enrollment to dropout</td></tr>
+            <tr style="background:rgba(255,255,255,.02)"><td style="padding:9px 12px;color:var(--text)">Ranking</td><td style="padding:9px 12px;color:var(--text2)">What is the order?</td><td style="padding:9px 12px;color:var(--a3);font-weight:700">Ranked bar chart</td><td style="padding:9px 12px;color:var(--text2);font-size:.72rem">Top 10 states by girl child enrollment</td></tr>
+          </table>
+        </div>
+        <div class="mrow" style="margin-top:10px">
+          <div class="mcard"><div class="mv" style="color:var(--a2)">⚠️ Never use Pie charts</div><div class="ml">...when comparing more than 5 categories, or when differences are subtle. Humans are bad at judging angles. Use bar charts instead.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a2)">⚠️ Don't truncate axes</div><div class="ml">Starting a bar chart at 90% instead of 0 makes a 2% difference look like 300%. Always start bar charts at zero.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a3)">✅ Dual axes warning</div><div class="ml">Two Y-axes (left/right) can make unrelated trends look correlated. Use only when the relationship is explicitly the point.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 6: Steps to Create a Data Story -->
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(67,217,173,.15)">🪜</div>
+        <div class="cc-info"><div class="cc-title">Steps to Create a Story Through Data</div><div class="cc-sub">The 6-step process from raw data to compelling presentation</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <div class="algo-steps">
+          <div class="algo-step"><div class="anum">1</div><div class="abody"><h5>Understand Your Audience & Goal</h5><p>Who will see this? What decision do you want them to make? A finance minister needs different storytelling than a class of students. Define the "So what?" before opening any spreadsheet.</p></div></div>
+          <div class="algo-step"><div class="anum">2</div><div class="abody"><h5>Collect & Clean the Data</h5><p>Raw data is always messy. Handle missing values, remove duplicates, check for outliers. A story built on dirty data will mislead — and you'll be blamed when the errors surface.</p></div></div>
+          <div class="algo-step"><div class="anum">3</div><div class="abody"><h5>Explore the Data (EDA)</h5><p>Before storytelling, find the story. Run basic statistics: mean, median, range. Create exploratory plots. Ask "what's surprising here?" The unexpected finding is usually the best story.</p></div></div>
+          <div class="algo-step"><div class="anum">4</div><div class="abody"><h5>Identify the Key Insight</h5><p>What is the ONE thing the audience must remember? Every data story has one central insight. Resist the temptation to show everything — more data ≠ better story. Cut ruthlessly.</p></div></div>
+          <div class="algo-step"><div class="anum">5</div><div class="abody"><h5>Build the Narrative Structure</h5><p>Apply Freytag's Pyramid: Context → Rising tension → Key insight (climax) → Complications → Recommendation. Script the story before making any slides.</p></div></div>
+          <div class="algo-step"><div class="anum">6</div><div class="abody"><h5>Design Visuals & Present</h5><p>Choose appropriate chart types. Label the insight directly on the chart (don't make audience find it). Use color purposefully — highlight only what matters. Keep slides uncluttered. Practice your verbal narrative separately from the visuals.</p></div></div>
+        </div>
+        <div class="code-wrap">
+          <div class="code-toolbar">
+            <div class="ce-dots"><div class="ce-dot" style="background:#ff5f57"></div><div class="ce-dot" style="background:#febc2e"></div><div class="ce-dot" style="background:#28c840"></div></div>
+            <span class="ce-filename">data_story_eda.py — CBSE Activity</span>
+            <button class="run-btn" onclick="runSplit('ds-code','ds-out','ds-dot')">▶ Run Code</button>
+          </div>
+          <div class="code-split">
+            <textarea class="code-pane" id="ds-code" spellcheck="false"># Data Storytelling: Exploring dropout data
+# Step 3: EDA to find the story
+
+import statistics
+
+# District data: [district, mdms_coverage%, dropout_rate%]
+data = [
+    ["Alwar",     90, 12], ["Barmer",   20, 38],
+    ["Churu",     85, 14], ["Dungarpur",15, 42],
+    ["Jaipur",    95, 8],  ["Jodhpur",  80, 16],
+    ["Kota",      92, 10], ["Nagaur",   25, 35],
+    ["Pali",      30, 31], ["Sawai",    88, 13],
+]
+
+# Separate high/low MDMS coverage
+high = [d for d in data if d[1] >= 80]
+low  = [d for d in data if d[1] < 40]
+
+avg_drop_high = statistics.mean([d[2] for d in high])
+avg_drop_low  = statistics.mean([d[2] for d in low])
+ratio = avg_drop_low / avg_drop_high
+
+print("=== DATA STORY FINDER ===")
+print(f"\nDistricts with HIGH MDMS (≥80%):")
+for d in high:
+    print(f"  {d[0]:12s}: coverage={d[1]}%, dropout={d[2]}%")
+
+print(f"\nDistricts with LOW MDMS (<40%):")
+for d in low:
+    print(f"  {d[0]:12s}: coverage={d[1]}%, dropout={d[2]}%")
+
+print(f"\n📊 KEY INSIGHT FOUND:")
+print(f"  Avg dropout (high MDMS): {avg_drop_high:.1f}%")
+print(f"  Avg dropout (low  MDMS): {avg_drop_low:.1f}%")
+print(f"  → Low MDMS areas have {ratio:.1f}× HIGHER dropout!")
+print(f"\n📖 STORY CLIMAX:")
+print(f"  'Districts with 80%+ MDMS coverage have")
+print(f"   {ratio:.1f}× lower dropout rates — proving")
+print(f"   school meals drive educational retention.'")</textarea>
+            <div class="output-pane" id="ds-out">
+              <div class="out-label"><div class="out-dot idle" id="ds-dot"></div>OUTPUT</div>
+              <div class="out-placeholder">Click ▶ Run Code to see output</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 7: Ethics in Data Storytelling -->
+    <div class="concept-card">
+      <div class="cc-header" onclick="toggleCC(this)">
+        <div class="cc-icon" style="background:rgba(255,101,132,.15)">⚖️</div>
+        <div class="cc-info"><div class="cc-title">Ethics in Data Storytelling</div><div class="cc-sub">Misleading charts · Cherry-picking · Correlation ≠ causation · Responsible storytelling</div></div>
+        <span class="cc-chev">▼</span>
+      </div>
+      <div class="cc-body">
+        <p style="font-size:.83rem;color:var(--text2);line-height:1.8;margin-bottom:12px">Data storytelling is powerful — and that power can be abused. Every design choice (axis range, color, what data to include) is an ethical choice. Misleading data stories have caused real harm: market crashes, election manipulation, medical misinformation.</p>
+        <div class="mrow">
+          <div class="mcard"><div class="mv" style="color:var(--a2)">📏 Truncated Axes</div><div class="ml">Starting a bar chart at 97% instead of 0 makes a 1% difference look dramatic. Always show the full scale. This is the #1 most common misleading chart technique in news media.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a4)">🍒 Cherry-picking</div><div class="ml">Selecting only the data that supports your conclusion and hiding contradictory data. Example: "Our product has 5-star reviews" (showing only 20 out of 10,000 reviews). Always show the full picture.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a1)">🔗 Correlation ≠ Causation</div><div class="ml">Ice cream sales and drowning both increase in summer — they are correlated but neither causes the other (both caused by hot weather = confounding variable). Never claim causation without experimental evidence.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a3)">📊 Misleading Scales</div><div class="ml">3D pie charts make small slices look larger. Dual Y-axes make unrelated trends appear correlated. Non-linear axes hide or exaggerate trends. Visual design manipulates perception.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a6)">👥 Missing Context</div><div class="ml">"Crime increased 100%" — from 1 case to 2 cases. Raw percentages without baseline numbers are meaningless. Always show both the percentage AND the absolute numbers.</div></div>
+          <div class="mcard"><div class="mv" style="color:var(--a5)">🎨 Biased Color</div><div class="ml">Using red for "bad" countries (political framing), making one party's chart bar a warm color and another's cold — color choices embed editorial bias. Use neutral palettes for factual reporting.</div></div>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(67,217,173,.06),rgba(67,217,173,.01));border:1px solid rgba(67,217,173,.18);border-radius:12px;padding:14px;margin:12px 0">
+          <h4 style="font-size:.82rem;font-weight:800;color:var(--a3);margin-bottom:8px">✅ Principles of Ethical Data Storytelling</h4>
+          <div style="font-size:.78rem;color:var(--text2);line-height:1.9">
+            <div>📌 <strong style="color:var(--text)">Transparency:</strong> Show your data sources, methodology, and limitations explicitly.</div>
+            <div>📌 <strong style="color:var(--text)">Completeness:</strong> Include data that challenges your argument — this builds credibility, not weakness.</div>
+            <div>📌 <strong style="color:var(--text)">Accuracy:</strong> Double-check every number. A single error destroys trust in the entire story.</div>
+            <div>📌 <strong style="color:var(--text)">Appropriate claims:</strong> If the data shows correlation, say "correlation." Never overstate what your data proves.</div>
+            <div>📌 <strong style="color:var(--text)">Accessible design:</strong> Use color-blind safe palettes. Add alt text. Ensure visuals are readable at small sizes.</div>
+          </div>
+        </div>
+        <div class="reallife"><div class="rl-icon">⚠️</div><div><h4>Real Example: The Misleading COVID Chart (2020)</h4><p>During COVID-19, several governments published charts with Y-axis starting at 100,000 (not 0) making their country's rising case numbers appear flat. When journalists pointed out the truncated axis, the perception completely changed. <strong style="color:var(--text)">Lesson:</strong> Even technically accurate charts can be deeply misleading through design choices. Critical data literacy — the ability to spot these tricks — is now a survival skill in the information age.</p></div></div>
+      </div>
+    </div>
+
   </div>
 
   <!-- ══════════ QUIZ ══════════ -->
@@ -1648,7 +2164,32 @@ Bot: GenAI creates NEW content: text, images, code, music — trained on massive
 You: What is Big Data
 Bot: Big Data: data so large/fast/varied that traditional tools can't handle it. The 5 Vs!
 
-[Real project: replace with actual Gemini API]`
+[Real project: replace with actual Gemini API]`,
+  'ds-code':`=== DATA STORY FINDER ===
+
+Districts with HIGH MDMS (≥80%):
+  Alwar       : coverage=90%, dropout=12%
+  Churu       : coverage=85%, dropout=14%
+  Jaipur      : coverage=95%, dropout=8%
+  Jodhpur     : coverage=80%, dropout=16%
+  Kota        : coverage=92%, dropout=10%
+  Sawai       : coverage=88%, dropout=13%
+
+Districts with LOW MDMS (<40%):
+  Barmer      : coverage=20%, dropout=38%
+  Dungarpur   : coverage=15%, dropout=42%
+  Nagaur      : coverage=25%, dropout=35%
+  Pali        : coverage=30%, dropout=31%
+
+📊 KEY INSIGHT FOUND:
+  Avg dropout (high MDMS): 12.2%
+  Avg dropout (low  MDMS): 36.5%
+  → Low MDMS areas have 3.0× HIGHER dropout!
+
+📖 STORY CLIMAX:
+  'Districts with 80%+ MDMS coverage have
+   3.0× lower dropout rates — proving
+   school meals drive educational retention.'`
 };
 
 function runSplit(codeId, outId, dotId){
@@ -1759,7 +2300,7 @@ function drawProjectViz(name){
   const canvasMap={diabetes:'diabetes-viz',student:'student-viz',crop:'crop-viz',fakenews:'fakenews-viz'};
   const c=document.getElementById(canvasMap[name]); if(!c) return;
   const ctx=c.getContext('2d'); const W=c.width,H=c.height;
-  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,W,H);
 
   if(name==='diabetes'){
     // Bar chart: metrics
@@ -2030,37 +2571,96 @@ function renderPage(page){
 
 function drawNumpy(){
   const c=document.getElementById('numpy-canvas'); if(!c) return;
+  c.width=620; c.height=210;
   const ctx=c.getContext('2d'); const W=c.width,H=c.height;
-  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
-  ctx.fillStyle='#8892b0'; ctx.font='11px Nunito'; ctx.fillText('Speed comparison:',16,24);
-  const bars=[{label:'Python List  (10,000 items)',spd:28,col:'#ff6584'},{label:'NumPy Array  (10,000 items)',spd:290,col:'#43d9ad'}];
+  ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,W,H);
+
+  // ── SECTION 1: Speed Comparison Bars (left half) ──
+  const sectionW = 290;
+  ctx.fillStyle=canvasText(); ctx.font='bold 11px Nunito';
+  ctx.fillText('⚡ Speed Comparison',14,20);
+
+  const bars=[
+    {label:'Python List',time:'100ms',spd:40,col:'#ff6584'},
+    {label:'NumPy Array',time:'1ms',spd:260,col:'#43d9ad'}
+  ];
   bars.forEach((b,i)=>{
-    const by=40+i*52, bx=160;
-    ctx.fillStyle='#13172a'; ctx.fillRect(bx,by,320,32);
-    const g=ctx.createLinearGradient(bx,by,bx+b.spd,by);
-    g.addColorStop(0,b.col+'88'); g.addColorStop(1,b.col);
-    ctx.fillStyle=g; ctx.beginPath(); ctx.roundRect(bx,by,b.spd,32,4); ctx.fill();
-    ctx.fillStyle='#cdd6f4'; ctx.font='bold 11px Nunito'; ctx.fillText(b.label,16,by+21);
-    ctx.fillStyle=b.col; ctx.font='bold 11px Nunito';
-    ctx.fillText(i===0?'1×':'~100× faster',bx+b.spd+8,by+21);
+    const by=34+i*60, bx=14, trackW=sectionW-28;
+    // track bg
+    ctx.fillStyle=isDark?'#0d1020':'#e4e8ff';
+    ctx.beginPath(); ctx.roundRect(bx,by+16,trackW,28,6); ctx.fill();
+    // filled bar
+    const g=ctx.createLinearGradient(bx,by+16,bx+b.spd,by+16);
+    g.addColorStop(0,b.col+'66'); g.addColorStop(1,b.col);
+    ctx.fillStyle=g; ctx.beginPath(); ctx.roundRect(bx,by+16,b.spd,28,6); ctx.fill();
+    // label left
+    ctx.fillStyle=canvasText2(); ctx.font='bold 10px Nunito'; ctx.textAlign='left';
+    ctx.fillText(b.label,bx+6,by+34);
+    // time chip right of bar
+    ctx.fillStyle=b.col; ctx.font='bold 10px Nunito';
+    ctx.fillText(b.time,bx+b.spd+8,by+34);
+    // multiplier below bar
+    ctx.fillStyle=canvasText(); ctx.font='9px Nunito';
+    ctx.fillText(i===0?'baseline (1×)':'~100× FASTER ✓',bx+6,by+56);
   });
-  // Array cells
-  ctx.fillStyle='#8892b0'; ctx.font='10px Fira Code'; ctx.fillText('arr = [85, 90, 78, 92, 88]',16,148);
-  [85,90,78,92,88].forEach((v,i)=>{
-    const bx=16+i*58, by=155;
-    ctx.fillStyle='rgba(108,99,255,.15)'; ctx.strokeStyle='#6c63ff'; ctx.lineWidth=1.5;
-    ctx.beginPath(); ctx.roundRect(bx,by,52,28,4); ctx.fill(); ctx.stroke();
-    ctx.fillStyle='#a6e3a1'; ctx.font='bold 14px Fira Code'; ctx.textAlign='center';
-    ctx.fillText(v,bx+26,by+19); ctx.textAlign='left';
-    ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.textAlign='center';
-    ctx.fillText('['+i+']',bx+26,by+38); ctx.textAlign='left';
+
+  // ── DIVIDER ──
+  ctx.strokeStyle=isDark?'#2a304a':'#d0d4ee'; ctx.lineWidth=1;
+  ctx.setLineDash([4,3]);
+  ctx.beginPath(); ctx.moveTo(sectionW+4,10); ctx.lineTo(sectionW+4,H-10); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // ── SECTION 2: Array Memory Layout (right half) ──
+  const rx = sectionW+16;
+  ctx.fillStyle=canvasText(); ctx.font='bold 11px Nunito'; ctx.textAlign='left';
+  ctx.fillText('🔢 Array Memory Layout',rx,20);
+
+  // 1D array
+  ctx.fillStyle=canvasText(); ctx.font='9px Nunito';
+  ctx.fillText('1D  →  marks = [85, 90, 78, 92, 88]',rx,40);
+  const vals=[85,90,78,92,88];
+  vals.forEach((v,i)=>{
+    const bx=rx+i*58, by=46;
+    const isMax=v===Math.max(...vals), isMin=v===Math.min(...vals);
+    const col=isMax?'#43d9ad':isMin?'#ff6584':'#6c63ff';
+    ctx.fillStyle=col+'22'; ctx.strokeStyle=col; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.roundRect(bx,by,52,30,5); ctx.fill(); ctx.stroke();
+    ctx.fillStyle=canvasText2(); ctx.font='bold 13px Fira Code'; ctx.textAlign='center';
+    ctx.fillText(v,bx+26,by+20);
+    ctx.fillStyle=canvasText(); ctx.font='8px Nunito';
+    ctx.fillText('['+i+']',bx+26,by+40);
+    if(isMax){ ctx.fillStyle='#43d9ad'; ctx.font='7px Nunito'; ctx.fillText('MAX',bx+26,by+52); }
+    if(isMin){ ctx.fillStyle='#ff6584'; ctx.font='7px Nunito'; ctx.fillText('MIN',bx+26,by+52); }
   });
+
+  // 2D array visual
+  ctx.textAlign='left';
+  ctx.fillStyle=canvasText(); ctx.font='9px Nunito';
+  ctx.fillText('2D  →  matrix = [[1,2,3],[4,5,6]]  shape:(2,3)',rx,115);
+  const mat=[[1,2,3],[4,5,6]];
+  const mcols=['#6c63ff','#43d9ad','#ffb347'];
+  mat.forEach((row,ri)=>{
+    row.forEach((val,ci)=>{
+      const bx=rx+ci*54, by=122+ri*34;
+      ctx.fillStyle=mcols[ci]+'18'; ctx.strokeStyle=mcols[ci]+'88'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.roundRect(bx,by,48,28,4); ctx.fill(); ctx.stroke();
+      ctx.fillStyle=canvasText2(); ctx.font='bold 12px Fira Code'; ctx.textAlign='center';
+      ctx.fillText(val,bx+24,by+19);
+    });
+  });
+  // row/col labels
+  ['Row 0','Row 1'].forEach((l,i)=>{
+    ctx.fillStyle=canvasText(); ctx.font='8px Nunito'; ctx.textAlign='left';
+    ctx.fillText(l,rx+170,122+i*34+18);
+  });
+
+  ctx.textAlign='left';
 }
 
 function drawPandas(){
   const c=document.getElementById('pandas-canvas'); if(!c) return;
   const ctx=c.getContext('2d'); const W=c.width,H=c.height;
-  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,W,H);
   const cols=['Name','Maths','Science','AI'], cw=[90,80,80,70];
   const rows=[['Arjun','85.0','90.0','95.0'],['Priya','92.0','88.0','89.0'],['Rahul','NaN','76.0','84.0'],['Sneha','78.0','NaN','91.0'],['Karan','95.0','82.0','NaN']];
   let cx=20;
@@ -2074,10 +2674,10 @@ function drawPandas(){
     let cx2=20;
     row.forEach((val,ci)=>{
       const isNaN=val==='NaN';
-      ctx.fillStyle=isNaN?'rgba(255,101,132,.15)':'rgba(255,255,255,.02)';
-      ctx.strokeStyle=isNaN?'#ff6584':'#242840'; ctx.lineWidth=1;
+      ctx.fillStyle=isNaN?'rgba(255,101,132,.15)':(isDark?'rgba(255,255,255,.02)':'rgba(108,99,255,.04)');
+      ctx.strokeStyle=isNaN?'#ff6584':canvasBorder(); ctx.lineWidth=1;
       ctx.fillRect(cx2,44+ri*22,cw[ci]-2,21); ctx.strokeRect(cx2,44+ri*22,cw[ci]-2,21);
-      ctx.fillStyle=isNaN?'#ff6584':'#cdd6f4'; ctx.font=(isNaN?'bold ':'')+'10px Fira Code';
+      ctx.fillStyle=isNaN?'#ff6584':canvasText2(); ctx.font=(isNaN?'bold ':'')+'10px Fira Code';
       ctx.fillText(val,cx2+6,44+ri*22+15); cx2+=cw[ci];
     });
   });
@@ -2088,42 +2688,37 @@ function drawPandas(){
 function drawLinReg(){
   const c=document.getElementById('linreg-canvas'); if(!c) return;
   const ctx=c.getContext('2d'); const W=c.width,H=c.height;
-  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,W,H);
   const px=55,py=18,pw=W-75,ph=H-48;
   const Xs=[1,2,3,4,5,6,7,8],Ys=[35,45,55,60,70,78,85,92];
   const maxX=10,maxY=110;
   const sx=x=>px+x/maxX*pw, sy=y=>py+ph-(y/maxY*ph);
-  // Grid
   [25,50,75,100].forEach(v=>{
-    ctx.strokeStyle='#1c2035'; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+    ctx.strokeStyle=canvasBorder(); ctx.lineWidth=1; ctx.setLineDash([3,3]);
     ctx.beginPath(); ctx.moveTo(px,sy(v)); ctx.lineTo(px+pw,sy(v)); ctx.stroke();
-    ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.fillText(v,px-28,sy(v)+4);
+    ctx.fillStyle=canvasText(); ctx.font='9px Nunito'; ctx.fillText(v,px-28,sy(v)+4);
   });
   [2,4,6,8].forEach(v=>{
     ctx.beginPath(); ctx.moveTo(sx(v),py); ctx.lineTo(sx(v),py+ph); ctx.stroke();
-    ctx.fillStyle='#8892b0'; ctx.font='9px Nunito'; ctx.textAlign='center';
+    ctx.fillStyle=canvasText(); ctx.font='9px Nunito'; ctx.textAlign='center';
     ctx.fillText(v,sx(v),py+ph+14); ctx.textAlign='left';
   });
   ctx.setLineDash([]);
-  // Axes
-  ctx.strokeStyle='#2a304a'; ctx.lineWidth=1.5;
+  ctx.strokeStyle=isDark?'#2a304a':'#b0b8d8'; ctx.lineWidth=1.5;
   ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(px,py+ph); ctx.lineTo(px+pw,py+ph); ctx.stroke();
-  // Regression line
   const m=8.21,b=26.79;
   ctx.strokeStyle='#6c63ff'; ctx.lineWidth=2.5; ctx.setLineDash([]);
   ctx.beginPath(); ctx.moveTo(sx(0),sy(b)); ctx.lineTo(sx(10),sy(m*10+b)); ctx.stroke();
   ctx.fillStyle='#6c63ff88'; ctx.font='bold 10px Nunito';
   ctx.fillText('Y = 8.21X + 26.79',sx(6)+4,sy(m*6+b)-8);
-  // Points
   Xs.forEach((x,i)=>{
     ctx.beginPath(); ctx.arc(sx(x),sy(Ys[i]),5.5,0,Math.PI*2);
     ctx.fillStyle='#43d9ad'; ctx.fill(); ctx.strokeStyle='#fff3'; ctx.lineWidth=1; ctx.stroke();
   });
-  ctx.fillStyle='#8892b0'; ctx.font='10px Nunito';
+  ctx.fillStyle=canvasText(); ctx.font='10px Nunito';
   ctx.fillText('Hours Studied →',px+pw/2-30,py+ph+26);
   ctx.save(); ctx.translate(px-40,py+ph/2+10); ctx.rotate(-Math.PI/2);
   ctx.fillText('Score →',0,0); ctx.restore();
-  // Click to add points
   c._userPts=c._userPts||[];
   c.onclick=e=>{
     const r=c.getBoundingClientRect();
@@ -2139,14 +2734,14 @@ function drawLinReg(){
 function drawDSMethod(){
   const c=document.getElementById('ds-method-canvas'); if(!c)return;
   const ctx=c.getContext('2d'); const W=c.width,H=c.height;
-  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,W,H);
   const steps=['Business\nUnderstanding','Analytic\nApproach','Data\nRequirements','Data\nCollection','Data\nUnderstanding','Data\nPreparation','AI\nModelling','Evaluation','Deployment','Feedback'];
   const cols=['#6c63ff','#7a72ff','#ff6584','#ffb347','#43d9ad','#4fc3f7','#c48cff','#ff6584','#43d9ad','#6c63ff'];
   const bw=(W-30)/steps.length-4;
   let step=0;
   if(c._anim) clearInterval(c._anim);
   c._anim=setInterval(()=>{
-    ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,W,H);
     steps.forEach((s,i)=>{
       const bx=15+i*(bw+4),by=25,bh=145;
       const act=i<=step;
@@ -2172,7 +2767,7 @@ function drawDSMethod(){
 function drawConfusion(){
   const c=document.getElementById('conf-canvas'); if(!c)return;
   const ctx=c.getContext('2d'); const W=c.width,H=c.height;
-  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,W,H);
   const cells=[{v:'TP\n45',x:110,y:70,col:'#43d9ad',desc:'Spam→Spam ✓'},{v:'FP\n2',x:250,y:70,col:'#ffb347',desc:'Ham→Spam ✗'},{v:'FN\n5',x:110,y:175,col:'#ff6584',desc:'Spam→Ham ✗'},{v:'TN\n48',x:250,y:175,col:'#4fc3f7',desc:'Ham→Ham ✓'}];
   ctx.fillStyle='#8892b0'; ctx.font='bold 11px Nunito'; ctx.textAlign='center';
   ctx.fillText('Predicted SPAM',185,30); ctx.fillText('Predicted HAM',325,30);
@@ -2203,7 +2798,7 @@ function drawConfusion(){
 function drawPixels(){
   const c=document.getElementById('pixel-canvas'); if(!c)return;
   const ctx=c.getContext('2d'); const W=c.width,H=c.height;
-  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,W,H);
   const img=[[255,255,255,255,255,255,255,255],[255,0,255,255,255,0,255,255],[255,0,255,255,255,0,255,255],[255,255,255,255,255,255,255,255],[255,0,255,255,255,255,0,255],[255,255,0,255,255,0,255,255],[255,255,255,0,0,255,255,255],[255,255,255,255,255,255,255,255]];
   const sz=24;
   // Left: pixel grid visual
@@ -2234,7 +2829,7 @@ function drawPixels(){
 
 function drawCVPipeline(){
   const c=document.getElementById('cv-pipeline-canvas'); if(!c)return;
-  const ctx=c.getContext('2d'); ctx.fillStyle='#080a10'; ctx.fillRect(0,0,c.width,c.height);
+  const ctx=c.getContext('2d'); ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,c.width,c.height);
   const W=c.width,H=c.height;
   const stages=[{icon:'📸',l:'Acquisition',s:'Camera/Sensor'},{icon:'⚙️',l:'Preprocessing',s:'Resize/Normalize'},{icon:'🔍',l:'Feature Extract',s:'Edges/Shapes'},{icon:'🧠',l:'Analysis',s:'CNN Model'},{icon:'✅',l:'Output',s:'Label/Score'}];
   const cols=['#6c63ff','#4fc3f7','#ffb347','#c48cff','#43d9ad'];
@@ -2242,7 +2837,7 @@ function drawCVPipeline(){
   let step=0;
   if(c._anim) clearInterval(c._anim);
   c._anim=setInterval(()=>{
-    ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,W,H);
     stages.forEach((s,i)=>{
       const bx=15+i*(sw+6),by=18,bh=H-36;
       const act=i<=step;
@@ -2263,7 +2858,7 @@ function drawCVPipeline(){
 
 function drawOrange(){
   const c=document.getElementById('orange-canvas'); if(!c)return;
-  const ctx=c.getContext('2d'); ctx.fillStyle='#080a10'; ctx.fillRect(0,0,c.width,c.height);
+  const ctx=c.getContext('2d'); ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,c.width,c.height);
   const W=c.width,H=c.height;
   const ws=[{i:'📂',l:'File\nWidget',col:'#ffb347'},{i:'📋',l:'Data\nTable',col:'#4fc3f7'},{i:'📊',l:'Scatter\nPlot',col:'#43d9ad'},{i:'✂️',l:'Data\nSampler',col:'#6c63ff'},{i:'🤖',l:'kNN\nClassifier',col:'#c48cff'},{i:'✅',l:'Test &\nScore',col:'#ff6584'}];
   const bw=90,bh=80,by=(H-bh)/2;
@@ -2288,7 +2883,7 @@ function drawOrange(){
 
 function drawBigData(){
   const c=document.getElementById('bigdata-canvas'); if(!c)return;
-  const ctx=c.getContext('2d'); ctx.fillStyle='#080a10'; ctx.fillRect(0,0,c.width,c.height);
+  const ctx=c.getContext('2d'); ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,c.width,c.height);
   const W=c.width,H=c.height,cx=W/2,cy=H/2;
   const Vs=[{l:'Volume',v:.9,col:'#6c63ff',a:-90},{l:'Velocity',v:.85,col:'#ff6584',a:-18},{l:'Variety',v:.75,col:'#ffb347',a:54},{l:'Veracity',v:.65,col:'#43d9ad',a:126},{l:'Value',v:.8,col:'#4fc3f7',a:198}];
   const R=100;
@@ -2317,7 +2912,7 @@ function drawStream(){
   let off=0;
   if(c._anim) clearInterval(c._anim);
   c._anim=setInterval(()=>{
-    ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,W,H);
     ctx.fillStyle='#8892b0'; ctx.font='bold 11px Nunito'; ctx.fillText('Live Data Stream → Real-time Analysis',16,18);
     for(let i=0;i<22;i++){
       const bx=10+i*28-off%28,by=28,bh=90,v=Math.sin(i*.7+off*.08)*22+55;
@@ -2347,7 +2942,7 @@ function drawNeural(){
   const ctx=c.getContext('2d'); const W=c.width,H=c.height;
   const layers=[{n:3,l:'Input Layer',lx:80},{n:4,l:'Hidden Layer 1',lx:240},{n:4,l:'Hidden Layer 2',lx:420},{n:2,l:'Output Layer',lx:580}];
   const cols=['#4fc3f7','#6c63ff','#c48cff','#43d9ad'];
-  ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,W,H);
   // Connections
   layers.forEach((l,li)=>{
     if(li===layers.length-1) return;
@@ -2384,7 +2979,7 @@ function drawNeural(){
   c.onclick=()=>{
     let step=0;
     const anim=setInterval(()=>{
-      ctx.fillStyle='#080a10'; ctx.fillRect(0,0,W,H);
+      ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,W,H);
       layers.forEach((l,li)=>{
         if(li===layers.length-1) return;
         for(let i=0;i<l.n;i++) for(let j=0;j<layers[li+1].n;j++){
@@ -2413,7 +3008,7 @@ function drawNeural(){
 
 function drawNNTypes(){
   const c=document.getElementById('nn-types-canvas'); if(!c)return;
-  const ctx=c.getContext('2d'); ctx.fillStyle='#080a10'; ctx.fillRect(0,0,c.width,c.height);
+  const ctx=c.getContext('2d'); ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,c.width,c.height);
   const W=c.width,H=c.height;
   const types=[{n:'CNN',s:'Images',i:'🖼️',c:'#6c63ff',a:'Face recognition\nMedical scans'},{n:'RNN',s:'Sequences',i:'🔄',c:'#ff6584',a:'Text translation\nSpeech'},{n:'LSTM',s:'Long context',i:'💾',c:'#43d9ad',a:'Chatbots\nStory generation'},{n:'GAN',s:'Create new data',i:'✨',c:'#ffb347',a:'Deepfakes\nAI Art'},{n:'Transformer',s:'Self-attention',i:'🔭',c:'#4fc3f7',a:'GPT/Gemini\nBERT'}];
   types.forEach((t,i)=>{
@@ -2430,7 +3025,7 @@ function drawNNTypes(){
 
 function drawGenAI(){
   const c=document.getElementById('genai-canvas'); if(!c)return;
-  const ctx=c.getContext('2d'); ctx.fillStyle='#080a10'; ctx.fillRect(0,0,c.width,c.height);
+  const ctx=c.getContext('2d'); ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,c.width,c.height);
   const W=c.width,H=c.height;
   // Discriminative
   ctx.strokeStyle='#4fc3f7'; ctx.lineWidth=1.5;
@@ -2459,7 +3054,7 @@ function drawGenAI(){
 
 function drawFreytag(){
   const c=document.getElementById('freytag-canvas'); if(!c)return;
-  const ctx=c.getContext('2d'); ctx.fillStyle='#080a10'; ctx.fillRect(0,0,c.width,c.height);
+  const ctx=c.getContext('2d'); ctx.fillStyle=canvasBg(); ctx.fillRect(0,0,c.width,c.height);
   const W=c.width,H=c.height;
   const pts=[[50,H-50],[155,H-100],[290,H-150],[440,55],[575,H-110],[675,H-70]];
   const lbls=['Exposition','Rising\nAction','Climax\nApproach','CLIMAX','Falling\nAction','Resolution'];
@@ -2485,8 +3080,28 @@ function drawFreytag(){
 }
 
 // ═══════════════════════════════════════════════════════════
-// SMART TOOLTIP POSITIONING
+// DARK / LIGHT THEME TOGGLE
 // ═══════════════════════════════════════════════════════════
+let isDark = true;
+function toggleTheme(){
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? '' : 'light');
+  document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+  document.getElementById('theme-label').textContent = isDark ? 'Light' : 'Dark';
+  // Redraw all visible canvases so they respect new theme colours
+  const activePage = document.querySelector('.page.active');
+  if(activePage){
+    const pid = activePage.id.replace('page-','');
+    setTimeout(()=>renderPage(pid), 50);
+  }
+}
+
+// Helper — returns canvas bg based on current theme
+function canvasBg(){ return isDark ? '#080a10' : '#f5f7ff'; }
+function canvasText(){ return isDark ? '#8892b0' : '#5a6080'; }
+function canvasText2(){ return isDark ? '#cdd6f4' : '#1a1d2e'; }
+function canvasBorder(){ return isDark ? '#1c2035' : '#d0d4ee'; }
+function canvasSurface(){ return isDark ? '#13172a' : '#eceffe'; }
 document.addEventListener('mousemove', function(e){
   const hv = e.target.closest('.hover-viz');
   if(!hv) return;
